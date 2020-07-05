@@ -1,28 +1,30 @@
 import {AfterViewInit, Component, ElementRef, OnInit, QueryList, ViewChildren} from '@angular/core';
 
-import {LocaleWord} from '../../common/constant/locale-word';
-import {LocaleHandlingUtil} from '../../core/util';
 import {EventFacade} from '../../core/facade/event-facade.service';
+import {LocaleName} from '../../common/constant';
+import {LocaleHandlingUtil} from '../../core/util';
 
 @Component({
-  selector: 'app-other-translate',
-  templateUrl: 'other-translate.component.html',
+  selector: 'app-locale-translate',
+  templateUrl: 'locale-translate.component.html',
 })
-export class OtherTranslateComponent implements OnInit, AfterViewInit {
+export class LocaleTranslateComponent implements OnInit, AfterViewInit {
 
   @ViewChildren('inputs') inputElements: QueryList<ElementRef<HTMLInputElement>>;
 
-  localeWord: LocaleWord = LocaleWord.getInstance();
+  LocaleName: LocaleName = LocaleName.getInstance();
 
   constructor(private localeHandlingUtil: LocaleHandlingUtil,
               private eventFacade: EventFacade) {
   }
 
   ngOnInit(): void {
+    console.log(this.LocaleName);
   }
 
   ngAfterViewInit(): void {
-    this.localeHandlingUtil.parentElementBundle(this.inputElements);
+    console.log(this.inputElements);
+    this.localeHandlingUtil.setParentElementBundle(this.inputElements);
     this.eventFacade.localeViewRendered(true);
   }
 

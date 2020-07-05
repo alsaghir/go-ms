@@ -60,6 +60,9 @@
                   "maximumError": "10kb"
                 }
               ]
+            },
+            "ar-EG": {
+              "localize": ["ar-EG"]
             }
           }
         },
@@ -71,6 +74,9 @@
           "configurations": {
             "production": {
               "browserTarget": "go-ms-ui:build:production"
+            },
+            "ar-EG": {
+              "browserTarget": "sp-front-end:build:ar-EG"
             }
           }
         },
@@ -121,6 +127,12 @@
               "devServerTarget": "go-ms-ui:serve:production"
             }
           }
+        }
+      },
+      "i18n": {
+        "sourceLocale": "en-US",
+        "locales": {
+          "ar-EG": "src/locale/messages.ar-EG.xlf"
         }
       }
     }},

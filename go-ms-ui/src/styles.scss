@@ -1,1 +1,70 @@
-/* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,600,700&display=swap');
+
+// themes - our custom or/and out of the box themes
+@import 'themes';
+
+// framework component themes (styles tied to theme variables)
+@import '~@nebular/theme/styles/globals';
+@import '~@nebular/auth/styles/all';
+
+// https://getbootstrap.com/docs/4.0/getting-started/theming/
+// https://stackoverflow.com/questions/45660802/how-to-use-bootstrap-4-with-sass-in-angular
+// Using bootstrap
+@import '~bootstrap/scss/functions';
+@import '~bootstrap/scss/variables';
+@import '~bootstrap/scss/mixins';
+@import '~bootstrap/scss/grid';
+
+// loading progress bar
+@mixin ngx-pace-theme() {
+
+  .pace .pace-progress {
+    background: nb-theme(color-primary-default);
+  }
+
+  .pace .pace-progress-inner {
+    box-shadow: 0 0 10px nb-theme(color-primary-default), 0 0 5px nb-theme(color-primary-default);
+  }
+
+  .pace .pace-activity {
+    display: none;
+  }
+}
+
+@mixin ngx-layout() {
+  @include media-breakpoint-down(is) {
+    .row {
+      margin-left: -10px;
+      margin-right: -10px;
+    }
+  }
+}
+
+@mixin nb-overrides() {
+  nb-select.size-medium button {
+    padding: 0.4375rem 2.2rem 0.4375rem 1.125rem !important;
+
+    nb-icon {
+      right: 0.41rem !important;
+    }
+  }
+}
+
+// install the framework and custom global styles
+@include nb-install() {
+
+  // framework global styles
+  @include nb-theme-global();
+  // framework global styles
+  @include nb-auth-global();
+
+  // https://akveo.github.io/nebular/docs/auth/installation#enable-styles
+  // @include nb-auth-global();
+
+  @include ngx-layout();
+
+  // loading progress bar
+  @include ngx-pace-theme();
+
+  @include nb-overrides();
+};

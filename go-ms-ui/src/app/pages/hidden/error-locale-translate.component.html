@@ -1,14 +1,16 @@
-<section hidden #errorsParentElement>
+<section hidden #errorLocaleParentElement>
   <input
+    #inputs
     aria-label
-    name="{{errorName.UNEXPECTED_ERROR}}"
+    name="{{errorLocaleName.UNEXPECTED_ERROR}}"
     id="e00001"
     i18n-value="@@e00001"
     value="Unexpected error. Please contact administrator."
     hidden/>
   <input
+    #inputs
     aria-label
-    name="{{errorName.EXPECTED_ERROR}}"
+    name="{{errorLocaleName.EXPECTED_ERROR}}"
     id="e00002"
     i18n-value="@@e00002"
     value="Expected error !"
