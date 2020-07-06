@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+  <file source-language="en-US" datatype="plaintext" original="ng2.template">
+    <body>
+      <trans-unit id="e00001" datatype="html">
+        <source>Unexpected error. Please contact administrator.</source>
+        <target>خطأ في النظام</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/hidden/error-locale-translate.component.html</context>
+          <context context-type="linenumber">8</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="e00002" datatype="html">
+        <source>Expected error !</source>
+        <target>خطأ في النظام</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/hidden/error-locale-translate.component.html</context>
+          <context context-type="linenumber">16</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6080b77234e92ad41bb52653b239c4c4f851317d" datatype="html">
+        <source>Error</source>
+        <target>خطأ</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/hidden/locale-translate.component.html</context>
+          <context context-type="linenumber">7</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="153258a8bb0b87b65e886022a1c33dc9ffb49905" datatype="html">
+        <source>Login is successful. Enjoy !</source>
+        <target>تم تسجيل الدخول بنجاح</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/hidden/locale-translate.component.html</context>
+          <context context-type="linenumber">14</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8489b953e78e6d260787ad82070ef0478f9f005b" datatype="html">
+        <source>Hello! Log in with your email.</source>
+        <target>مرحبا! ادخل باستخدام البريد الشخصي</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/login/login.component.html</context>
+          <context context-type="linenumber">7</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="0f2f2d812f612a1bf2ec04eba3579d659b3836f7" datatype="html">
+        <source>Oh snap!</source>
+        <target>خطأ</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/login/login.component.html</context>
+          <context context-type="linenumber">9</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="244aae9346da82b0922506c2d2581373a15641cc" datatype="html">
+        <source>Email</source>
+        <target>البريد الشخصي</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/login/login.component.html</context>
+          <context context-type="linenumber">19</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/login/login.component.html</context>
+          <context context-type="linenumber">28</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="add7e6e8e77f78fbd169b6cd5333d94e80036da6" datatype="html">
+        <source>email is required</source>
+        <target>البريد الشخصي مطلوب</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/login/login.component.html</context>
+          <context context-type="linenumber">36</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2a5af64de961a844fcee8246e882a4133609b908" datatype="html">
+        <source>Email must be valid e.g. example@brand.com</source>
+        <target>البريد الشخصي يجب ان يكتب بشكل صحيح مثال
+          example@brand.com
+        </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/login/login.component.html</context>
+          <context context-type="linenumber">39</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="c32ef07f8803a223a83ed17024b38e8d82292407" datatype="html">
+        <source>Password</source>
+        <target>كلمة السر</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/login/login.component.html</context>
+          <context context-type="linenumber">46</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/login/login.component.html</context>
+          <context context-type="linenumber">55</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="956d39b1f1ec89d18f49e8f8a23048304732ab8c" datatype="html">
+        <source>
+          Password is required!
+        </source>
+        <target>لابد من ادخال كلمة السر</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/login/login.component.html</context>
+          <context context-type="linenumber">63</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="dd1250481b54b8ddd781500b215235be0bb72b04" datatype="html">
+        <source>
+          Password should contain
+          from 3 to 12 characters
+        </source>
+        <target>كلمة السر طولها لابد ان ايكون بين 3 الى 12</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/login/login.component.html</context>
+          <context context-type="linenumber">67</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3eb49d60bd859eb2d9d3a6d380cdf4e0b8252333" datatype="html">
+        <source>Remember me</source>
+        <target>تذكرني</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/login/login.component.html</context>
+          <context context-type="linenumber">75</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="c2d5ce4389cae9df34463beb05a878eaaa62badb" datatype="html">
+        <source>
+          Log In
+        </source>
+        <target>ادخل</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/login/login.component.html</context>
+          <context context-type="linenumber">83</context>
+        </context-group>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

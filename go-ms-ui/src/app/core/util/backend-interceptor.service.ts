@@ -1,10 +1,10 @@
 import {Injectable} from '@angular/core';
 import {HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse} from '@angular/common/http';
 import {Observable, of as observableOf} from 'rxjs';
-import {API_BACKEND_HOST_ACTIVE} from '../../common/config';
-import mockData from '../../../assets/mock.json';
-import {LoggerUtil} from './logger-util.service';
 
+import {API_BACKEND_HOST_ACTIVE, BackendUrls} from '../../common/config';
+import {LoggerUtil} from './logger-util.service';
+import jsonData from '../../../assets/mock.json';
 
 @Injectable()
 export class BackendInterceptor implements HttpInterceptor {
@@ -19,23 +19,18 @@ export class BackendInterceptor implements HttpInterceptor {
     } else {
       this.loggerUtil.debug('***START Requesting Mock Data***');
       this.loggerUtil.debug(req);
-      const data = mockData;
-      const pathVars = req.url.split('/');
-      pathVars.splice(0, 1); // delete first empty element
-      const responseBody = this.getResponseFrom(data, pathVars);
-      this.loggerUtil.debug(responseBody);
+      const data = mockData.filter(dataForUrl => dataForUrl.url === req.url);
+      this.loggerUtil.debug(data);
       this.loggerUtil.debug('***END Requesting Mock Data***');
-      return observableOf(new HttpResponse({body: responseBody, status: 200}));
+      return observableOf(new HttpResponse({body: data, status: 200}));
     }
   }
 
-  private getResponseFrom(data: {}, pathVars: string[]): {} {
-    if (pathVars[0]) {
-      const deletedPathVar = pathVars.splice(0, 1);
-      data = data[deletedPathVar[0]];
-      return this.getResponseFrom(data, pathVars);
-    } else {
-      return data;
-    }
-  }
 }
+
+const mockData = [
+  {
+    url: BackendUrls.API_ENDPOINT(BackendUrls.API_LOGIN),
+    json: jsonData.API_LOGIN
+  }
+];
