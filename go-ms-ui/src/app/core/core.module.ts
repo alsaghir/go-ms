@@ -1,9 +1,11 @@
 import {ModuleWithProviders, NgModule, Optional, SkipSelf} from '@angular/core';
 import {NbThemeModule, NbToastrModule} from '@nebular/theme';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
+
 import {NbAuthModule} from '@nebular/auth';
+
 import {TokenStrategyFacadeService} from './facade';
 import {NbJwtToken} from '../common/implementation';
-import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {BackendInterceptor} from './util';
 
 export const CORE_PROVIDERS = [
