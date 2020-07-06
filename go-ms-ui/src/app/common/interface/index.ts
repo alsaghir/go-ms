@@ -1,8 +1,5 @@
-export interface AppConfig {
-}
-
 export interface User {
-  username: string;
+  email: string;
   password: string;
 }
 
@@ -13,10 +10,5 @@ export interface JwtToken {
 export interface ApiError {
   status: string;
   timestamp: string;
-  errorCodes: {[code: string]: string}[];
-}
-
-export interface Theme {
-  name: string;
-  translatedName: string;
+  errorCodes: { [code: string]: string }[];
 }

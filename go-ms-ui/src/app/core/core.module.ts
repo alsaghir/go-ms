@@ -3,7 +3,8 @@ import {NbThemeModule, NbToastrModule} from '@nebular/theme';
 import {NbAuthModule} from '@nebular/auth';
 import {TokenStrategyFacadeService} from './facade';
 import {NbJwtToken} from '../common/implementation';
-import {HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
+import {BackendInterceptor} from './util';
 
 export const CORE_PROVIDERS = [
   NbAuthModule.forRoot({
@@ -20,6 +21,10 @@ export const CORE_PROVIDERS = [
     name: 'default',
   }).providers,
   NbToastrModule.forRoot().providers
+];
+
+export const HTTP_CLIENT_INTERCEPTORS = [
+  {provide: HTTP_INTERCEPTORS, useClass: BackendInterceptor, multi: true},
 ];
 
 @NgModule({
@@ -40,6 +45,7 @@ export class CoreModule {
       ngModule: CoreModule,
       providers: [
         ...CORE_PROVIDERS,
+        ...HTTP_CLIENT_INTERCEPTORS
       ],
     };
   }

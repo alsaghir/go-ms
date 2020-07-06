@@ -1,17 +1,20 @@
 import {Injectable} from '@angular/core';
 import {Location} from '@angular/common';
-import {LayoutDirectionUtil} from './layout-direction-util.service';
 import {LayoutDirection} from '../../common/constant';
+import {NbUtil} from './nb-util.service';
 
 @Injectable({providedIn: 'root'})
 export class InitializationUtil {
 
   constructor(private location: Location,
-              private layoutDirectionUtil: LayoutDirectionUtil) {
+              private nbUtil: NbUtil) {
   }
 
-  initialize(): void{
-    // i.e. from /ar-EG/ to ar-EG
+  initialize(): void {
+
+    /* Changing pattern of locale detected from URL
+    i.e. from /ar-EG/ to ar-EG
+    */
     let currentLocaleInUrlPath: string = this.location.prepareExternalUrl('');
     currentLocaleInUrlPath = currentLocaleInUrlPath.substring(currentLocaleInUrlPath.indexOf('/') + 1);
     currentLocaleInUrlPath = currentLocaleInUrlPath.substring(0, currentLocaleInUrlPath.indexOf('/'));
@@ -25,7 +28,7 @@ export class InitializationUtil {
         break;
     }
 
-    this.layoutDirectionUtil.setDirection(direction);
+    this.nbUtil.setDirection(direction);
   }
 
 }

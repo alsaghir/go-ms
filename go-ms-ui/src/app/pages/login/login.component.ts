@@ -1,6 +1,6 @@
 import {ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
-import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {Subject} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
 
@@ -8,6 +8,7 @@ import {NbAuthResult} from '@nebular/auth';
 import {EventFacade, UserManagementFacade} from '../../core/facade';
 import {ErrorLocaleHandlingUtil, LocaleHandlingUtil, NbUtil} from '../../core/util';
 import {LocaleName} from '../../common/constant';
+import {User} from '../../common/interface';
 
 @Component({
   selector: 'app-login',
@@ -17,14 +18,12 @@ import {LocaleName} from '../../common/constant';
 export class LoginComponent implements OnInit, OnDestroy {
 
   private destroy$ = new Subject<void>();
-  private readonly loginFormControls = {username: 'username', password: 'password', remember: 'remember'};
+  private readonly loginFormControls = {email: 'email', password: 'password'};
 
   submitted: boolean;
   rememberMe: boolean; // TODO
   loginForm: FormGroup;
   errors: string[];
-  messages: string[];
-  showMessages: { success: boolean, error: boolean }; // show/not show success/error messages
 
   constructor(private formBuilder: FormBuilder,
               private router: Router,
@@ -43,10 +42,11 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.submitted = false;
     this.rememberMe = false;
     this.errors = [];
-    this.messages = [];
-    this.showMessages = {success: true, error: true};
     this.loginForm = this.formBuilder.group(
-      {username: '', password: ''}
+      {
+        email: ['', Validators.email]
+        , password: ['', [Validators.minLength(3), Validators.maxLength(12)]]
+      }
     );
 
     this.eventFacade.localeViewRendered$().pipe(takeUntil(this.destroy$))
@@ -62,23 +62,24 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
-  usernameFormControl(): FormControl {
-    return this.loginForm.get(this.loginFormControls.username) as FormControl;
+  emailFormControl(): FormControl {
+    return this.loginForm.get(this.loginFormControls.email) as FormControl;
   }
 
-  passwordFormControl(): FormControl{
+  passwordFormControl(): FormControl {
     return this.loginForm.get(this.loginFormControls.password) as FormControl;
   }
 
   login(): void {
-    const userCredentials = {username: this.usernameFormControl().value, password: this.passwordFormControl().value};
+    const userCredentials: User = {email: this.emailFormControl().value, password: this.passwordFormControl().value};
     this.userManagementFacade.authenticate('jwt', userCredentials)
       .subscribe(
         (authResult: NbAuthResult) => {
           this.errors = [];
           console.log(authResult);
           if (authResult.isSuccess()) {
-            this.router.navigate(['/pages/admin/users']).then(navigation => console.log(navigation.valueOf()));
+            //this.router.navigate(['/pages/admin/users']).then(navigation => console.log(navigation.valueOf()));
+            this.nbUtil.showToast(LocaleName.getInstance().LOGIN_SUCCESS, 'Success', 'bottom-right', 'success');
           } else {
             this.errors.push(...this.errorHandlingUtil.translateByCodesAndNames(authResult.getErrors()));
           }
