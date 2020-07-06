@@ -4,99 +4,87 @@
       <nb-card-body>
         <nb-auth-block>
           <h1 id="title" class="title">Go-MS</h1>
-          <p class="sub-title">Hello! Log in with your username.</p>
-          <div class="container">
-            <div class="row">
-              <div class="col">
-                <nb-alert *ngIf="showMessages.error && errors?.length && !submitted" outline="danger" role="alert">
-                  <p class="alert-title"><b>Oh snap!</b></p>
-                  <ul class="alert-message-list">
-                    <li *ngFor="let error of errors" class="alert-message">{{ error }}</li>
-                  </ul>
-                </nb-alert>
+          <p class="sub-title" i18n>Hello! Log in with your email.</p>
+          <nb-alert *ngIf="errors?.length && !submitted" outline="danger" role="alert">
+            <p class="alert-title"><b i18n>Oh snap!</b></p>
+            <ul class="alert-message-list">
+              <li *ngFor="let error of errors" class="alert-message">{{ error }}</li>
+            </ul>
+          </nb-alert>
 
-                <nb-alert *ngIf="showMessages.success && messages?.length && !submitted" outline="success" role="alert">
-                  <p class="alert-title"><b>Hooray!</b></p>
-                  <ul class="alert-message-list">
-                    <li *ngFor="let message of messages" class="alert-message">{{ message }}</li>
-                  </ul>
-                </nb-alert>
+          <form [formGroup]="loginForm" (ngSubmit)="login()" aria-labelledby="title">
 
-                <form [formGroup]="loginForm" (ngSubmit)="login()" aria-labelledby="title">
+            <div class="form-control-group">
+              <label class="label" for="email">
+                <ng-container i18n>Email</ng-container>
+                :</label>
+              <input formControlName="email"
+                     nbInput
+                     fullWidth
+                     type="email"
+                     id="email"
+                     fieldSize="large"
+                     i18n-placeholder
+                     placeholder="Email"
+                     autofocus
+                     [status]="loginForm.dirty ? (loginForm.invalid  ? 'danger' : 'success') : 'basic'"
+                     required
+                     email />
 
-                  <div class="form-control-group">
-                    <label class="label" for="input-username">
-                      <ng-container i18n>Username</ng-container>
-                      :</label>
-                    <input formControlName="username"
-                           nbInput
-                           fullWidth
-                           id="input-username"
-                           pattern="[a-zA-Z]+"
-                           fieldSize="large"
-                           placeholder="Username"
-                           autofocus
-                           [status]="loginForm.dirty ? (loginForm.invalid  ? 'danger' : 'success') : 'basic'"
-                           [required]="true"/>
-
-                    <ng-container *ngIf="usernameFormControl().invalid && usernameFormControl().touched">
-                      <p class="caption status-danger" *ngIf="usernameFormControl().errors?.required">
-                        <ng-container i18n>Username is required</ng-container>
-                        !
-                      </p>
-                      <p class="caption status-danger" *ngIf="usernameFormControl().errors?.pattern">
-                        <ng-container i18n>Username should be the real one</ng-container>
-                        !
-                      </p>
-                    </ng-container>
-                  </div>
-
-                  <div class="form-control-group">
-                    <span class="label-with-link">
-                      <label class="label" for="input-password"><ng-container i18n>Password</ng-container>:</label>
-                    </span>
-                    <input formControlName="password"
-                           nbInput
-                           fullWidth
-                           type="password"
-                           id="input-password"
-                           fieldSize="large"
-                           placeholder="Password"
-                           autofocus
-                           [required]="true"
-                           [status]="loginForm.dirty ? (loginForm.invalid  ? 'danger' : 'success') : 'basic'"
-                           [minlength]="1"
-                           [maxlength]="5"/>
-
-                    <ng-container *ngIf="passwordFormControl().invalid && passwordFormControl().touched ">
-                      <p class="caption status-danger" *ngIf="passwordFormControl().errors?.required">
-                        Password is required!
-                      </p>
-                      <p class="caption status-danger"
-                         *ngIf="passwordFormControl().errors?.minlength || passwordFormControl().errors?.maxlength">
-                        Password should contain
-                        from 3 to 5 characters
-                      </p>
-                    </ng-container>
-                  </div>
-
-                  <div class="form-control-group accept-group">
-                    <nb-checkbox *ngIf="rememberMe">Remember me</nb-checkbox>
-                  </div>
-
-                  <button nbButton
-                          fullWidth
-                          status="primary"
-                          size="large"
-                          [disabled]="submitted || !loginForm.valid"
-                          [class.btn-pulse]="submitted">
-                    Log In
-                  </button>
-
-                </form>
-              </div>
+              <ng-container *ngIf="emailFormControl().invalid && emailFormControl().touched">
+                <p class="caption status-danger" *ngIf="emailFormControl().errors?.required">
+                  <ng-container i18n>email is required</ng-container>!
+                </p>
+                <p class="caption status-danger" *ngIf="emailFormControl().errors?.pattern">
+                  <ng-container i18n>Email must be valid e.g. example@brand.com</ng-container>!
+                </p>
+              </ng-container>
             </div>
-          </div>
+
+            <div class="form-control-group">
+                    <span class="label-with-link">
+                      <label class="label" for="password"><ng-container i18n>Password</ng-container>:</label>
+                    </span>
+              <input formControlName="password"
+                     nbInput
+                     fullWidth
+                     type="password"
+                     id="password"
+                     fieldSize="large"
+                     i18n-placeholder
+                     placeholder="Password"
+                     autofocus
+                     [status]="loginForm.dirty ? (loginForm.invalid  ? 'danger' : 'success') : 'basic'"
+                     minlength="3"
+                     maxlength="12"
+                     required/>
+
+              <ng-container *ngIf="passwordFormControl().invalid && passwordFormControl().touched ">
+                <p class="caption status-danger" *ngIf="passwordFormControl().errors?.required" i18n>
+                  Password is required!
+                </p>
+                <p class="caption status-danger"
+                   *ngIf="passwordFormControl().errors?.minlength || passwordFormControl().errors?.maxlength" i18n>
+                  Password should contain
+                  from 3 to 12 characters
+                </p>
+              </ng-container>
+            </div>
+
+            <div class="form-control-group accept-group">
+              <nb-checkbox *ngIf="rememberMe" i18n>Remember me</nb-checkbox>
+            </div>
+
+            <button nbButton
+                    fullWidth
+                    status="primary"
+                    size="large"
+                    [disabled]="submitted || !loginForm.valid"
+                    [class.btn-pulse]="submitted" i18n>
+              Log In
+            </button>
+
+          </form>
         </nb-auth-block>
       </nb-card-body>
     </nb-card>

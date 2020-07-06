@@ -30,7 +30,8 @@
             "styles": [
               "src/styles.scss"
             ],
-            "scripts": []
+            "scripts": [],
+            "i18nMissingTranslation": "error"
           },
           "configurations": {
             "production": {
@@ -76,7 +77,7 @@
               "browserTarget": "go-ms-ui:build:production"
             },
             "ar-EG": {
-              "browserTarget": "sp-front-end:build:ar-EG"
+              "browserTarget": "go-ms-ui:build:ar-EG"
             }
           }
         },

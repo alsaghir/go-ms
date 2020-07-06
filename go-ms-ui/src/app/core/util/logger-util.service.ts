@@ -8,4 +8,10 @@ export class LoggerUtil {
       console.log(message);
     }
   }
+
+  debug(message: any): void {
+    if (window.console) {
+      console.log(message);
+    }
+  }
 }

@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {InitializationUtil} from '../core/util';
 
 @Component({
@@ -11,10 +11,13 @@ import {InitializationUtil} from '../core/util';
     <app-error-locale-translate>
     </app-error-locale-translate>`,
 })
-export class PagesComponent {
+export class PagesComponent implements OnInit {
 
   constructor(private initializationUtil: InitializationUtil) {
     this.initializationUtil.initialize();
+  }
+
+  ngOnInit(): void {
   }
 
 }

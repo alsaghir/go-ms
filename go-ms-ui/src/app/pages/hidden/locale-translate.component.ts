@@ -1,6 +1,6 @@
 import {AfterViewInit, Component, ElementRef, OnInit, QueryList, ViewChildren} from '@angular/core';
 
-import {EventFacade} from '../../core/facade/event-facade.service';
+import {EventFacade} from '../../core/facade';
 import {LocaleName} from '../../common/constant';
 import {LocaleHandlingUtil} from '../../core/util';
 
