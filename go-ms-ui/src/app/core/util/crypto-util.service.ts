@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import * as forge from 'node-forge';
+import forge from 'node-forge';
 
 @Injectable({providedIn: 'root'})
 export class CryptoUtil {

@@ -31,6 +31,7 @@
               "src/styles.scss"
             ],
             "scripts": [],
+            "allowedCommonJsDependencies": ["node-forge"],
             "i18nMissingTranslation": "error"
           },
           "configurations": {
