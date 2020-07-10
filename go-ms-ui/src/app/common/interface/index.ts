@@ -1,6 +1,7 @@
 export interface User {
   email: string;
   password: string;
+  encryptedPassword?: boolean;
 }
 
 export interface JwtToken {

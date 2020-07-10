@@ -4,7 +4,7 @@ import {Observable, of as observableOf} from 'rxjs';
 import {NbAuthStrategyOptions} from '@nebular/auth/strategies/auth-strategy-options';
 import {ApiError, JwtToken, User} from '../../common/interface';
 import {CryptoUtil, ErrorLocaleHandlingUtil, LoggerUtil} from '../util';
-import {BackendUrls} from '../../common/config';
+import {BackendUrls, PASSWORD_ENCRYPTION_ENABLED} from '../../common/config';
 import {ErrorLocaleName} from '../../common/constant';
 import {HttpClient, HttpErrorResponse, HttpResponse} from '@angular/common/http';
 import {catchError, map} from 'rxjs/operators';
@@ -28,7 +28,9 @@ export class TokenStrategyFacadeService extends NbAuthStrategy {
   authenticate(data?: any): Observable<NbAuthResult> {
     const userData = data as User;
 
-    userData.password = this.encrypt(userData.password);
+    if (PASSWORD_ENCRYPTION_ENABLED){
+      userData.password = this.encrypt(userData.password);
+    }
 
     const api = BackendUrls.API_ENDPOINT(BackendUrls.API_LOGIN);
 

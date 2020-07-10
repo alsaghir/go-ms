@@ -1,0 +1,95 @@
+spring:
+  profiles: @spring.profiles.active@
+
+  jpa:
+
+    # no generation for database schema
+    generate-ddl: false
+    hibernate:
+      ddl-auto: none
+
+    # Spring Boot by default registers OpenEntityManagerInViewInterceptor
+    # to apply the “Open EntityManager in View” pattern, to allow for lazy loading in web views.
+    open-in-view: false
+
+  output:
+    ansi:
+      enabled: detect
+  main:
+    lazy-initialization: true
+
+
+app:
+  config:
+    initializing-data-required: true
+
+    # 123456789ABCDEFGHIJKLMNOPQRSTUVW123456789ABCDEFGHIJKLMNOPQRSTUVW
+    # AES generated key and encoded to Base64 String. It's 64 byte length for HS512 (HMAC SHA-512)
+    jwt-signing-key: MTIzNDU2Nzg5QUJDREVGR0hJSktMTU5PUFFSU1RVVlcxMjM0NTY3ODlBQkNERUZHSElKS0xNTk9QUVJTVFVWVw==
+
+    # In seconds
+    jwt-expiration-time: 18000
+
+    rsa-private-key: |
+      -----BEGIN PRIVATE KEY-----
+      MIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQChAzd6+/5h75tv
+      xMyl51WjCPspmreieTL+o/C1UhhQ1AMcz+Jxgvv2ztjylq/p7ciSiKbL5AgeWg40
+      /fjNrazuBkH72fiKoQkFY2cKu3cUF7gGAmpRj+gl5Sj6MzR7q+nQH26TlAnMgRqw
+      rRHUQItTUEcDrq2ojwmeBm06Jw4INZKie56a+2zVQKqaWfEyAnPq2A/WmqY+IBuk
+      zx7won2YOgf5M433WZxhk7Sadjj/Kq9yUBQKcXnww9M5NAAJTiARA/DU2mhQ5p2D
+      rEOhr0BB+6exiIHL/rf35C1mGyHw319H5ScVeKuc1+8Gi/COZS578LDe4aA5UxCT
+      jiEbInAjAgMBAAECggEAWNVrgMETYnlOKuZLeqUdjGviFtwzwMJZrkBJB+EZZU7z
+      wKu5ZaM83LjW3VDiEZCNfrtCO2++QvCwsfAFm4Tcyh5NvWRPSjz6uyxSp4sycbV8
+      ZGRkwEdDb9T1PMWPiUQaJieRXH7qwRfh3+Q81/wcYoUCCTgQu9TfG360OMdfaIs0
+      gb59teNZAS5eVyCm+H/XtMz9OevHaGCttoU+LLG0bu9/Fr+gFh1maSmAHQQX3+XA
+      W4K2mDYIzluHNVaBaVOP1pX6mGVCu3xE8F9Ip8cw/BzJ5xYmEFwQFIcg1a3ITYPx
+      BYGlHtB0eTLksHJGNUW2k50rNSIZM90h9x+mKxuvMQKBgQDlR4vf6vzla2lDUykL
+      4x7Bb+s4dwNSO/JHKVByFcNhrn74AHE+4FPDS8Oq3wAIE8yoRsvHM/SbxOvq8JhP
+      CQGyU86GoBCFfxvjYXt6mT1PyQlz25oRpjaLsBGDY+RHXM4K6yldUdOh5Ro7NHfg
+      jUgvBQfjTsurtGzI2Zp0If/iDwKBgQCzxvTnKx9uP0t6GbOp0EOol4YJ+Z4H1yG8
+      lftHaaJeVVkIMjOOKSbAlZRjAgUWmIwzw+oC34u27lDERLdXOjwUZvJfaeAxvhLw
+      wjKlqvJ6psFrwTNgFiJXWfByftUtgTgKFRfPXk3UwvI1clXU2MWTHcmlHpkBF/MV
+      BG/D8xqUrQKBgQC0j0qVNX6hwZvs/CGYDe2bkmLgXcFM0o6zAdMrdP4gAAZXkimc
+      xZbRduoJt4JT2hvS7aXvI3hf742GwKCBpWsjn6JGHOnF59rzj0JpwyIoof6Csg88
+      FPRhv2+bVGBi3rAYoyc5KYaLuVuWAnThbwHInaKfnN8CQp1k8xESoe/cewKBgBzY
+      y+tcDAsQtPe+sAmLlY+z4JoxJ55ycsNj/ZIT7S3d3A9onsUs7T7xwYGxjUd26uhT
+      g3U6kZyk2OjlbdXdTk6nxjRxNLxGl5tyTdYvfAEaSOcVdTzx0Ejb8a0tlN9cYLWd
+      dNiddTeyoFLbKdKhhfJ5USXhpwN56FNzBswWcilxAoGBAIrHGt/bpoR268d3GVNG
+      owsDLHT1ZIryETawC4WS5XnGBvQXFVjUZ8QwWYJxnkidSKifsUHlPcEY4lWcvHN9
+      a0qBTDTAlfwrhsFEiaG1U/RSg351Pm64RdXyERysyownUCTer8G/L5QQp9J0aFRk
+      gXkR5BRDW57emP5GX+lY+85f
+      -----END PRIVATE KEY-----
+
+---
+spring:
+  profiles: dev
+
+  jpa:
+    show-sql: true
+
+  datasource:
+    platform: derby
+
+    # Use jdb...;create=true to create database for the first time
+    url: jdbc:derby://localhost:1527/D:/Programs/Databases/SPDB
+
+    username: u
+
+    # p
+    password: xbiuRecyJlySMXZOc/C3wAusLIeNr9LBJ5RQr7I=
+    driver-class-name: org.apache.derby.jdbc.ClientDriver
+
+    # never create schema of databases (every type)
+    # set it always to initialize database for first run
+    # then bring it back to never
+    initialization-mode: never
+
+debug: true
+
+logging:
+  level:
+    root: DEBUG
+    org:
+      springframework:
+        transaction: DEBUG
+        security: DEBUG
