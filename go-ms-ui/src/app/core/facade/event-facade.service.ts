@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {EventState} from '../state/event-state.service';
+import {EventState} from '../state';
 import {Observable} from 'rxjs';
 
 @Injectable({providedIn: 'root'})
@@ -8,12 +8,12 @@ export class EventFacade {
   }
 
 
-  localeViewRendered(isRendered: true): void {
-    this.eventState.localeViewRendered(isRendered);
+  setLocaleViewRendered(isRendered: true): void {
+    this.eventState.setLocaleViewRendered(isRendered);
   }
 
   localeViewRendered$(): Observable<boolean> {
-    return this.eventState.isLocaleViewRendered();
+    return this.eventState.isLocaleViewRendered$();
   }
 
 }

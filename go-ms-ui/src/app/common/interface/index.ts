@@ -11,5 +11,5 @@ export interface JwtToken {
 export interface ApiError {
   status: string;
   timestamp: string;
-  errorCodes: { [code: string]: string }[];
+  apiSubErrors: { [code: string]: string }[];
 }

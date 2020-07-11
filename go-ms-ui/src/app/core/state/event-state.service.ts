@@ -6,11 +6,11 @@ export class EventState {
 
   private localeViewRendered$ = new BehaviorSubject<boolean>(false);
 
-  localeViewRendered(isRendered: true): void {
+  setLocaleViewRendered(isRendered: true): void {
     this.localeViewRendered$.next(isRendered);
   }
 
-  isLocaleViewRendered(): Observable<boolean> {
+  isLocaleViewRendered$(): Observable<boolean> {
     return this.localeViewRendered$.asObservable();
   }
 }

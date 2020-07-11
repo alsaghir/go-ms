@@ -25,7 +25,7 @@ export class LocaleTranslateComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {
     console.log(this.inputElements);
     this.localeHandlingUtil.setParentElementBundle(this.inputElements);
-    this.eventFacade.localeViewRendered(true);
+    this.eventFacade.setLocaleViewRendered(true);
   }
 
 }

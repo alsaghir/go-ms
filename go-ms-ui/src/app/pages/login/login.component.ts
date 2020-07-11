@@ -76,16 +76,14 @@ export class LoginComponent implements OnInit, OnDestroy {
       .subscribe(
         (authResult: NbAuthResult) => {
           this.errors = [];
-          console.log(authResult);
           if (authResult.isSuccess()) {
-            //this.router.navigate(['/pages/admin/users']).then(navigation => console.log(navigation.valueOf()));
+            // this.router.navigate(['/pages/admin/users']).then(navigation => console.log(navigation.valueOf()));
             this.nbUtil.showToast(LocaleName.getInstance().LOGIN_SUCCESS, 'Success', 'bottom-right', 'success');
           } else {
             this.errors.push(...this.errorHandlingUtil.translateByCodesAndNames(authResult.getErrors()));
           }
           this.errors.forEach(error =>
             this.nbUtil.dangerToast(error, this.localeHandlingUtil.translationOf(LocaleName.getInstance().NOTIFICATION_TITLE), 'bottom-right'));
-
         });
   }
 

@@ -87,6 +87,6 @@ export class ErrorLocaleHandlingUtil {
   }
 
   codesOf(apiError: ApiError): string[] {
-    return Object.keys(apiError.errorCodes);
+    return Object.keys(apiError.apiSubErrors);
   }
 }
