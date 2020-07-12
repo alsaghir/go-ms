@@ -83,6 +83,8 @@ spring:
     # set it always to initialize database for first run
     # then bring it back to never
     initialization-mode: never
+  banner:
+    location: classpath:banner.txt
 
 debug: true
 
@@ -93,3 +95,4 @@ logging:
       springframework:
         transaction: DEBUG
         security: DEBUG
+
