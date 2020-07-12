@@ -22,16 +22,19 @@ public class UserConverter {
         .setId(user.id())
         .setPassword(user.password().value())
         .setEmail(user.email())
-        .setActive(user.isActive());
+        .setActive(user.isActive())
+        .setProfileEntitySet(
+            user.profiles() == null
+                ? null
+                : this.profileConverter.toPersistenceEntitySet(user.profiles()));
   }
 
   public User toDomain(UserEntity userEntity) {
     return new User(
-            userEntity.getId(),
-            userEntity.getEmail(),
+        userEntity.getId(),
+        userEntity.getEmail(),
         new Password(userEntity.getPassword(), PasswordState.HASHED),
-            userEntity.isActive()
-    );
+        userEntity.isActive());
   }
 
   public User toDomainWithProfiles(UserEntity userEntity) {
@@ -39,11 +42,10 @@ public class UserConverter {
             userEntity.getId(),
             userEntity.getEmail(),
             new Password(userEntity.getPassword(), PasswordState.HASHED),
-            userEntity.isActive()
-    )
-            .assignProfiles(
-                    userEntity.getProfileEntitySet() == null
-                            ? null
-                            : this.profileConverter.toDomainSet(userEntity.getProfileEntitySet()));
+            userEntity.isActive())
+        .assignProfiles(
+            userEntity.getProfileEntitySet() == null
+                ? null
+                : this.profileConverter.toDomainSet(userEntity.getProfileEntitySet()));
   }
 }

@@ -139,7 +139,7 @@ public class RSAUtil {
 
   private static KeyPair generateKeyPair() throws NoSuchAlgorithmException {
     KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("RSA");
-    keyPairGenerator.initialize(2048);
+    keyPairGenerator.initialize(2048); // RSA Recommendation is 2048
     return keyPairGenerator.genKeyPair();
   }
 }

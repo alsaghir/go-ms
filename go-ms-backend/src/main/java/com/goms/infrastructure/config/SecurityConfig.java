@@ -23,7 +23,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 
 @Configuration
-@EnableGlobalMethodSecurity(securedEnabled = true)
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 @EnableWebSecurity(debug = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
@@ -47,10 +47,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         // https://docs.spring.io/spring-security/site/docs/current/reference/html5/#cors
         .cors(Customizer.withDefaults())
         .authorizeRequests()
-        .antMatchers("/api/login", "/api/hello")
-        .permitAll()
         .anyRequest()
-        .authenticated()
+        .permitAll()
         .and()
         .exceptionHandling()
         .authenticationEntryPoint(jwtAuthenticationEntryPoint)
