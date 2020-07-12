@@ -71,7 +71,7 @@ spring:
     platform: derby
 
     # Use jdb...;create=true to create database for the first time
-    url: jdbc:derby://localhost:1527/D:/Programs/Databases/SPDB
+    url: jdbc:derby://localhost:1527/D:/work/databases/goms
 
     username: u
 
