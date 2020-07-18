@@ -47,7 +47,7 @@ public class UserRepositoryImpl implements UserRepository {
   }
 
   @Override
-  public User save(User user) {
+  public User saveFull(User user) {
     UserEntity userEntity = this.userConverter.toPersistenceEntity(user);
     UserEntity savedUserEntity = this.userRepositoryJpa.save(userEntity);
     return this.userConverter.toDomain(savedUserEntity);
@@ -58,6 +58,4 @@ public class UserRepositoryImpl implements UserRepository {
     Optional<UserEntity> optionalUsersEntity = this.userRepositoryJpa.findTopBy();
     return optionalUsersEntity.map(this.userConverter::toDomain);
   }
-
-
 }

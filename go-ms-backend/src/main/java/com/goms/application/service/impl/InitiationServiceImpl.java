@@ -58,7 +58,7 @@ public class InitiationServiceImpl implements InitiationService {
           this.profileRepository.save(
               new Profile("admin").assignPrivileges(this.privilegeRepository.findAll()));
 
-      this.userRepository.save(
+      this.userRepository.saveFull(
           new User("admin@example.com", new Password("{noop}admin", PasswordState.RAW), true)
                   .assignProfiles(Set.of(defaultProfile)));
     }

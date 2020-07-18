@@ -1,7 +1,5 @@
 package com.goms.application.service.command;
 
-import com.goms.domain.model.user.Password;
-
 public class GenerateJwtTokenCommand {
     private String email;
     private String password;
