@@ -1,6 +1,5 @@
 package com.goms.application.service.impl;
 
-
 import com.goms.application.service.InitiationService;
 import com.goms.domain.model.config.AppConfigRepository;
 import com.goms.domain.model.privilege.Privilege;
@@ -44,15 +43,14 @@ public class InitiationServiceImpl implements InitiationService {
   @Override
   @Transactional
   public void storeDefaultData() {
-    if (checkIfInitializationIsRequired()) {
+    if (initializationIsRequired()) {
       initializePrivileges();
       initializeProfilesAndUsers();
     }
   }
 
   private void initializeProfilesAndUsers() {
-    if (this.profileRepository.findAny().isEmpty()
-            && this.userRepository.findAny().isEmpty()) {
+    if (!this.userRepository.atLeastOneUserExists()) {
 
       Profile defaultProfile =
           this.profileRepository.save(
@@ -60,7 +58,7 @@ public class InitiationServiceImpl implements InitiationService {
 
       this.userRepository.saveFull(
           new User("admin@example.com", new Password("{noop}admin", PasswordState.RAW), true)
-                  .assignProfiles(Set.of(defaultProfile)));
+              .assignProfiles(Set.of(defaultProfile)));
     }
   }
 
@@ -70,12 +68,12 @@ public class InitiationServiceImpl implements InitiationService {
 
     if (!utilService.equals(allPrivileges, storedPrivileges)) {
       Set<Privilege> notStoredPrivileges =
-              utilService.differentPrivilegesBetween(allPrivileges, storedPrivileges);
+          utilService.differentPrivilegesBetween(allPrivileges, storedPrivileges);
       this.privilegeRepository.save(notStoredPrivileges);
     }
   }
 
-  private boolean checkIfInitializationIsRequired() {
+  private boolean initializationIsRequired() {
     return this.appConfigRepository.findAll().initializingDataRequired();
   }
 }

@@ -58,4 +58,9 @@ public class UserRepositoryImpl implements UserRepository {
     Optional<UserEntity> optionalUsersEntity = this.userRepositoryJpa.findTopBy();
     return optionalUsersEntity.map(this.userConverter::toDomain);
   }
+
+  @Override
+  public boolean atLeastOneUserExists() {
+    return this.userRepositoryJpa.count() > 0;
+  }
 }

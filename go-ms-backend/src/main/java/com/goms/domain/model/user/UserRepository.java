@@ -15,4 +15,5 @@ public interface UserRepository {
 
     Optional<User> findById(Integer id);
 
+    boolean atLeastOneUserExists();
 }
