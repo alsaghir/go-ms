@@ -18,7 +18,7 @@ import {NbMenuItem} from '@nebular/theme';
       </nb-layout-column>
 
       <nb-layout-footer fixed>
-        <app-footer></app-footer>on
+        <app-footer></app-footer>
       </nb-layout-footer>
     </nb-layout>
   `,
@@ -28,7 +28,7 @@ export class PrivateComponent implements OnInit {
   MENU_ITEMS: NbMenuItem[] = [
     {
       title: 'Users',
-      icon: 'shopping-cart-outline',
+      icon: 'people-outline',
       link: '/pages/pr/users',
       home: true,
     }
