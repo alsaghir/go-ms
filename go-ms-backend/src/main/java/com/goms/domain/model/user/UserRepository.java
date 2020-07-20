@@ -7,7 +7,7 @@ public interface UserRepository {
     Optional<User> findByEmailWithProfiles(String userName);
     Optional<User> findByIdWithProfiles(Integer id);
 
-    User save(User user);
+    User saveFull(User user);
 
     Optional<User> findAny();
 
@@ -15,4 +15,5 @@ public interface UserRepository {
 
     Optional<User> findById(Integer id);
 
+    boolean atLeastOneUserExists();
 }

@@ -47,7 +47,7 @@ public class UserRepositoryImpl implements UserRepository {
   }
 
   @Override
-  public User save(User user) {
+  public User saveFull(User user) {
     UserEntity userEntity = this.userConverter.toPersistenceEntity(user);
     UserEntity savedUserEntity = this.userRepositoryJpa.save(userEntity);
     return this.userConverter.toDomain(savedUserEntity);
@@ -59,5 +59,8 @@ public class UserRepositoryImpl implements UserRepository {
     return optionalUsersEntity.map(this.userConverter::toDomain);
   }
 
-
+  @Override
+  public boolean atLeastOneUserExists() {
+    return this.userRepositoryJpa.count() > 0;
+  }
 }

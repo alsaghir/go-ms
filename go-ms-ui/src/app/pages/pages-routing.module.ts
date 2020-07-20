@@ -13,6 +13,10 @@ const routes: Routes = [
         component: LoginComponent
       },
       {
+        path: 'pr',
+        loadChildren: () => import('./private/private.module').then(m => m.PrivateModule)
+      },
+      {
         path: '',
         redirectTo: 'login',
         pathMatch: 'full'

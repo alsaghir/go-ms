@@ -28,10 +28,12 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.scss"
+              "src/app/theme/styles.scss"
             ],
             "scripts": [],
-            "allowedCommonJsDependencies": ["node-forge"],
+            "allowedCommonJsDependencies": [
+              "node-forge"
+            ],
             "i18nMissingTranslation": "error"
           },
           "configurations": {
@@ -64,7 +66,9 @@
               ]
             },
             "ar-EG": {
-              "localize": ["ar-EG"]
+              "localize": [
+                "ar-EG"
+              ]
             }
           }
         },
@@ -100,7 +104,7 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.scss"
+              "src/app/theme/styles.scss"
             ],
             "scripts": []
           }
@@ -137,6 +141,7 @@
           "ar-EG": "src/locale/messages.ar-EG.xlf"
         }
       }
-    }},
+    }
+  },
   "defaultProject": "go-ms-ui"
 }

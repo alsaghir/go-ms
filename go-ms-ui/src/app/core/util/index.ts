@@ -5,3 +5,4 @@ export * from './initialization-util.service';
 export * from './locale-handling-util.service';
 export * from './logger-util.service';
 export * from './nb-util.service';
+export * from './ripple.service';

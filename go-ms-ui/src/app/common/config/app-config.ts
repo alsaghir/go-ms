@@ -10,7 +10,7 @@ const DEV: EnvironmentProfile = {
   API_PROTOCOL: 'http://',
   API_HOST: 'localhost',
   API_PORT: '8080',
-  MOCK: false,
+  MOCK: true,
   API_FULL_HOST_URL: () => DEV.API_PROTOCOL + DEV.API_HOST + ':' + DEV.API_PORT
 };
 
