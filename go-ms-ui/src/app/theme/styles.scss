@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=Open+Sans:400,600,700&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Roboto:200,300,400,500,600,700,800&display=swap');
 
 // themes - our custom or/and out of the box themes
 @import 'themes';
@@ -14,6 +15,8 @@
 @import 'node_modules/bootstrap/scss/variables';
 @import 'node_modules/bootstrap/scss/mixins';
 @import 'node_modules/bootstrap/scss/grid';
+
+@import './material/angular-material';
 
 // loading progress bar
 @mixin ngx-pace-theme() {
@@ -50,17 +53,61 @@
   }
 }
 
+@mixin material-overrides() {
+  @include nb-for-themes(material-dark, material-light) {
+    nb-layout-header {
+      nb-actions, .logo-container {
+        nb-icon, .user-name {
+          color: nb-theme(color-basic-100) !important;
+        }
+      }
+
+      .select-button {
+        background-color: nb-theme(background-basic-color-3) !important;
+      }
+    }
+
+    nb-sidebar {
+      transition: width 0.3s;
+
+      .main-container {
+        transition: width 0.3s;
+      }
+    }
+
+    nb-card {
+      border-bottom-left-radius: 0.125rem;
+      border-bottom-right-radius: 0.125rem;
+
+      nb-card-header, .tabset {
+        background-color: nb-theme(card-divider-color);
+      }
+    }
+
+    [nbinput] {
+      font-weight: 400;
+
+      &.status-basic:focus:hover {
+        border-color: nb-theme(color-primary-focus) !important;
+      }
+    }
+
+    [nbbutton] {
+      box-shadow: none !important;
+    }
+  }
+}
+
 // install the framework and custom global styles
 @include nb-install() {
+
+  @include angular-material();
 
   // framework global styles
   @include nb-theme-global();
 
-  // framework global styles
-  @include nb-auth-global();
-
   // https://akveo.github.io/nebular/docs/auth/installation#enable-styles
-  // @include nb-auth-global();
+  @include nb-auth-global();
 
   @include ngx-layout();
 
@@ -68,7 +115,5 @@
   @include ngx-pace-theme();
 
   @include nb-overrides();
+  @include material-overrides();
 };
-
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

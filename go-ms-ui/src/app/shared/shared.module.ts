@@ -1,22 +1,30 @@
 import {ModuleWithProviders, NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {MatRippleModule} from '@angular/material/core';
 
 import {
   NbActionsModule,
-  NbAlertModule, NbButtonModule, NbCardModule, NbCheckboxModule, NbContextMenuModule,
+  NbAlertModule,
+  NbButtonModule,
+  NbCardModule,
+  NbCheckboxModule,
+  NbContextMenuModule,
   NbIconModule,
   NbInputModule,
-  NbLayoutModule, NbMenuModule,
+  NbLayoutModule, NbListModule,
+  NbMenuModule,
   NbSearchModule,
-  NbSelectModule, NbSidebarModule,
+  NbSelectModule,
+  NbSidebarModule,
+  NbThemeModule,
   NbUserModule
 } from '@nebular/theme';
+
 import {NbEvaIconsModule} from '@nebular/eva-icons';
 import {NbAuthModule} from '@nebular/auth';
 
 import {HeaderComponent} from './components';
-import {MatRippleModule} from '@angular/material/core';
 import {FooterComponent} from './components/footer/footer.component';
 
 const COMPONENTS = [HeaderComponent, FooterComponent];
@@ -34,18 +42,20 @@ const NB_MODULES = [
   NbIconModule,
   NbInputModule,
   NbLayoutModule,
+  NbListModule,
   NbMenuModule,
   NbSearchModule,
   NbSelectModule,
   NbSidebarModule,
-  NbUserModule
+  NbThemeModule,
+  NbUserModule,
 ];
 
 const MODULES = [CommonModule, FormsModule, ReactiveFormsModule, NB_MODULES];
 
 @NgModule({
   imports: [MatRippleModule, ...MODULES],
-  exports: [...MODULES, ...PIPES, ...COMPONENTS],
+  exports: [MatRippleModule, ...MODULES, ...PIPES, ...COMPONENTS],
   declarations: [...COMPONENTS, ...PIPES],
 })
 export class SharedModule {

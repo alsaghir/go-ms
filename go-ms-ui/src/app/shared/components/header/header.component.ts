@@ -45,7 +45,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
     this.nbUtil.onThemeChange()
       .pipe(
-        map((name) => name),
+        map(({name}) => name),
         takeUntil(this.destroy$),
       ).subscribe(themeName => {
       this.currentTheme = themeName;

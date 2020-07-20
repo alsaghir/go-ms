@@ -52,13 +52,12 @@
     ></nb-action>
     <nb-action
       class="user-action"
-      *nbIsGranted="['view', 'user']"
       matRipple
       [matRippleUnbounded]="true"
       [matRippleCentered]="true">
       <nb-user [nbContextMenu]="userMenu"
                [onlyPicture]="userPictureOnly"
-               [name]="'example'">
+               [name]="'Admin Any'">
       </nb-user>
     </nb-action>
   </nb-actions>
