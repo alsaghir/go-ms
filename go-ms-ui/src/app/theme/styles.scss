@@ -4,16 +4,16 @@
 @import 'themes';
 
 // framework component themes (styles tied to theme variables)
-@import '~@nebular/theme/styles/globals';
-@import '~@nebular/auth/styles/all';
+@import 'node_modules/@nebular/theme/styles/globals';
+@import 'node_modules/@nebular/auth/styles/all';
 
 // https://getbootstrap.com/docs/4.0/getting-started/theming/
 // https://stackoverflow.com/questions/45660802/how-to-use-bootstrap-4-with-sass-in-angular
 // Using bootstrap
-@import '~bootstrap/scss/functions';
-@import '~bootstrap/scss/variables';
-@import '~bootstrap/scss/mixins';
-@import '~bootstrap/scss/grid';
+@import 'node_modules/bootstrap/scss/functions';
+@import 'node_modules/bootstrap/scss/variables';
+@import 'node_modules/bootstrap/scss/mixins';
+@import 'node_modules/bootstrap/scss/grid';
 
 // loading progress bar
 @mixin ngx-pace-theme() {
@@ -55,6 +55,7 @@
 
   // framework global styles
   @include nb-theme-global();
+
   // framework global styles
   @include nb-auth-global();
 
@@ -68,3 +69,6 @@
 
   @include nb-overrides();
 };
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
