@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {NbAuthResult, NbAuthService, NbTokenService} from '@nebular/auth';
 import {Observable} from 'rxjs';
-import {UserCredentials, UserDetails} from '../../common/interface';
+import {UserCredentials, UserDetails, UserInfo} from '../../common/interface';
 import {UserManagementState} from '../state';
 import {tap} from 'rxjs/operators';
 import {UserManagementApi} from '../api';
@@ -30,6 +30,18 @@ export class UserManagementFacade {
   }
 
   getUserDetails$(): Observable<UserDetails> {
-    return this.userManagementApi.getUserDetails$();
+    if (this.userManagementState.isUserDetailsLoaded()) {
+      return this.userManagementState.getUserDetails$();
+    } else {
+      return this.userManagementApi.getUserDetails$().pipe(tap(userDetails => this.userManagementState.setUserDetails(userDetails)));
+    }
+  }
+
+  getUsers$(): Observable<UserInfo[]> {
+    if (this.userManagementState.isUsersInfoLoaded()) {
+      return this.userManagementState.getUsersInfo$();
+    } else {
+      return this.userManagementApi.getUsersInfo$().pipe(tap(usersInfo => this.userManagementState.setUsersInfo(usersInfo)));
+    }
   }
 }

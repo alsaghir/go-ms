@@ -71,6 +71,10 @@ export class NbJwtToken extends NbAuthSimpleToken {
     return date;
   }
 
+  getToken(): string {
+    return this.token as string;
+  }
+
   // https://stackoverflow.com/a/38552302/7054574
   private parseJwt(encoded: string): string {
     const base64Url = encoded.split('.')[1];

@@ -7,6 +7,7 @@ import com.goms.interfaces.usermanagement.facade.UserManagementFacade;
 import com.goms.interfaces.usermanagement.facade.dto.LoginRequest;
 import com.goms.interfaces.usermanagement.facade.dto.LoginResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -27,6 +28,7 @@ public class UserManagementController {
   }
 
   @GetMapping("/user")
+  @PreAuthorize("isAuthenticated()")
   public UserDetailsData user() {
     return this.userManagementFacade.getUserDetails();
   }

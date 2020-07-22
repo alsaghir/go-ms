@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient, HttpErrorResponse, HttpResponse} from '@angular/common/http';
 import {BackendUrls} from '../../common/config';
 import {Observable, of as observableOf} from 'rxjs';
-import {ApiError, JwtToken, UserCredentials, UserDetails} from '../../common/interface';
+import {ApiError, JwtToken, UserCredentials, UserDetails, UserInfo} from '../../common/interface';
 import {catchError, map, tap} from 'rxjs/operators';
 import {NbAuthResult} from '@nebular/auth';
 import {NbJwtToken} from '../../common/implementation';
@@ -26,14 +26,13 @@ export class UserManagementApi {
           (response: HttpResponse<JwtToken>) =>
             new NbAuthResult(true, response, null, [], [], new NbJwtToken(response.body.token, strategyName))
         ),
-        catchError((error: any, caught: Observable<NbAuthResult>) => {
-            this.loggerUtil.error(error);
+        catchError((err: any, caught: Observable<NbAuthResult>) => {
+            this.loggerUtil.error(err);
             const errorCodesOrNames: string[] = [];
 
-            if (error.error as ApiError && (error.error as ApiError).apiSubErrors) {
-              errorCodesOrNames.push(...Object.keys((error.error as ApiError).apiSubErrors));
-            } else if (error as HttpErrorResponse || (error as HttpErrorResponse).status === 0) {
-              errorCodesOrNames.push(ErrorLocaleName.instance.UNEXPECTED_ERROR);
+            if ((err.error as ApiError).apiSubErrors != null) {
+
+              errorCodesOrNames.push(...Object.keys((err.error as ApiError).apiSubErrors));
             } else {
               errorCodesOrNames.push(ErrorLocaleName.instance.UNEXPECTED_ERROR);
             }
@@ -45,13 +44,11 @@ export class UserManagementApi {
 
   getUserDetails$(): Observable<UserDetails> {
     const apiUrl = BackendUrls.API_ENDPOINT(BackendUrls.API_USER);
-    return this.http.get<UserDetails>(apiUrl).pipe(
-      tap(x => console.log(x)),
-      catchError((err, caught) => {
-        console.log(caught);
-        console.log(err);
-        throw new Error('Error calling API');
-      })
-    );
+    return this.http.get<UserDetails>(apiUrl);
+  }
+
+  getUsersInfo$(): Observable<UserInfo[]> {
+    const apiUrl = BackendUrls.API_ENDPOINT(BackendUrls.API_USERS_INFO);
+    return this.http.get<UserInfo[]>(apiUrl);
   }
 }
