@@ -35,7 +35,7 @@ public class UserDetailsLoadingService implements UserDetailsService {
   public UserDetails loadUserByUserId(Integer id) throws UsernameNotFoundException {
     User user =
         this.userRepository
-            .findByIdWithProfiles(id)
+            .findByIdWithProfilesAndPrivileges(id)
             .orElseThrow(() -> new UsernameNotFoundException("User with id: " + id + " not found"));
 
     return new UserPrincipal(user);

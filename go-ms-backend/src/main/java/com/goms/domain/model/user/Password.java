@@ -5,6 +5,8 @@ import com.goms.domain.shared.DomainError;
 import com.goms.domain.shared.DomainException;
 import com.goms.domain.shared.ValueObject;
 
+import java.util.Objects;
+
 public class Password implements ValueObject<Password> {
 
   private final PasswordState state;
@@ -13,6 +15,14 @@ public class Password implements ValueObject<Password> {
   public Password(String value, PasswordState state) {
     this.value = value;
     this.state = state;
+  }
+
+  public static Password of(String value, PasswordState state) throws DomainException {
+
+    if (value == null || value.isBlank())
+      throw new DomainException("Password must has a value", DomainError.UNEXPECTED_ERROR);
+
+    return new Password(value, state);
   }
 
   public PasswordState state() {
@@ -30,11 +40,10 @@ public class Password implements ValueObject<Password> {
   }
 
   public Password checkStateAndGetRaw(CryptoService cryptoService, String rsaPrivateKey)
-          throws DomainException {
+      throws DomainException {
     if (this.state.equals(PasswordState.BASE64_ENCRYPTED))
       return new Password(cryptoService.decryptedPassword(value, rsaPrivateKey), PasswordState.RAW);
-    else if (this.state.equals(PasswordState.RAW))
-      return this;
+    else if (this.state.equals(PasswordState.RAW)) return this;
     else throw new DomainException("Unknown password state", DomainError.UNEXPECTED_ERROR);
   }
 }

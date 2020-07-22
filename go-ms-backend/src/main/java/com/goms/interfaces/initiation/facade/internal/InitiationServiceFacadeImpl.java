@@ -2,6 +2,7 @@ package com.goms.interfaces.initiation.facade.internal;
 
 
 import com.goms.application.service.InitiationService;
+import com.goms.domain.shared.DomainException;
 import com.goms.interfaces.initiation.facade.InitiationServiceFacade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,7 +18,7 @@ public class InitiationServiceFacadeImpl implements InitiationServiceFacade {
   }
 
   @Override
-  public void storeDefaultData() {
+  public void storeDefaultData() throws DomainException {
     this.initiationService.storeDefaultData();
   }
 }

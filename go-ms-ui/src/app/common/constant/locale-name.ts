@@ -1,16 +1,21 @@
+import {Helper} from '../implementation';
+
 export class LocaleName {
 
-  static instance = new LocaleName();
+  private static reference = new LocaleName();
 
   readonly NOTIFICATION_TITLE = 'NOTIFICATION_TITLE';
   readonly LOGIN_SUCCESS = 'LOGIN_SUCCESS';
-
-
+  readonly LOGOUT = 'LOGOUT';
 
   private constructor() {
   }
 
-  static getInstance(): LocaleName {
-    return this.instance;
+  static get instance(): LocaleName {
+    if (LocaleName.reference == null) {
+      LocaleName.reference = new LocaleName();
+      Helper.instance.validateConstantProperties(LocaleName.reference);
+    }
+    return LocaleName.reference;
   }
 }

@@ -2,19 +2,18 @@ import {NbAuthResult, NbAuthStrategy, NbAuthStrategyClass, NbPasswordAuthStrateg
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 import {NbAuthStrategyOptions} from '@nebular/auth/strategies/auth-strategy-options';
-import {User} from '../../common/interface';
-import {CryptoUtil, ErrorLocaleHandlingUtil, LoggerUtil} from '../util';
-import {BackendUrls, PASSWORD_ENCRYPTION_ENABLED} from '../../common/config';
+import {UserCredentials} from '../../common/interface';
+import {CryptoUtil, LoggerUtil} from '../util';
+import {PASSWORD_ENCRYPTION_ENABLED} from '../../common/config';
 import {HttpClient} from '@angular/common/http';
 import {UserManagementApi} from '../api';
-import {UserManagementState} from '../state';
 
 
 @Injectable({providedIn: 'root'})
-export class TokenStrategyFacadeService extends NbAuthStrategy {
+export class TokenStrategyFacade extends NbAuthStrategy {
 
   static setup(options: NbAuthStrategyOptions): [NbAuthStrategyClass, NbPasswordAuthStrategyOptions] {
-    return [TokenStrategyFacadeService, options];
+    return [TokenStrategyFacade, options];
   }
 
   constructor(private httpClient: HttpClient,
@@ -25,7 +24,7 @@ export class TokenStrategyFacadeService extends NbAuthStrategy {
   }
 
   authenticate(data?: any): Observable<NbAuthResult> {
-    const userData = data as User;
+    const userData = data as UserCredentials;
 
     if (PASSWORD_ENCRYPTION_ENABLED) {
       userData.password = this.encrypt(userData.password);

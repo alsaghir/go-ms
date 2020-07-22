@@ -29,7 +29,7 @@ public class UserRepositoryImpl implements UserRepository {
   }
 
   @Override
-  public Optional<User> findByIdWithProfiles(Integer id) {
+  public Optional<User> findByIdWithProfilesAndPrivileges(Integer id) {
     Optional<UserEntity> optionalUsersEntity = this.userRepositoryJpa.findById(id);
     return optionalUsersEntity.map(this.userConverter::toDomainWithProfiles);
   }

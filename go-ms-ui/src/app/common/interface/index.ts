@@ -1,4 +1,4 @@
-export interface User {
+export interface UserCredentials {
   email: string;
   password: string;
   encryptedPassword?: boolean;
@@ -12,4 +12,17 @@ export interface ApiError {
   status: string;
   timestamp: string;
   apiSubErrors: { [code: string]: string }[];
+}
+
+export interface Profile {
+  id: number;
+  name: string;
+  privileges: string[];
+}
+
+export interface UserDetails {
+  email: string;
+  firstName: string;
+  lastName: string;
+  profiles: Profile[];
 }

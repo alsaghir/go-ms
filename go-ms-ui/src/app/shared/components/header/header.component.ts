@@ -1,9 +1,11 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {Observable, Subject} from 'rxjs';
+import {ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
+import {BehaviorSubject, Subject} from 'rxjs';
 import {map, takeUntil} from 'rxjs/operators';
 
-import {NbUtil, RippleService} from '../../../core/util';
-import {THEMES} from '../../../common/constant';
+import {LocaleHandlingUtil, NbUtil, RippleService} from '../../../core/util';
+import {LocaleName, THEMES} from '../../../common/constant';
+import {NbMenuItem} from '@nebular/theme';
+import {EventFacade, UserManagementFacade} from '../../../core/facade';
 
 
 @Component({
@@ -15,25 +17,37 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   private destroy$: Subject<void> = new Subject<void>();
 
-  readonly materialTheme$: Observable<boolean>;
-  readonly themes: {name: string, value: string}[];
+  readonly themes: { name: string, value: string }[] = Object.keys(THEMES).map(themeKey => THEMES[themeKey]);
 
+  materialTheme$ = new BehaviorSubject<boolean>(false);
   userPictureOnly = false;
-  currentTheme = THEMES.DEFAULT.value;
+  currentTheme: string = null;
+  userMenu: NbMenuItem[] = null;
 
-  userMenu = [{title: 'Profile'}, {title: 'Log out'}];
-
-  public constructor(private rippleService: RippleService, private nbUtil: NbUtil) {
-    this.themes = Object.keys(THEMES).map(themeKey => THEMES[themeKey]);
-    this.materialTheme$ = this.nbUtil.onThemeChange()
-      .pipe(map(theme => {
-        const themeName: string = theme?.name || '';
-        return themeName.startsWith('material');
-      }));
+  public constructor(private changeDetectorRef: ChangeDetectorRef,
+                     private rippleService: RippleService,
+                     private eventFacade: EventFacade,
+                     private userManagementFacade: UserManagementFacade,
+                     private localeHandlingUtil: LocaleHandlingUtil,
+                     private nbUtil: NbUtil) {
   }
 
   ngOnInit(): void {
+
+    this.userManagementFacade.getUserDetails$().subscribe(value => console.log(value));
+
+    this.eventFacade.localeViewRendered$().pipe(takeUntil(this.destroy$))
+      .subscribe((localeViewRendered: boolean) => {
+        if (localeViewRendered) {
+          this.userMenu = [{
+            title: this.translationOf(LocaleName.instance.LOGOUT)
+          }];
+          this.changeDetectorRef.detectChanges();
+        }
+      });
+
     this.currentTheme = this.nbUtil.currentTheme();
+    this.materialTheme$.next(this.currentTheme.startsWith('material'));
 
     const {xl} = this.nbUtil.getBreakpointsMap();
     this.nbUtil.onMediaQueryChange()
@@ -49,6 +63,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
         takeUntil(this.destroy$),
       ).subscribe(themeName => {
       this.currentTheme = themeName;
+      this.materialTheme$.next(themeName.startsWith('material'));
       this.rippleService.toggle(themeName?.startsWith('material'));
     });
   }
@@ -70,5 +85,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
   navigateHome(): boolean {
     this.nbUtil.navigateHome();
     return false;
+  }
+
+  private translationOf(text: string): string {
+    return this.localeHandlingUtil.translationOf(text);
   }
 }

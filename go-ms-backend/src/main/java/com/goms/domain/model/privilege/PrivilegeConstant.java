@@ -4,10 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public enum PrivilegeConstant {
-  OP_CREATE_USER(1),
-  OP_DELETE_ACCOUNT(2),
-  OP_UPDATE_ACCOUNT(3),
-  OP_READ_ACCOUNT(4);
+  OP_USERS_MANAGEMENT(1);
 
   private final Integer id;
   private static final Map<Integer, PrivilegeConstant> lookupOfPrivileges = new HashMap<>();

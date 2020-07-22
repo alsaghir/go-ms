@@ -5,4 +5,6 @@ import com.goms.domain.shared.DomainException;
 
 public interface AuthService {
   User authenticateUsingNameAndPassword(User user) throws DomainException;
+
+  User getAuthenticatedUserWithProfilesAndPrivileges();
 }

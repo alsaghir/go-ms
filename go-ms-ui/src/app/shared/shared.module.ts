@@ -16,7 +16,7 @@ import {
   NbMenuModule,
   NbSearchModule,
   NbSelectModule,
-  NbSidebarModule,
+  NbSidebarModule, NbSpinnerModule,
   NbThemeModule,
   NbUserModule
 } from '@nebular/theme';
@@ -49,6 +49,7 @@ const NB_MODULES = [
   NbSidebarModule,
   NbThemeModule,
   NbUserModule,
+  NbSpinnerModule
 ];
 
 const MODULES = [CommonModule, FormsModule, ReactiveFormsModule, NB_MODULES];

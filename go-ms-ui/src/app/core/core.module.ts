@@ -3,15 +3,16 @@ import {NbMenuModule, NbSidebarModule, NbThemeModule, NbToastrModule} from '@neb
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 
 import {NbAuthModule} from '@nebular/auth';
+import { NbSecurityModule } from '@nebular/security';
 
-import {TokenStrategyFacadeService} from './facade';
+import {TokenStrategyFacade} from './facade';
 import {NbJwtToken} from '../common/implementation';
 import {BackendInterceptor} from './util';
 
 export const CORE_PROVIDERS = [
   NbAuthModule.forRoot({
     forms: {}, strategies: [
-      TokenStrategyFacadeService.setup({
+      TokenStrategyFacade.setup({
         name: 'jwt',
         token: {
           class: NbJwtToken
@@ -19,6 +20,7 @@ export const CORE_PROVIDERS = [
       })
     ]
   }).providers,
+  NbSecurityModule.forRoot().providers,
   NbThemeModule.forRoot({
     name: 'default',
   }).providers,

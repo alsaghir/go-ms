@@ -30,7 +30,7 @@ export class LocaleHandlingUtil {
     inputElements.forEach((element: ElementRef<HTMLInputElement>) => {
       this.storedLocale[element.nativeElement.id] = element.nativeElement.value;
 
-      if (!LocaleName.getInstance().hasOwnProperty(element.nativeElement.id)) {
+      if (!LocaleName.instance.hasOwnProperty(element.nativeElement.id)) {
         throw new TypeError('Locale name is not found !');
       }
     });

@@ -2,6 +2,7 @@ package com.goms.domain.model.user;
 
 import com.goms.domain.model.profile.Profile;
 import com.goms.domain.service.CryptoService;
+import com.goms.domain.shared.DomainError;
 import com.goms.domain.shared.DomainException;
 
 import java.util.Set;
@@ -11,9 +12,11 @@ import java.util.Set;
 public class User {
 
   private Integer id;
-  private String email;
+  private final String email;
   private Password password;
   private boolean active;
+  private String firstName;
+  private String lastName;
   private Set<Profile> profiles;
 
   public User(String email, Password password) {
@@ -31,6 +34,22 @@ public class User {
     this.active = active;
   }
 
+  public static User of(String email, Password password) throws DomainException {
+
+    if (email == null || email.isBlank() || password == null)
+      throw new DomainException("Error instantiating user per input validation", DomainError.UNEXPECTED_ERROR);
+
+    return new User(email, password);
+  }
+
+  public static User of(String email, Password password, boolean active, String firstName, String lastName) throws DomainException {
+
+    if (email == null || email.isBlank() || password == null)
+      throw new DomainException("Error instantiating user per input validation", DomainError.UNEXPECTED_ERROR);
+
+    return new User(email, password, active).assignFirstName(firstName).assignLastName(lastName);
+  }
+
   public Integer id() {
     return this.id;
   }
@@ -39,12 +58,29 @@ public class User {
     return this.email;
   }
 
+  public String firstName() {
+    return firstName;
+  }
+
+  public String lastName() {
+    return lastName;
+  }
+
   public Password password() {
     return password;
   }
 
   public User assignPassword(Password password) {
     this.password = password;
+    return this;
+  }
+
+  public User assignFirstName(String firstName) {
+    this.firstName = firstName;
+    return this;
+  }
+  public User assignLastName(String lastName) {
+    this.lastName = lastName;
     return this;
   }
 

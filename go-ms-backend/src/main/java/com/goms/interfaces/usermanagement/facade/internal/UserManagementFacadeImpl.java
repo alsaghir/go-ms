@@ -1,8 +1,9 @@
 package com.goms.interfaces.usermanagement.facade.internal;
 
 import com.goms.application.service.UserManagementService;
-import com.goms.application.service.command.GenerateJwtTokenCommand;
+import com.goms.application.service.data.UserDetailsData;
 import com.goms.application.shared.ApplicationException;
+import com.goms.infrastructure.auth.UserPrincipal;
 import com.goms.interfaces.usermanagement.facade.UserManagementFacade;
 import com.goms.interfaces.usermanagement.facade.dto.LoginRequest;
 import com.goms.interfaces.usermanagement.facade.dto.LoginResponse;
@@ -23,10 +24,9 @@ public class UserManagementFacadeImpl implements UserManagementFacade {
   public LoginResponse generateToken(LoginRequest loginRequest) throws ApplicationException {
     String token =
         userManagementService.generateToken(
-            new GenerateJwtTokenCommand(
                 loginRequest.getEmail(),
                 loginRequest.getPassword(),
-                loginRequest.isEncryptedPassword()));
+                loginRequest.isEncryptedPassword());
     return new LoginResponse(token);
   }
 
@@ -34,4 +34,11 @@ public class UserManagementFacadeImpl implements UserManagementFacade {
   public Integer validateAndExtractUserIdFromToken(String token) throws ApplicationException {
     return userManagementService.verifyTokenAndExtractUserIdFrom(token);
   }
+
+  @Override
+  public UserDetailsData getUserDetails() {
+    return this.userManagementService.retrieveUserDetails();
+  }
+
+
 }

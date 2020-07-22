@@ -8,7 +8,7 @@ import {NbAuthResult} from '@nebular/auth';
 import {EventFacade, UserManagementFacade} from '../../core/facade';
 import {ErrorLocaleHandlingUtil, LocaleHandlingUtil, NbUtil} from '../../core/util';
 import {LocaleName} from '../../common/constant';
-import {User} from '../../common/interface';
+import {UserCredentials} from '../../common/interface';
 
 @Component({
   selector: 'app-login',
@@ -71,19 +71,19 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   login(): void {
-    const userCredentials: User = {email: this.emailFormControl().value, password: this.passwordFormControl().value};
+    const userCredentials: UserCredentials = {email: this.emailFormControl().value, password: this.passwordFormControl().value};
     this.userManagementFacade.authenticate('jwt', userCredentials)
       .subscribe(
         (authResult: NbAuthResult) => {
           this.errors = [];
           if (authResult.isSuccess()) {
             this.router.navigate(['/pages/pr/users']).then(navigation => console.log(navigation.valueOf()));
-            this.nbUtil.showToast(LocaleName.getInstance().LOGIN_SUCCESS, 'Success', 'bottom-right', 'success');
+            this.nbUtil.showToast(LocaleName.instance.LOGIN_SUCCESS, 'Success', 'bottom-right', 'success');
           } else {
             this.errors.push(...this.errorHandlingUtil.translateByCodesAndNames(authResult.getErrors()));
           }
           this.errors.forEach(error =>
-            this.nbUtil.dangerToast(error, this.localeHandlingUtil.translationOf(LocaleName.getInstance().NOTIFICATION_TITLE), 'bottom-right'));
+            this.nbUtil.dangerToast(error, this.localeHandlingUtil.translationOf(LocaleName.instance.NOTIFICATION_TITLE), 'bottom-right'));
         });
   }
 

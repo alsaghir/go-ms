@@ -80,7 +80,7 @@ export class ErrorLocaleHandlingUtil {
     inputElements.forEach((element: ElementRef<HTMLInputElement>) => {
       this.storedLocale[element.nativeElement.id] = element.nativeElement.value;
       this.storedLocale[element.nativeElement.name] = element.nativeElement.value;
-      if (!ErrorLocaleName.getInstance().hasOwnProperty(element.nativeElement.name)) {
+      if (!ErrorLocaleName.instance.hasOwnProperty(element.nativeElement.name)) {
         throw new TypeError('Error code or name is not found !');
       }
     });

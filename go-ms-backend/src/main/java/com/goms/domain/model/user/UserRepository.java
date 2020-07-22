@@ -5,7 +5,7 @@ import java.util.Optional;
 public interface UserRepository {
 
     Optional<User> findByEmailWithProfiles(String userName);
-    Optional<User> findByIdWithProfiles(Integer id);
+    Optional<User> findByIdWithProfilesAndPrivileges(Integer id);
 
     User saveFull(User user);
 

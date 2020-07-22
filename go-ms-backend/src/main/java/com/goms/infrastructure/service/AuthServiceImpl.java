@@ -10,6 +10,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -25,11 +26,19 @@ public class AuthServiceImpl implements AuthService {
   @Override
   public User authenticateUsingNameAndPassword(User user) throws DomainException {
     try {
-      Authentication auth = this.authenticationManager.authenticate(
+      Authentication auth =
+          this.authenticationManager.authenticate(
               new UsernamePasswordAuthenticationToken(user.email(), user.password().value()));
-      return ((UserPrincipal) auth.getPrincipal()).getUser();
+      return ((UserPrincipal) auth.getPrincipal()).getUserWithProfilesAndPrivileges();
     } catch (BadCredentialsException ex) {
       throw new DomainException("Bad credentials Entered", ex, DomainError.BAD_CREDENTIALS);
     }
+  }
+
+  @Override
+  public User getAuthenticatedUserWithProfilesAndPrivileges() {
+    UserPrincipal userPrincipal =
+        (UserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    return userPrincipal.getUserWithProfilesAndPrivileges();
   }
 }
