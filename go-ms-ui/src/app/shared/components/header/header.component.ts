@@ -2,10 +2,11 @@ import {ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
 import {BehaviorSubject, Subject} from 'rxjs';
 import {map, takeUntil} from 'rxjs/operators';
 
-import {LocaleHandlingUtil, NbUtil, RippleService} from '../../../core/util';
-import {LocaleName, THEMES} from '../../../common/constant';
+import {ErrorLocaleHandlingUtil, LocaleHandlingUtil, LoggerUtil, NbUtil, RippleService} from '../../../core/util';
+import {ErrorLocaleName, LocaleName, THEMES} from '../../../common/constant';
 import {NbMenuItem} from '@nebular/theme';
 import {EventFacade, UserManagementFacade} from '../../../core/facade';
+import {ApiError, UserDetails, UserInfo} from '../../../common/interface';
 
 
 @Component({
@@ -23,25 +24,30 @@ export class HeaderComponent implements OnInit, OnDestroy {
   userPictureOnly = false;
   currentTheme: string = null;
   userMenu: NbMenuItem[] = null;
+  userDetails: UserDetails = null;
+  usersInfo: UserInfo[] = null;
 
   public constructor(private changeDetectorRef: ChangeDetectorRef,
                      private rippleService: RippleService,
                      private eventFacade: EventFacade,
                      private userManagementFacade: UserManagementFacade,
                      private localeHandlingUtil: LocaleHandlingUtil,
+                     private errorLocaleHandlingUtil: ErrorLocaleHandlingUtil,
+                     private loggerUtil: LoggerUtil,
                      private nbUtil: NbUtil) {
   }
 
   ngOnInit(): void {
 
-    this.userManagementFacade.getUserDetails$().subscribe(value => console.log(value));
-
     this.eventFacade.localeViewRendered$().pipe(takeUntil(this.destroy$))
       .subscribe((localeViewRendered: boolean) => {
         if (localeViewRendered) {
+
           this.userMenu = [{
             title: this.translationOf(LocaleName.instance.LOGOUT)
           }];
+          this.changeDetectorRef.detectChanges();
+          this.initializeData();
           this.changeDetectorRef.detectChanges();
         }
       });
@@ -89,5 +95,28 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   private translationOf(text: string): string {
     return this.localeHandlingUtil.translationOf(text);
+  }
+
+  private initializeData(): void {
+    this.userManagementFacade.getUserDetails$()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(
+        userDetails => this.userDetails = userDetails,
+        err => {
+          this.loggerUtil.error(err);
+          const errorCodesOrNames: string[] = [];
+
+          if ((err.error as ApiError).apiSubErrors != null) {
+            (err.error as ApiError).apiSubErrors.forEach(apiSubError => errorCodesOrNames.push(apiSubError.code));
+          } else {
+            errorCodesOrNames.push(ErrorLocaleName.instance.UNEXPECTED_ERROR);
+          }
+
+          this.errorLocaleHandlingUtil.translateByCodesAndNames(errorCodesOrNames)
+            .forEach(translatedError => this.nbUtil.dangerToast(translatedError,
+              this.localeHandlingUtil.translationOf(LocaleName.instance.NOTIFICATION_TITLE),
+              'bottom-right'));
+        }
+      );
   }
 }

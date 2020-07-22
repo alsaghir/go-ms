@@ -26,3 +26,10 @@ export interface UserDetails {
   lastName: string;
   profiles: Profile[];
 }
+
+export interface UserInfo {
+  id: number;
+  email: string;
+  firstName: string;
+  lastName: string;
+}

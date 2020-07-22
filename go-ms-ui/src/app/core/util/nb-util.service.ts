@@ -14,6 +14,7 @@ import {
 import {LayoutDirection} from '../../common/constant';
 import {Observable} from 'rxjs';
 import {NbMediaBreakpoint} from '@nebular/theme/services/breakpoints.service';
+import {NbAuthToken, NbTokenService, NbTokenStorage} from '@nebular/auth';
 
 @Injectable({providedIn: 'root'})
 export class NbUtil {
@@ -23,13 +24,14 @@ export class NbUtil {
               private nbLayoutDirectionService: NbLayoutDirectionService,
               private nbSidebarService: NbSidebarService,
               private nbMenuService: NbMenuService,
-              private nbMediaBreakpointsService: NbMediaBreakpointsService) {
+              private nbMediaBreakpointsService: NbMediaBreakpointsService,
+              private nbTokenService: NbTokenService,
+              private nbTokenStorage: NbTokenStorage) {
   }
 
   private toastService(): NbToastrService {
     return this.nbToastrService;
   }
-
 
   showToast(message: string, title: string, position: string | NbGlobalPosition, status: NbComponentStatus): NbToastRef {
     return this.toastService().show(message, title, {position: position as NbGlobalPosition, status: status as NbComponentStatus});
@@ -87,6 +89,14 @@ export class NbUtil {
 
   navigateHome(): void {
     this.nbMenuService.navigateHome();
+  }
+
+  private tokenStorage(): NbTokenStorage {
+    return this.nbTokenStorage;
+  }
+
+  getToken(): NbAuthToken {
+    return this.tokenStorage().get();
   }
 
 }

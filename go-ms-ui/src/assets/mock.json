@@ -15,5 +15,17 @@
         ]
       }
     ]
-  }
+  },
+  "API_USERS_INFO": [
+    {
+      "id": 15,
+      "firstName": "first",
+      "lastName": "last"
+    },
+    {
+      "id": 16,
+      "firstName": "anotherfirst",
+      "lastName": "anotherlast"
+    }
+  ]
 }

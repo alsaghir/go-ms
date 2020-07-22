@@ -43,6 +43,8 @@ public class UserConverter {
             userEntity.getEmail(),
             new Password(userEntity.getPassword(), PasswordState.HASHED),
             userEntity.isActive())
+        .assignFirstName(userEntity.getFirstName())
+        .assignLastName(userEntity.getLastName())
         .assignProfiles(
             userEntity.getProfileEntitySet() == null
                 ? null
