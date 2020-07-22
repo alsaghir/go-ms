@@ -1,7 +1,8 @@
 package com.goms.application.service.impl;
 
 import com.goms.application.service.UserManagementService;
-import com.goms.application.service.command.GenerateJwtTokenCommand;
+import com.goms.application.service.data.ProfileData;
+import com.goms.application.service.data.UserDetailsData;
 import com.goms.application.shared.ApplicationException;
 import com.goms.domain.model.config.AppConfig;
 import com.goms.domain.model.config.AppConfigRepository;
@@ -18,6 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class UserManagementServiceImpl implements UserManagementService {
@@ -41,20 +43,17 @@ public class UserManagementServiceImpl implements UserManagementService {
 
   @Transactional(rollbackFor = ApplicationException.class, readOnly = true)
   @Override
-  public String generateToken(GenerateJwtTokenCommand generateJwtTokenCommand)
+  public String generateToken(String email, String password, boolean passwordEncrypted)
       throws ApplicationException {
     try {
-      AppConfig appConfig = this.appConfigRepository.findAll();
 
-      User userToAuthenticate =
-          new User(
-              generateJwtTokenCommand.getEmail(),
-              new Password(
-                  generateJwtTokenCommand.isPasswordEncrypted()
-                      ? this.cryptoService.decryptedPassword(
-                          generateJwtTokenCommand.getPassword(), appConfig.rsaPrivateKey())
-                      : generateJwtTokenCommand.getPassword(),
-                  PasswordState.RAW));
+      AppConfig appConfig = this.appConfigRepository.findAll();
+      password =
+          passwordEncrypted
+              ? this.cryptoService.decryptedPassword(password, appConfig.rsaPrivateKey())
+              : password;
+
+      User userToAuthenticate = User.of(email, Password.of(password, PasswordState.RAW));
 
       User authenticatedUser =
           this.authService.authenticateUsingNameAndPassword(userToAuthenticate);
@@ -95,5 +94,28 @@ public class UserManagementServiceImpl implements UserManagementService {
           new DomainException("UserId: " + userId + " not found", DomainError.UNEXPECTED_ERROR));
 
     return storedUser.get().id();
+  }
+
+  @Override
+  public UserDetailsData retrieveUserDetails() {
+
+    User user = this.authService.getAuthenticatedUserWithProfilesAndPrivileges();
+
+    return new UserDetailsData()
+        .setEmail(user.email())
+        .setFirstName(user.firstName())
+        .setLastName(user.lastName())
+        .setProfileDataSet(
+            user.profiles().stream()
+                .map(
+                    profile ->
+                        new ProfileData()
+                            .setId(profile.id())
+                            .setName(profile.name())
+                            .setPrivileges(
+                                profile.privileges().stream()
+                                    .map(privilege -> privilege.privilegeConstant().name())
+                                    .collect(Collectors.toSet())))
+                .collect(Collectors.toSet()));
   }
 }

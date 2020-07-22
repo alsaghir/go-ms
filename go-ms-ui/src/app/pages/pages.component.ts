@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {InitializationUtil} from '../core/util';
+import {PrivilegeConstant} from '../common/constant/backendrelated/privilege-constant';
 
 @Component({
   selector: 'app-pages',

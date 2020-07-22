@@ -32,5 +32,9 @@ const mockData = [
   {
     url: BackendUrls.API_ENDPOINT(BackendUrls.API_LOGIN),
     json: jsonData.API_LOGIN
+  },
+  {
+    url: BackendUrls.API_ENDPOINT(BackendUrls.API_USER),
+    json: jsonData.API_USER
   }
 ];

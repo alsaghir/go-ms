@@ -5,6 +5,7 @@ export class BackendUrls {
   // End-points paths of API services
   static readonly API_PREFIX = '/api';
   static readonly API_LOGIN = '/login';
+  static readonly API_USER = '/user';
 
   /** Returns full end point url
    *

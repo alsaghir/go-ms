@@ -12,18 +12,16 @@ export class LocaleTranslateComponent implements OnInit, AfterViewInit {
 
   @ViewChildren('inputs') inputElements: QueryList<ElementRef<HTMLInputElement>>;
 
-  LocaleName: LocaleName = LocaleName.getInstance();
+  LocaleName: LocaleName = LocaleName.instance;
 
   constructor(private localeHandlingUtil: LocaleHandlingUtil,
               private eventFacade: EventFacade) {
   }
 
   ngOnInit(): void {
-    console.log(this.LocaleName);
   }
 
   ngAfterViewInit(): void {
-    console.log(this.inputElements);
     this.localeHandlingUtil.setParentElementBundle(this.inputElements);
     this.eventFacade.setLocaleViewRendered(true);
   }

@@ -28,7 +28,7 @@ public class UserPrincipal implements UserDetails {
         return this.user.id();
     }
 
-    public User getUser() {
+    public User getUserWithProfilesAndPrivileges() {
         return this.user;
     }
 

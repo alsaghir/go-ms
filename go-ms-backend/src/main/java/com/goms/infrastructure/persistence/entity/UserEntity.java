@@ -29,6 +29,12 @@ public class UserEntity {
   @Column(name = "ACTIVE")
   private boolean active;
 
+  @Column(name = "FIRST_NAME")
+  private String firstName;
+
+  @Column(name = "LAST_NAME")
+  private String lastName;
+
   @ManyToMany
   @JoinTable(
       name = "APP_USER_PROFILE",
@@ -72,6 +78,23 @@ public class UserEntity {
     return this;
   }
 
+  public String getFirstName() {
+    return firstName;
+  }
+
+  public UserEntity setFirstName(String firstName) {
+    this.firstName = firstName;
+    return this;
+  }
+
+  public String getLastName() {
+    return lastName;
+  }
+
+  public UserEntity setLastName(String lastName) {
+    this.lastName = lastName;
+    return this;
+  }
 
   public Set<ProfileEntity> getProfileEntitySet() {
     return profileEntitySet;

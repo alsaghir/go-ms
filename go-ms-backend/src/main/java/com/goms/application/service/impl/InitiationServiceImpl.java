@@ -11,6 +11,7 @@ import com.goms.domain.model.user.PasswordState;
 import com.goms.domain.model.user.User;
 import com.goms.domain.model.user.UserRepository;
 import com.goms.domain.service.UtilService;
+import com.goms.domain.shared.DomainException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -42,14 +43,14 @@ public class InitiationServiceImpl implements InitiationService {
 
   @Override
   @Transactional
-  public void storeDefaultData() {
+  public void storeDefaultData() throws DomainException {
     if (initializationIsRequired()) {
       initializePrivileges();
       initializeProfilesAndUsers();
     }
   }
 
-  private void initializeProfilesAndUsers() {
+  private void initializeProfilesAndUsers() throws DomainException {
     if (!this.userRepository.atLeastOneUserExists()) {
 
       Profile defaultProfile =
@@ -57,7 +58,12 @@ public class InitiationServiceImpl implements InitiationService {
               new Profile("admin").assignPrivileges(this.privilegeRepository.findAll()));
 
       this.userRepository.saveFull(
-          new User("admin@example.com", new Password("{noop}admin", PasswordState.RAW), true)
+          User.of(
+                  "admin@example.com",
+                  Password.of("{noop}admin", PasswordState.RAW),
+                  true,
+                  "admin",
+                  "admin")
               .assignProfiles(Set.of(defaultProfile)));
     }
   }

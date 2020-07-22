@@ -1,6 +1,6 @@
 import {AfterViewInit, Component, ElementRef, OnInit, QueryList, ViewChildren} from '@angular/core';
-import {ErrorLocaleHandlingUtil} from '../../core/util';
-import {ErrorLocaleName} from '../../common/constant';
+import {ErrorLocaleHandlingUtil} from '../../../core/util';
+import {ErrorLocaleName} from '../../../common/constant';
 
 @Component({
   selector: 'app-error-locale-translate',
@@ -10,7 +10,7 @@ export class ErrorTranslateComponent implements OnInit, AfterViewInit {
 
   @ViewChildren('inputs') errorInputElements: QueryList<ElementRef<HTMLInputElement>>;
 
-  errorLocaleName: ErrorLocaleName = ErrorLocaleName.getInstance();
+  errorLocaleName: ErrorLocaleName = ErrorLocaleName.instance;
 
   constructor(private errorLocaleHandlingUtil: ErrorLocaleHandlingUtil) {
   }
