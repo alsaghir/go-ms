@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient, HttpErrorResponse, HttpResponse} from '@angular/common/http';
 import {BackendUrls} from '../../common/config';
 import {Observable, of as observableOf} from 'rxjs';
-import {ApiError, JwtToken, UserCredentials, UserDetails, UserInfo} from '../../common/interface';
+import {ApiError, JwtToken, Profile, UserCredentials, UserDetails, UserInfo} from '../../common/interface';
 import {catchError, map, tap} from 'rxjs/operators';
 import {NbAuthResult} from '@nebular/auth';
 import {NbJwtToken} from '../../common/implementation';
@@ -50,5 +50,10 @@ export class UserManagementApi {
   getUsersInfo$(): Observable<UserInfo[]> {
     const apiUrl = BackendUrls.API_ENDPOINT(BackendUrls.API_USERS_INFO);
     return this.http.get<UserInfo[]>(apiUrl);
+  }
+
+  getProfiles$(): Observable<Profile[]> {
+    const apiUrl = BackendUrls.API_ENDPOINT(BackendUrls.API_PROFILES);
+    return this.http.get<Profile[]>(apiUrl);
   }
 }

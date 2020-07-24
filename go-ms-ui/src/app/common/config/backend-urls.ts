@@ -7,6 +7,7 @@ export class BackendUrls {
   static readonly API_LOGIN = '/login';
   static readonly API_USER = '/user';
   static readonly API_USERS_INFO = '/users';
+  static readonly API_PROFILES = '/profiles';
 
   /** Returns full end point url
    *

@@ -14,7 +14,9 @@ import {
 import {LayoutDirection} from '../../common/constant';
 import {Observable} from 'rxjs';
 import {NbMediaBreakpoint} from '@nebular/theme/services/breakpoints.service';
-import {NbAuthToken, NbTokenService, NbTokenStorage} from '@nebular/auth';
+import {NbAuthResult, NbAuthService, NbAuthToken, NbTokenService, NbTokenStorage} from '@nebular/auth';
+import {UserCredentials} from '../../common/interface';
+import {NbAccessControl, NbAclService} from '@nebular/security';
 
 @Injectable({providedIn: 'root'})
 export class NbUtil {
@@ -26,7 +28,9 @@ export class NbUtil {
               private nbMenuService: NbMenuService,
               private nbMediaBreakpointsService: NbMediaBreakpointsService,
               private nbTokenService: NbTokenService,
-              private nbTokenStorage: NbTokenStorage) {
+              private nbTokenStorage: NbTokenStorage,
+              private nbAuthService: NbAuthService,
+              private nbAclService: NbAclService) {
   }
 
   private toastService(): NbToastrService {
@@ -97,6 +101,22 @@ export class NbUtil {
 
   getToken(): NbAuthToken {
     return this.tokenStorage().get();
+  }
+
+  private authService(): NbAuthService {
+    return this.nbAuthService;
+  }
+
+  authenticate(strategyName: string, data: UserCredentials): Observable<NbAuthResult> {
+    return this.authService().authenticate(strategyName, data);
+  }
+
+  private aclService(): NbAclService {
+    return this.nbAclService;
+  }
+
+  setAccessControl(list: NbAccessControl): void {
+    return this.aclService().setAccessControl(list);
   }
 
 }

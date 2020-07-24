@@ -2,11 +2,13 @@ import {ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
 import {BehaviorSubject, Subject} from 'rxjs';
 import {map, takeUntil} from 'rxjs/operators';
 
-import {ErrorLocaleHandlingUtil, LocaleHandlingUtil, LoggerUtil, NbUtil, RippleService} from '../../../core/util';
+import {CommonUtil, ErrorLocaleHandlingUtil, LocaleHandlingUtil, LoggerUtil, NbUtil, RippleService} from '../../../core/util';
 import {ErrorLocaleName, LocaleName, THEMES} from '../../../common/constant';
 import {NbMenuItem} from '@nebular/theme';
 import {EventFacade, UserManagementFacade} from '../../../core/facade';
 import {ApiError, UserDetails, UserInfo} from '../../../common/interface';
+import {NbAccessChecker} from '@nebular/security';
+import {PrivilegeConstant} from '../../../common/constant/backendrelated';
 
 
 @Component({
@@ -34,44 +36,20 @@ export class HeaderComponent implements OnInit, OnDestroy {
                      private localeHandlingUtil: LocaleHandlingUtil,
                      private errorLocaleHandlingUtil: ErrorLocaleHandlingUtil,
                      private loggerUtil: LoggerUtil,
-                     private nbUtil: NbUtil) {
+                     private commonUtil: CommonUtil,
+                     private nbUtil: NbUtil,
+                     private nbAccessChecker : NbAccessChecker ) {
   }
 
   ngOnInit(): void {
-
-    this.eventFacade.localeViewRendered$().pipe(takeUntil(this.destroy$))
-      .subscribe((localeViewRendered: boolean) => {
-        if (localeViewRendered) {
-
-          this.userMenu = [{
-            title: this.translationOf(LocaleName.instance.LOGOUT)
-          }];
-          this.changeDetectorRef.detectChanges();
-          this.initializeData();
-          this.changeDetectorRef.detectChanges();
-        }
-      });
+    this.listenInfoNeedsLocaleTranslation();
 
     this.currentTheme = this.nbUtil.currentTheme();
     this.materialTheme$.next(this.currentTheme.startsWith('material'));
 
-    const {xl} = this.nbUtil.getBreakpointsMap();
-    this.nbUtil.onMediaQueryChange()
-      .pipe(
-        map(([, currentBreakpoint]) => currentBreakpoint.width < xl),
-        takeUntil(this.destroy$),
-      )
-      .subscribe((isLessThanXl: boolean) => this.userPictureOnly = isLessThanXl);
+    this.ListenBreakPointForMediaQueryChange();
 
-    this.nbUtil.onThemeChange()
-      .pipe(
-        map(({name}) => name),
-        takeUntil(this.destroy$),
-      ).subscribe(themeName => {
-      this.currentTheme = themeName;
-      this.materialTheme$.next(themeName.startsWith('material'));
-      this.rippleService.toggle(themeName?.startsWith('material'));
-    });
+    this.listenThemeChange();
   }
 
   ngOnDestroy(): void {
@@ -97,26 +75,52 @@ export class HeaderComponent implements OnInit, OnDestroy {
     return this.localeHandlingUtil.translationOf(text);
   }
 
-  private initializeData(): void {
+  private listenUserDetails(): void {
     this.userManagementFacade.getUserDetails$()
       .pipe(takeUntil(this.destroy$))
       .subscribe(
         userDetails => this.userDetails = userDetails,
         err => {
-          this.loggerUtil.error(err);
-          const errorCodesOrNames: string[] = [];
-
-          if ((err.error as ApiError).apiSubErrors != null) {
-            (err.error as ApiError).apiSubErrors.forEach(apiSubError => errorCodesOrNames.push(apiSubError.code));
-          } else {
-            errorCodesOrNames.push(ErrorLocaleName.instance.UNEXPECTED_ERROR);
-          }
-
-          this.errorLocaleHandlingUtil.translateByCodesAndNames(errorCodesOrNames)
-            .forEach(translatedError => this.nbUtil.dangerToast(translatedError,
-              this.localeHandlingUtil.translationOf(LocaleName.instance.NOTIFICATION_TITLE),
-              'bottom-right'));
+          this.commonUtil.handleRetrievingDataError(err);
         }
       );
+  }
+
+  private listenInfoNeedsLocaleTranslation(): void {
+    this.eventFacade.localeViewRendered$().pipe(takeUntil(this.destroy$))
+      .subscribe((localeViewRendered: boolean) => {
+        if (localeViewRendered) {
+
+          this.userMenu = [{
+            title: this.translationOf(LocaleName.instance.LOGOUT)
+          }];
+
+          this.listenUserDetails();
+
+          this.changeDetectorRef.detectChanges();
+        }
+      });
+  }
+
+  private ListenBreakPointForMediaQueryChange(): void {
+    const {xl} = this.nbUtil.getBreakpointsMap();
+    this.nbUtil.onMediaQueryChange()
+      .pipe(
+        map(([, currentBreakpoint]) => currentBreakpoint.width < xl),
+        takeUntil(this.destroy$),
+      )
+      .subscribe((isLessThanXl: boolean) => this.userPictureOnly = isLessThanXl);
+  }
+
+  private listenThemeChange(): void {
+    this.nbUtil.onThemeChange()
+      .pipe(
+        map(({name}) => name),
+        takeUntil(this.destroy$),
+      ).subscribe(themeName => {
+      this.currentTheme = themeName;
+      this.materialTheme$.next(themeName.startsWith('material'));
+      this.rippleService.toggle(themeName?.startsWith('material'));
+    });
   }
 }

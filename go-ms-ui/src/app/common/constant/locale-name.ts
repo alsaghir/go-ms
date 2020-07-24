@@ -4,7 +4,7 @@ export class LocaleName {
 
   private static reference = new LocaleName();
 
-  readonly NOTIFICATION_TITLE = 'NOTIFICATION_TITLE';
+  readonly ERROR = 'ERROR';
   readonly LOGIN_SUCCESS = 'LOGIN_SUCCESS';
   readonly LOGOUT = 'LOGOUT';
 

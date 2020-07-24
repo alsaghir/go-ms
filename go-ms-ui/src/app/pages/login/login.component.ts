@@ -83,9 +83,8 @@ export class LoginComponent implements OnInit, OnDestroy {
             this.errors.push(...this.errorHandlingUtil.translateByCodesAndNames(authResult.getErrors()));
           }
           this.errors.forEach(error =>
-            this.nbUtil.dangerToast(error, this.localeHandlingUtil.translationOf(LocaleName.instance.NOTIFICATION_TITLE), 'bottom-right'));
+            this.nbUtil.dangerToast(error, this.localeHandlingUtil.translationOf(LocaleName.instance.ERROR), 'bottom-right'));
         });
   }
-
 
 }

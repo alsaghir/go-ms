@@ -8,10 +8,10 @@
     "lastName": "last",
     "profiles": [
       {
-        "id": 1,
+        "id": 2,
         "name": "admin-profile",
         "privileges": [
-          "OP_USERS_MANAGEMENT"
+          "OP_USERS_DELETE"
         ]
       }
     ]
@@ -26,6 +26,22 @@
       "id": 16,
       "firstName": "anotherfirst",
       "lastName": "anotherlast"
+    }
+  ],
+  "API_PROFILES": [
+    {
+      "id": 1,
+      "name": "another-profile",
+      "privileges": [
+        "OP_USERS_MANAGEMENT"
+      ]
+    },
+    {
+      "id": 2,
+      "name": "admin-profile",
+      "privileges": [
+        "OP_USERS_DELETE"
+      ]
     }
   ]
 }

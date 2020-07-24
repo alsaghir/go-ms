@@ -1,15 +1,20 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
-import { NbAuthService } from '@nebular/auth';
-import { NbRoleProvider } from '@nebular/security';
+import {NbRoleProvider} from '@nebular/security';
 
-@Injectable({providedIn: 'root'})
+import {UserManagementFacade} from './user-management-facade.service';
+import {map} from 'rxjs/operators';
+
+@Injectable()
 export class RoleProviderFacade implements NbRoleProvider {
 
-  constructor(private authService: NbAuthService) {
+  constructor(private userManagementFacade: UserManagementFacade) {
   }
 
-  getRole(): Observable<string> {
-    return null;
+  getRole(): Observable<string | string[]> {
+    return this.userManagementFacade.getUserDetails$()
+      .pipe(
+        map(userDetails => userDetails.profiles.map(profile => profile.id.toString()))
+      );
   }
 }

@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {NbAuthResult} from '@nebular/auth';
 import {BehaviorSubject, Observable} from 'rxjs';
-import {UserDetails, UserInfo} from '../../common/interface';
+import {Profile, UserDetails, UserInfo} from '../../common/interface';
 
 @Injectable({providedIn: 'root'})
 export class UserManagementState {
@@ -12,6 +12,9 @@ export class UserManagementState {
   private userDetailsLoaded = false;
   private usersInfo$ = new BehaviorSubject<UserInfo[]>(null);
   private usersInfoLoaded = false;
+  private profiles$ = new BehaviorSubject<Profile[]>(null);
+  private profilesLoaded = false;
+
 
   constructor() {
   }
@@ -52,4 +55,17 @@ export class UserManagementState {
   isUsersInfoLoaded(): boolean {
     return this.usersInfoLoaded;
   }
+
+  isProfilesLoaded(): boolean {
+    return this.profilesLoaded;
+  }
+
+  getProfiles$(): Observable<Profile[]> {
+    return this.profiles$.asObservable();
+  }
+
+  setProfiles(profiles: Profile[]): void {
+    return this.profiles$.next(profiles);
+  }
+
 }

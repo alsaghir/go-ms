@@ -5,7 +5,7 @@ export class PrivilegeConstant {
   private static reference = null;
 
   readonly OP_CREATE_USER = 'OP_CREATE_USER';
-  readonly OP_UPDATE_ACCOUNT = 'OP_UPDATE_ACCOUNT';
+  readonly OP_USERS_DELETE = 'OP_USERS_DELETE';
 
   private constructor() {
 

@@ -3,9 +3,9 @@ import {NbMenuModule, NbSidebarModule, NbThemeModule, NbToastrModule} from '@neb
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 
 import {NbAuthModule} from '@nebular/auth';
-import { NbSecurityModule } from '@nebular/security';
+import {NbRoleProvider, NbSecurityModule} from '@nebular/security';
 
-import {TokenStrategyFacade} from './facade';
+import {RoleProviderFacade, TokenStrategyFacade} from './facade';
 import {NbJwtToken} from '../common/implementation';
 import {BackendInterceptor} from './util';
 
@@ -26,7 +26,8 @@ export const CORE_PROVIDERS = [
   }).providers,
   NbToastrModule.forRoot().providers,
   NbSidebarModule.forRoot().providers,
-  NbMenuModule.forRoot().providers
+  NbMenuModule.forRoot().providers,
+  { provide: NbRoleProvider, useClass: RoleProviderFacade }
 ];
 
 export const HTTP_CLIENT_INTERCEPTORS = [
