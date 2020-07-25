@@ -7,6 +7,7 @@ export const THEMES: {[key: string]: {name: string, value: string}} = {
   COSMIC: {name: 'Cosmic', value: 'cosmic'},
   CORPORATE: {name: 'Corporate', value: 'corporate'},
   DARK: {name: 'Dark', value: 'dark'},
+  AQUAMARINE_COLORED: {name: 'Aquamarine Colored', value: 'aquamarine-colored'},
   MATERIAL_LIGHT: {name: 'Material Light', value: 'material-light'},
   MATERIAL_DARK: {name: 'material Dark', value: 'material-dark'}
 };
