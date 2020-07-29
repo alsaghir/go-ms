@@ -1,6 +1,7 @@
 import {ModuleWithProviders, NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+
 import {MatRippleModule} from '@angular/material/core';
 
 import {
@@ -24,10 +25,18 @@ import {
 import {NbEvaIconsModule} from '@nebular/eva-icons';
 import {NbAuthModule} from '@nebular/auth';
 
+import {TableModule} from 'primeng/table';
+
 import {HeaderComponent} from './components';
 import {FooterComponent} from './components/footer/footer.component';
+import {TableComponent} from './components/table/table.component';
 
-const COMPONENTS = [HeaderComponent, FooterComponent];
+const COMPONENTS = [
+  HeaderComponent,
+  FooterComponent,
+  TableComponent
+];
+
 const PIPES = [];
 
 const NB_MODULES = [
@@ -52,11 +61,19 @@ const NB_MODULES = [
   NbSpinnerModule
 ];
 
-const MODULES = [CommonModule, FormsModule, ReactiveFormsModule, NB_MODULES];
+const MODULES = [
+  CommonModule,
+  FormsModule,
+  ReactiveFormsModule,
+
+  MatRippleModule,
+  TableModule,
+
+  NB_MODULES];
 
 @NgModule({
-  imports: [MatRippleModule, ...MODULES],
-  exports: [MatRippleModule, ...MODULES, ...PIPES, ...COMPONENTS],
+  imports: [...MODULES],
+  exports: [...MODULES, ...PIPES, ...COMPONENTS],
   declarations: [...COMPONENTS, ...PIPES],
 })
 export class SharedModule {

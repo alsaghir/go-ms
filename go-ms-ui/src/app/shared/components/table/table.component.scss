@@ -1,23 +1,6 @@
 @import '../../../theme/themes';
 
 @include nb-install-component() {
-  .list-card {
-    nb-card-header {
-      border-bottom: none;
-    }
-
-    nb-card-body {
-      padding: 0;
-    }
-  }
-
-  .card-actions {
-    padding: nb-theme(card-padding);
-    position: absolute;
-    right: 0;
-    top: 0;
-  }
-
   ::ng-deep .ui-table .ui-table-thead > tr > th {
     color: nb-theme(text-basic-color);
     background-color: nb-theme(background-basic-color-1);
