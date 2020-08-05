@@ -22,7 +22,7 @@ export const CORE_PROVIDERS = [
   }).providers,
   NbSecurityModule.forRoot().providers,
   NbThemeModule.forRoot({
-    name: 'aquamarine-colored',
+    name: 'cosmic',
   }).providers,
   NbToastrModule.forRoot().providers,
   NbSidebarModule.forRoot().providers,

@@ -1,5 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Subject} from 'rxjs';
+import {UserManagementFacade} from '../../../core/facade';
+import {UserInfo} from '../../../common/interface';
 
 
 @Component({
@@ -13,27 +15,19 @@ export class UsersComponent implements OnInit, OnDestroy {
 
   isShowAddUserForm = false;
 
-  users: { email: string, name: string }[] = [
-    {email: 'Carla.Espinosa@exmaple.com', name: 'Carla Espinosa'},
-    {email: 'Bob.Kelso@exmaple.com', name: 'Bob Kelso'},
-    {email: 'Janitor@exmaple.com', name: 'Janitor Janitor'},
-    {email: 'Perry.Cox@exmaple.com', name: 'Perry Cox'},
-    {email: 'Ben.Sullivan@exmaple.com', name: 'Carpenter and photographer'},
-    {email: 'Carla.Espinosa@exmaple.com', name: 'Nurse'},
-    {email: 'Bob.Kelso@exmaple.com', name: 'Doctor of Medicine'},
-    {email: 'Perry.Cox@exmaple.com', name: 'Doctor of Medicine'},
-    {email: 'Carla.Espinosa@exmaple.com', name: 'Nurse'},
-    {email: 'Bob.Kelso@exmaple.com', name: 'Doctor of Medicine'},
-    {email: 'Janitor@exmaple.com', name: 'Janitor'}
+  users: UserInfo[] = null;
+
+  usersDataToDisplay = [
+    {header: 'email', field: 'email'},
+    {header: 'firstName', field: 'firstName'},
+    {header: 'lastName', field: 'lastName'}
   ];
 
-  usersData = [{header: 'email', field: 'email'}, {header: 'name', field: 'name'}];
-
-  constructor() {
-
+  constructor(private userManagementFacade: UserManagementFacade) {
   }
 
   ngOnInit(): void {
+    this.userManagementFacade.getUsers$().subscribe(usersInfo => this.users = usersInfo);
   }
 
   ngOnDestroy(): void {

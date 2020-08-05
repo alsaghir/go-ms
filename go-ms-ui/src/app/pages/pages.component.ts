@@ -34,7 +34,7 @@ export class PagesComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.initializeDirectionByLocale();
-    this.listenProfilesAndPrivileges();
+    // this.listenProfilesAndPrivileges();
   }
 
   ngOnDestroy(): void {
@@ -75,8 +75,6 @@ export class PagesComponent implements OnInit, OnDestroy {
             profile.privileges.forEach(privilege => nbAclRole[privilege] = '*');
             nbAcl[profile.id.toString()] = nbAclRole;
           });
-          console.log('nbAcl');
-          console.log(nbAcl);
           this.nbUtil.setAccessControl(nbAcl);
         },
         err => {

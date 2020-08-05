@@ -19,11 +19,13 @@
   "API_USERS_INFO": [
     {
       "id": 15,
+      "email": "any@first.com",
       "firstName": "first",
       "lastName": "last"
     },
     {
       "id": 16,
+      "email": "any@second.com",
       "firstName": "anotherfirst",
       "lastName": "anotherlast"
     }

@@ -18,8 +18,6 @@ export class TableComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    console.log(this.dataObjects);
-    console.log(this.columnsData);
   }
 
   ngOnDestroy(): void {

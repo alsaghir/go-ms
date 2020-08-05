@@ -42,4 +42,13 @@ export class UserManagementFacade {
         .pipe(tap(profiles => this.userManagementState.setProfiles(profiles)));
     }
   }
+
+  getUsers$(): Observable<UserInfo[]> {
+    if (this.userManagementState.isUsersInfoLoaded()) {
+      return this.userManagementState.getUsersInfo$();
+    } else {
+      return this.userManagementApi.getUsersInfo$()
+        .pipe(tap(usersInfo => this.userManagementState.setUsersInfo(usersInfo)));
+    }
+  }
 }
