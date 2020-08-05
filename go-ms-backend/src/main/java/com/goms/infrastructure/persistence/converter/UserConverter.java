@@ -34,7 +34,9 @@ public class UserConverter {
         userEntity.getId(),
         userEntity.getEmail(),
         new Password(userEntity.getPassword(), PasswordState.HASHED),
-        userEntity.isActive());
+        userEntity.isActive(),
+        userEntity.getFirstName(),
+        userEntity.getLastName());
   }
 
   public User toDomainWithProfiles(UserEntity userEntity) {
@@ -42,9 +44,9 @@ public class UserConverter {
             userEntity.getId(),
             userEntity.getEmail(),
             new Password(userEntity.getPassword(), PasswordState.HASHED),
-            userEntity.isActive())
-        .assignFirstName(userEntity.getFirstName())
-        .assignLastName(userEntity.getLastName())
+            userEntity.isActive(),
+            userEntity.getFirstName(),
+            userEntity.getLastName())
         .assignProfiles(
             userEntity.getProfileEntitySet() == null
                 ? null

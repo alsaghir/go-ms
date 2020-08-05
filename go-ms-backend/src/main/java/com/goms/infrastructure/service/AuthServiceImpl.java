@@ -1,5 +1,6 @@
 package com.goms.infrastructure.service;
 
+import com.goms.domain.model.user.Password;
 import com.goms.domain.model.user.User;
 import com.goms.domain.service.AuthService;
 import com.goms.domain.shared.DomainError;
@@ -40,5 +41,17 @@ public class AuthServiceImpl implements AuthService {
     UserPrincipal userPrincipal =
         (UserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     return userPrincipal.getUserWithProfilesAndPrivileges();
+  }
+
+  @Override
+  public User authenticate(String email, String password) throws DomainException {
+    try {
+      Authentication auth =
+              this.authenticationManager.authenticate(
+                      new UsernamePasswordAuthenticationToken(email, password));
+      return ((UserPrincipal) auth.getPrincipal()).getUserWithProfilesAndPrivileges();
+    } catch (BadCredentialsException ex) {
+      throw new DomainException("Bad credentials Entered", ex, DomainError.BAD_CREDENTIALS);
+    }
   }
 }

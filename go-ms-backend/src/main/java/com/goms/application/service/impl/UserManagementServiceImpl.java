@@ -3,11 +3,10 @@ package com.goms.application.service.impl;
 import com.goms.application.service.UserManagementService;
 import com.goms.application.service.data.ProfileData;
 import com.goms.application.service.data.UserDetailsData;
+import com.goms.application.service.data.UserInfoData;
 import com.goms.application.shared.ApplicationException;
 import com.goms.domain.model.config.AppConfig;
 import com.goms.domain.model.config.AppConfigRepository;
-import com.goms.domain.model.user.Password;
-import com.goms.domain.model.user.PasswordState;
 import com.goms.domain.model.user.User;
 import com.goms.domain.model.user.UserRepository;
 import com.goms.domain.service.AuthService;
@@ -18,7 +17,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -48,15 +49,10 @@ public class UserManagementServiceImpl implements UserManagementService {
     try {
 
       AppConfig appConfig = this.appConfigRepository.findAll();
-      password =
-          passwordEncrypted
-              ? this.cryptoService.decryptedPassword(password, appConfig.rsaPrivateKey())
-              : password;
-
-      User userToAuthenticate = User.of(email, Password.of(password, PasswordState.RAW));
+      String rawPassword = this.cryptoService.decryptedPassword(password, appConfig.rsaPrivateKey(), passwordEncrypted);
 
       User authenticatedUser =
-          this.authService.authenticateUsingNameAndPassword(userToAuthenticate);
+          this.authService.authenticate(email, rawPassword);
 
       return authenticatedUser.generateToken(
           this.cryptoService, appConfig.jwtSigningKey(), appConfig.jwtExpirationTime());
@@ -117,5 +113,14 @@ public class UserManagementServiceImpl implements UserManagementService {
                                     .map(privilege -> privilege.privilegeConstant().name())
                                     .collect(Collectors.toSet())))
                 .collect(Collectors.toSet()));
+  }
+
+  @Override
+  public Set<UserInfoData> retrieveAllUsersInfo() {
+    List<User> users = this.userRepository.findAll();
+
+    return users.parallelStream()
+            .map(user -> new UserInfoData(user.id(), user.email(), user.firstName(), user.lastName()))
+            .collect(Collectors.toSet());
   }
 }

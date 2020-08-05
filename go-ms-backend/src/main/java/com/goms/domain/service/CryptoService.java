@@ -6,6 +6,9 @@ public interface CryptoService {
   String decryptedPassword(final String encryptedMessage, final String rsaPrivateKey)
       throws DomainException;
 
+  String decryptedPassword(final String encryptedMessage, final String rsaPrivateKey, final boolean passwordEncrypted)
+          throws DomainException;
+
   String generateJwtTokenForUser(Integer id, String jwtSigningKey, String jwtExpirationTime)
       throws DomainException;
 

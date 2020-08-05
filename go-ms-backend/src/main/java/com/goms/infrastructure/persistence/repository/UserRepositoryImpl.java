@@ -8,7 +8,9 @@ import com.goms.infrastructure.persistence.repository.jpa.UserRepositoryJpa;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Repository
 public class UserRepositoryImpl implements UserRepository {
@@ -29,7 +31,7 @@ public class UserRepositoryImpl implements UserRepository {
   }
 
   @Override
-  public Optional<User> findByIdWithProfilesAndPrivileges(Integer id) {
+  public Optional<User> findByIdWithProfiles(Integer id) {
     Optional<UserEntity> optionalUsersEntity = this.userRepositoryJpa.findById(id);
     return optionalUsersEntity.map(this.userConverter::toDomainWithProfiles);
   }
@@ -57,6 +59,13 @@ public class UserRepositoryImpl implements UserRepository {
   public Optional<User> findAny() {
     Optional<UserEntity> optionalUsersEntity = this.userRepositoryJpa.findTopBy();
     return optionalUsersEntity.map(this.userConverter::toDomain);
+  }
+
+  public List<User> findAll() {
+    List<UserEntity> allUsers = this.userRepositoryJpa.findAll();
+    return allUsers.parallelStream()
+            .map(this.userConverter::toDomain)
+            .collect(Collectors.toList());
   }
 
   @Override

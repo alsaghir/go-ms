@@ -31,16 +31,6 @@ public class CryptoServiceImpl implements CryptoService {
 
   public static void main(String[] args) throws DomainException {
 
-    int intValue = 0;
-    boolean b = (intValue != 0);
-    System.out.println(b);
-    intValue = 1;
-    b = (intValue != 0);
-    System.out.println(b);
-    intValue = 5;
-    b = (intValue != 0);
-    System.out.println(b);
-
     CryptoServiceImpl x = new CryptoServiceImpl();
     System.out.println(
         x.generateJwtTokenForUser(
@@ -85,6 +75,16 @@ public class CryptoServiceImpl implements CryptoService {
       throw new DomainException("Failed to decrypt password", ex, DomainError.UNEXPECTED_ERROR);
     }
     return new String(password, StandardCharsets.UTF_8);
+  }
+
+  @Override
+  public String decryptedPassword(String message,
+                                  String rsaPrivateKey,
+                                  boolean passwordEncrypted) throws DomainException {
+    if(!passwordEncrypted)
+      return message;
+    else
+      return decryptedPassword(message, rsaPrivateKey);
   }
 
   @Override

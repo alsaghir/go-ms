@@ -1,8 +1,10 @@
 package com.goms.application.service;
 
 import com.goms.application.service.data.UserDetailsData;
+import com.goms.application.service.data.UserInfoData;
 import com.goms.application.shared.ApplicationException;
-import com.goms.domain.model.user.User;
+
+import java.util.Set;
 
 public interface UserManagementService {
 
@@ -11,6 +13,7 @@ public interface UserManagementService {
 
   Integer verifyTokenAndExtractUserIdFrom(String token) throws ApplicationException;
 
-
   UserDetailsData retrieveUserDetails();
+
+  Set<UserInfoData> retrieveAllUsersInfo();
 }

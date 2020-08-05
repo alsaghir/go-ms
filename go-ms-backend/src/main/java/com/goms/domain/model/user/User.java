@@ -7,45 +7,46 @@ import com.goms.domain.shared.DomainException;
 
 import java.util.Set;
 
-;
-
 public class User {
 
   private Integer id;
   private final String email;
-  private Password password;
+  private final Password password;
   private boolean active;
   private String firstName;
   private String lastName;
   private Set<Profile> profiles;
 
-  public User(String email, Password password) {
+  private User(String email, Password password) {
     this.email = email;
     this.password = password;
   }
 
-  public User(Integer id, String email, Password password, boolean active) {
+  public User(
+      Integer id,
+      String email,
+      Password password,
+      boolean active,
+      String firstName,
+      String lastName) {
     this(email, password, active);
-    this.id = id;;
+    this.id = id;
+    this.firstName = firstName;
+    this.lastName = lastName;
   }
 
-  public User(String email, Password password, boolean active) {
+  private User(String email, Password password, boolean active) {
     this(email, password);
     this.active = active;
   }
 
-  public static User of(String email, Password password) throws DomainException {
+  public static User of(
+      String email, Password password, boolean active, String firstName, String lastName)
+      throws DomainException {
 
     if (email == null || email.isBlank() || password == null)
-      throw new DomainException("Error instantiating user per input validation", DomainError.UNEXPECTED_ERROR);
-
-    return new User(email, password);
-  }
-
-  public static User of(String email, Password password, boolean active, String firstName, String lastName) throws DomainException {
-
-    if (email == null || email.isBlank() || password == null)
-      throw new DomainException("Error instantiating user per input validation", DomainError.UNEXPECTED_ERROR);
+      throw new DomainException(
+          "Error instantiating user per input validation", DomainError.UNEXPECTED_ERROR);
 
     return new User(email, password, active).assignFirstName(firstName).assignLastName(lastName);
   }
@@ -54,7 +55,7 @@ public class User {
     return this.id;
   }
 
-  public String email(){
+  public String email() {
     return this.email;
   }
 
@@ -70,15 +71,11 @@ public class User {
     return password;
   }
 
-  public User assignPassword(Password password) {
-    this.password = password;
-    return this;
-  }
-
   public User assignFirstName(String firstName) {
     this.firstName = firstName;
     return this;
   }
+
   public User assignLastName(String lastName) {
     this.lastName = lastName;
     return this;
@@ -98,9 +95,8 @@ public class User {
   }
 
   public String generateToken(
-          CryptoService cryptoService, String jwtSigningKey, String jwtExpirationTime)
-          throws DomainException {
+      CryptoService cryptoService, String jwtSigningKey, String jwtExpirationTime)
+      throws DomainException {
     return cryptoService.generateJwtTokenForUser(this.id, jwtSigningKey, jwtExpirationTime);
   }
-
 }

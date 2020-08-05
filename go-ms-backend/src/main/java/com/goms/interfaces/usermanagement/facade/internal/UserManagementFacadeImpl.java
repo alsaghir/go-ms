@@ -2,13 +2,15 @@ package com.goms.interfaces.usermanagement.facade.internal;
 
 import com.goms.application.service.UserManagementService;
 import com.goms.application.service.data.UserDetailsData;
+import com.goms.application.service.data.UserInfoData;
 import com.goms.application.shared.ApplicationException;
-import com.goms.infrastructure.auth.UserPrincipal;
 import com.goms.interfaces.usermanagement.facade.UserManagementFacade;
 import com.goms.interfaces.usermanagement.facade.dto.LoginRequest;
 import com.goms.interfaces.usermanagement.facade.dto.LoginResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.util.Set;
 
 @Component
 public class UserManagementFacadeImpl implements UserManagementFacade {
@@ -38,6 +40,11 @@ public class UserManagementFacadeImpl implements UserManagementFacade {
   @Override
   public UserDetailsData getUserDetails() {
     return this.userManagementService.retrieveUserDetails();
+  }
+
+  @Override
+  public Set<UserInfoData> getUsersInfo() {
+    return this.userManagementService.retrieveAllUsersInfo();
   }
 
 
