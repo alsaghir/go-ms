@@ -1,22 +1,26 @@
 @import '../../../theme/themes';
 
+// override properties from
+// node_modules/primeng/resources/primeng.css
+// node_modules/primeng/resources/themes/nova-dark/theme.css
+
 @include nb-install-component() {
-  ::ng-deep .ui-table .ui-table-thead > tr > th {
+  .ui-table .ui-table-thead > tr > th {
     color: nb-theme(text-basic-color);
     background-color: nb-theme(background-basic-color-1);
     border: 1px solid nb-theme(border-basic-color-3);
   }
 
-  ::ng-deep .ui-table .ui-table-tbody > tr {
+  .ui-table .ui-table-tbody > tr {
     color: nb-theme(text-basic-color);
     background-color: nb-theme(background-basic-color-2);
   }
 
-  ::ng-deep .ui-table .ui-table-tbody > tr > td {
+  .ui-table .ui-table-tbody > tr > td {
     border: 1px solid nb-theme(border-basic-color-3);
   }
 
-  ::ng-deep .ui-table .ui-table-tbody > tr:nth-child(even) {
+  .ui-table .ui-table-tbody > tr:nth-child(even) {
     background-color: nb-theme(background-basic-color-1);
   }
 }
