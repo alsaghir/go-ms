@@ -5,22 +5,20 @@
 // node_modules/primeng/resources/themes/nova-dark/theme.css
 
 @include nb-install-component() {
-  .ui-table .ui-table-thead > tr > th {
+  ::ng-deep .p-datatable .p-datatable-thead > tr > th {
     color: nb-theme(text-basic-color);
-    background-color: nb-theme(background-basic-color-1);
-    border: 1px solid nb-theme(border-basic-color-3);
+    background: nb-theme(background-basic-color-1);
+    border-width: 0 0 1px 0;
+    border-style: solid;
+    border-color: nb-theme(border-basic-color-3);
   }
-
-  .ui-table .ui-table-tbody > tr {
+  ::ng-deep .p-datatable .p-datatable-tbody > tr {
     color: nb-theme(text-basic-color);
-    background-color: nb-theme(background-basic-color-2);
+    background: nb-theme(background-basic-color-1);
   }
-
-  .ui-table .ui-table-tbody > tr > td {
-    border: 1px solid nb-theme(border-basic-color-3);
-  }
-
-  .ui-table .ui-table-tbody > tr:nth-child(even) {
-    background-color: nb-theme(background-basic-color-1);
+  ::ng-deep .p-datatable .p-datatable-tbody > tr > td {
+    border-width: 0 0 1px 0;
+    border-style: solid;
+    border-color: nb-theme(border-basic-color-3);
   }
 }

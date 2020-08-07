@@ -1,21 +1,17 @@
 @import '../../../theme/themes';
 
 @include nb-install-component() {
-  .list-card {
-    nb-card-header {
-      border-bottom: none;
-    }
-
-    nb-card-body {
-      padding: 0;
-    }
-  }
 
   .card-actions {
-    padding: nb-theme(card-padding);
-    position: absolute;
-    right: 0;
-    top: 0;
+    display: inline-flex;
+
+    @include nb-ltr {
+      float: right;
+
+    }
+    @include nb-rtl {
+      float: left;
+    }
   }
 
   ::ng-deep .ui-table .ui-table-thead > tr > th {

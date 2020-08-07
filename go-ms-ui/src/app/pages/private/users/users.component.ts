@@ -1,7 +1,9 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit, TemplateRef, ViewChild} from '@angular/core';
 import {Subject} from 'rxjs';
 import {UserManagementFacade} from '../../../core/facade';
 import {UserInfo} from '../../../common/interface';
+import {NbUtil} from '../../../core/util';
+import {FormBuilder, FormGroup} from '@angular/forms';
 
 
 @Component({
@@ -17,17 +19,30 @@ export class UsersComponent implements OnInit, OnDestroy {
 
   users: UserInfo[] = null;
 
+  createUserForm: FormGroup;
+  showCreateUserForm = false;
+
   usersDataToDisplay = [
     {header: 'email', field: 'email'},
     {header: 'firstName', field: 'firstName'},
     {header: 'lastName', field: 'lastName'}
   ];
 
-  constructor(private userManagementFacade: UserManagementFacade) {
+  constructor(private formBuilder: FormBuilder,
+              private userManagementFacade: UserManagementFacade,
+              private nbUtil: NbUtil) {
   }
 
   ngOnInit(): void {
     this.userManagementFacade.getUsers$().subscribe(usersInfo => this.users = usersInfo);
+
+    this.createUserForm = this.formBuilder.group(
+      {
+        email: [''],
+        firstName: [''],
+        lastName: ['']
+      });
+
   }
 
   ngOnDestroy(): void {
@@ -37,5 +52,9 @@ export class UsersComponent implements OnInit, OnDestroy {
 
   showAddUserForm(): void {
     this.isShowAddUserForm = true;
+  }
+
+  createUser($event: any): void {
+    console.log($event);
   }
 }

@@ -1,5 +1,5 @@
 import {ModuleWithProviders, NgModule, Optional, SkipSelf} from '@angular/core';
-import {NbMenuModule, NbSidebarModule, NbThemeModule, NbToastrModule} from '@nebular/theme';
+import {NbMenuModule, NbSidebarModule, NbThemeModule, NbToastrModule, NbWindowModule} from '@nebular/theme';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 
 import {NbAuthModule} from '@nebular/auth';
@@ -21,13 +21,17 @@ export const CORE_PROVIDERS = [
     ]
   }).providers,
   NbSecurityModule.forRoot().providers,
+  { provide: NbRoleProvider, useClass: RoleProviderFacade },
+
   NbThemeModule.forRoot({
     name: 'cosmic',
   }).providers,
+
   NbToastrModule.forRoot().providers,
   NbSidebarModule.forRoot().providers,
   NbMenuModule.forRoot().providers,
-  { provide: NbRoleProvider, useClass: RoleProviderFacade }
+  NbWindowModule.forRoot().providers
+
 ];
 
 export const HTTP_CLIENT_INTERCEPTORS = [

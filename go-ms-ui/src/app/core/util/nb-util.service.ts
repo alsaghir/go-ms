@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {Injectable, TemplateRef} from '@angular/core';
 import {
   NbComponentStatus,
   NbGlobalPosition,
@@ -9,7 +9,8 @@ import {
   NbSidebarService,
   NbThemeService,
   NbToastRef,
-  NbToastrService
+  NbToastrService,
+  NbWindowService
 } from '@nebular/theme';
 import {LayoutDirection} from '../../common/constant';
 import {Observable} from 'rxjs';
@@ -17,6 +18,9 @@ import {NbMediaBreakpoint} from '@nebular/theme/services/breakpoints.service';
 import {NbAuthResult, NbAuthService, NbAuthToken, NbTokenService, NbTokenStorage} from '@nebular/auth';
 import {UserCredentials} from '../../common/interface';
 import {NbAccessControl, NbAclService} from '@nebular/security';
+import {NbComponentType} from '@nebular/theme/components/cdk/overlay/mapping';
+import {NbWindowConfig} from '@nebular/theme/components/window/window.options';
+import {NbWindowRef} from '@nebular/theme/components/window/window-ref';
 
 @Injectable({providedIn: 'root'})
 export class NbUtil {
@@ -30,7 +34,8 @@ export class NbUtil {
               private nbTokenService: NbTokenService,
               private nbTokenStorage: NbTokenStorage,
               private nbAuthService: NbAuthService,
-              private nbAclService: NbAclService) {
+              private nbAclService: NbAclService,
+              private nbWindowService: NbWindowService) {
   }
 
   private toastService(): NbToastrService {
@@ -117,6 +122,15 @@ export class NbUtil {
 
   setAccessControl(list: NbAccessControl): void {
     return this.aclService().setAccessControl(list);
+  }
+
+  private windowService(): NbWindowService {
+    return this.nbWindowService;
+  }
+
+  openWindow(windowContent: TemplateRef<any> | NbComponentType,
+             windowConfig?: Partial<NbWindowConfig>): NbWindowRef {
+    return this.windowService().open(windowContent, windowConfig);
   }
 
 }

@@ -1,14 +1,91 @@
-<div class="lists row">
+<div class="row">
   <div class="col-md-12 col-lg-6 col-xxxl-6">
-    <nb-card class="list-card">
+    <nb-card>
+      <nb-card-header><span>Users</span>
+        <nb-actions size="medium" class="card-actions">
+          <nb-action matRipple icon="plus-square-outline" (click)="showCreateUserForm = true"></nb-action>
+        </nb-actions>
+      </nb-card-header>
       <nb-card-body>
-
         <app-table [dataObjects]="users"
                    [columnsData]="usersDataToDisplay">
         </app-table>
+      </nb-card-body>
+    </nb-card>
+  </div>
+  <div class="col-md-12 col-lg-6 col-xxxl-6">
+    <nb-card *ngIf="showCreateUserForm">
+      <nb-card-header>New User</nb-card-header>
+      <nb-card-body>
+        <form [formGroup]="createUserForm" (ngSubmit)="createUser($event)">
 
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label class="label" for="email">Email</label>
+                <input formControlName="email"
+                       nbInput
+                       fullWidth
+                       type="email"
+                       id="email"
+                       fieldSize="large"
+                       placeholder="Email"
+                       autofocus
+                       [status]="createUserForm.dirty ? (createUserForm.invalid  ? 'danger' : 'success') : 'basic'"
+                       required
+                       email/>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label class="label" for="firstName">First Name</label>
+                <input formControlName="firstName"
+                       nbInput
+                       fullWidth
+                       type="text"
+                       id="firstName"
+                       fieldSize="large"
+                       placeholder="First Name"
+                       autofocus
+                       [status]="createUserForm.dirty ? (createUserForm.invalid  ? 'danger' : 'success') : 'basic'"
+                       minlength="3"
+                       maxlength="12"
+                       required/>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="form-group">
+                    <span class="label-with-link">
+                      <label class="label" for="lastName"><ng-container i18n>Last Name</ng-container>:</label>
+                    </span>
+                <input formControlName="lastName"
+                       nbInput
+                       fullWidth
+                       type="text"
+                       id="lastName"
+                       fieldSize="large"
+                       placeholder="Last Name"
+                       autofocus
+                       [status]="createUserForm.dirty ? (createUserForm.invalid  ? 'danger' : 'success') : 'basic'"
+                       minlength="3"
+                       maxlength="12"
+                       required/>
+              </div>
+            </div>
+          </div>
+
+
+          <button nbButton
+                  status="primary"
+                  size="large"
+                  [disabled]="!createUserForm.valid">
+            Create
+          </button>
+        </form>
       </nb-card-body>
     </nb-card>
   </div>
 </div>
-
