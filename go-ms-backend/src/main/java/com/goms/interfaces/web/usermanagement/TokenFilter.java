@@ -1,10 +1,9 @@
-package com.goms.interfaces.usermanagement.web;
+package com.goms.interfaces.web.usermanagement;
 
-
+import com.goms.application.service.UserManagementService;
 import com.goms.application.shared.ApplicationException;
 import com.goms.infrastructure.auth.MutableHttpServletRequest;
 import com.goms.infrastructure.config.UserDetailsLoadingService;
-import com.goms.interfaces.usermanagement.facade.UserManagementFacade;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -37,20 +36,20 @@ import static org.springframework.http.HttpHeaders.AUTHORIZATION;
  */
 public class TokenFilter extends OncePerRequestFilter {
 
-  private UserManagementFacade userManagementFacade;
+  private UserManagementService userManagementService;
   private UserDetailsLoadingService userDetailsLoadingService;
 
   @Override
   protected void doFilterInternal(
-          HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
+      HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
       throws IOException, ServletException {
 
     // Dependencies
-    if (userManagementFacade == null) {
+    if (userManagementService == null) {
       WebApplicationContext ctx =
           WebApplicationContextUtils.getWebApplicationContext(request.getServletContext());
       if (ctx != null) {
-        userManagementFacade = ctx.getBean(UserManagementFacade.class);
+        userManagementService = ctx.getBean(UserManagementService.class);
         userDetailsLoadingService = ctx.getBean(UserDetailsLoadingService.class);
       }
     }
@@ -71,7 +70,7 @@ public class TokenFilter extends OncePerRequestFilter {
 
       Integer userId;
       try {
-        userId = this.userManagementFacade.validateAndExtractUserIdFromToken(token);
+        userId = this.userManagementService.verifyTokenAndExtractUserIdFrom(token);
 
         UserDetails userDetails = userDetailsLoadingService.loadUserByUserId(userId);
         UsernamePasswordAuthenticationToken authentication =

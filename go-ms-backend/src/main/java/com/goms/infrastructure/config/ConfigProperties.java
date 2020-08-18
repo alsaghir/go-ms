@@ -2,7 +2,9 @@ package com.goms.infrastructure.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.kafka.annotation.EnableKafka;
 
+@EnableKafka
 @Configuration
 @ConfigurationProperties(prefix = "app.config")
 public class ConfigProperties {

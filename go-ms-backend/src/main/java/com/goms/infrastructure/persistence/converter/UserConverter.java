@@ -18,11 +18,13 @@ public class UserConverter {
   }
 
   public UserEntity toPersistenceEntity(User user) {
-    return new UserEntity()
-        .setId(user.id())
-        .setPassword(user.password().value())
-        .setEmail(user.email())
-        .setActive(user.isActive())
+    return new UserEntity(
+            user.id(),
+            user.email(),
+            user.password().value(),
+            user.isActive(),
+            user.firstName(),
+            user.lastName())
         .setProfileEntitySet(
             user.profiles() == null
                 ? null

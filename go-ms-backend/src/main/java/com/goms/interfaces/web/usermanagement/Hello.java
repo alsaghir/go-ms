@@ -1,4 +1,4 @@
-package com.goms.interfaces.usermanagement.web;
+package com.goms.interfaces.web.usermanagement;
 
 import com.goms.infrastructure.utility.APIController;
 import org.springframework.http.HttpStatus;

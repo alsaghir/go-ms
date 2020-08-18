@@ -140,6 +140,13 @@
         </dependency>
         <!-- START Spring dependencies -->
 
+        <!-- START ION Format Jackson dependencies -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.dataformat</groupId>
+            <artifactId>jackson-dataformat-ion</artifactId>
+        </dependency>
+        <!-- END ION Format Jackson dependencies -->
+
         <!-- START Log4J2 dependencies -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

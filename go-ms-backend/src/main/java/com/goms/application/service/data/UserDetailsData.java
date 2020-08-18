@@ -43,4 +43,14 @@ public class UserDetailsData {
         this.profileDataSet = profileDataSet;
         return this;
     }
+
+    @Override
+    public String toString() {
+        return "UserDetailsData{" +
+                "email='" + email + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", profileDataSet=" + profileDataSet +
+                '}';
+    }
 }

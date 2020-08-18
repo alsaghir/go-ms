@@ -42,6 +42,17 @@ public class UserEntity {
       inverseJoinColumns = @JoinColumn(name = "PROFILE_ID", referencedColumnName = "ID"))
   private Set<ProfileEntity> profileEntitySet;
 
+  UserEntity() {}
+
+  public UserEntity(Integer id, String email, String password, boolean active, String firstName, String lastName) {
+    this.id = id;
+    this.email = email;
+    this.password = password;
+    this.active = active;
+    this.firstName = firstName;
+    this.lastName = lastName;
+  }
+
   public Integer getId() {
     return id;
   }

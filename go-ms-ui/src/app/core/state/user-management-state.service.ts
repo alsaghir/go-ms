@@ -7,11 +7,11 @@ import {Profile, UserDetails, UserInfo} from '../../common/interface';
 export class UserManagementState {
 
   private nbAuthResult$ = new BehaviorSubject<NbAuthResult>(new NbAuthResult(false));
-  private updating$ = new BehaviorSubject<boolean>(false);
   private userDetails$ = new BehaviorSubject<UserDetails>(null);
   private userDetailsLoaded = false;
   private usersInfo$ = new BehaviorSubject<UserInfo[]>(null);
   private usersInfoLoaded = false;
+  private usersInfoUpdating = false;
   private profiles$ = new BehaviorSubject<Profile[]>(null);
   private profilesLoaded = false;
 
@@ -26,14 +26,6 @@ export class UserManagementState {
   setUserDetails(userDetails: UserDetails): void {
     this.userDetailsLoaded = true;
     this.userDetails$.next(userDetails);
-  }
-
-  setUpdating(isUpdating: boolean): void {
-    this.updating$.next(isUpdating);
-  }
-
-  isUpdating$(): Observable<boolean> {
-    return this.updating$.asObservable();
   }
 
   getUserDetails$(): Observable<UserDetails> {
@@ -54,6 +46,18 @@ export class UserManagementState {
 
   isUsersInfoLoaded(): boolean {
     return this.usersInfoLoaded;
+  }
+
+  setUsersInfoLoaded(usersInfoLoaded: boolean): void {
+    this.usersInfoLoaded = usersInfoLoaded;
+  }
+
+  isUsersInfoUpdating$(): boolean {
+    return this.usersInfoUpdating;
+  }
+
+  setUsersInfoUpdating(usersInfoUpdating: boolean): void {
+    this.usersInfoUpdating = usersInfoUpdating;
   }
 
   isProfilesLoaded(): boolean {

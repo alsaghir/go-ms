@@ -42,7 +42,7 @@ public class InitiationServiceImpl implements InitiationService {
   }
 
   @Override
-  @Transactional
+  @Transactional(transactionManager = "transactionManager")
   public void storeDefaultData() throws DomainException {
     if (initializationIsRequired()) {
       initializePrivileges();

@@ -3,7 +3,7 @@
     <nb-card>
       <nb-card-header><span>Users</span>
         <nb-actions size="medium" class="card-actions">
-          <nb-action matRipple icon="plus-square-outline" (click)="showCreateUserForm = true"></nb-action>
+          <nb-action matRipple icon="plus-square-outline" (click)="setShowCreateUserForm(true)"></nb-action>
         </nb-actions>
       </nb-card-header>
       <nb-card-body>
@@ -77,11 +77,10 @@
             </div>
           </div>
 
-
           <button nbButton
                   status="primary"
                   size="large"
-                  [disabled]="!createUserForm.valid">
+                  [disabled]="!createUserForm.valid || createUserFormSubmitted">
             Create
           </button>
         </form>

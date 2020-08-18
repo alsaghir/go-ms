@@ -1,7 +1,7 @@
 package com.goms.infrastructure.config;
 
-import com.goms.interfaces.usermanagement.web.JwtAuthenticationEntryPoint;
-import com.goms.interfaces.usermanagement.web.TokenFilter;
+import com.goms.interfaces.web.usermanagement.JwtAuthenticationEntryPoint;
+import com.goms.interfaces.web.usermanagement.TokenFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

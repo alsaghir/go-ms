@@ -6,6 +6,7 @@ import {UserManagementState} from '../state';
 import {tap} from 'rxjs/operators';
 import {UserManagementApi} from '../api';
 import {NbUtil} from '../util';
+import {HttpResponse} from '@angular/common/http';
 
 @Injectable({providedIn: 'root'})
 export class UserManagementFacade {
@@ -15,12 +16,10 @@ export class UserManagementFacade {
   }
 
   authenticate(strategyName: string, data: UserCredentials): Observable<NbAuthResult> {
-    this.userManagementState.setUpdating(true);
     return this.nbUtil.authenticate(strategyName, data)
       .pipe(
         tap(nbAuthResult => {
           this.userManagementState.setNbAuthResult(nbAuthResult);
-          this.userManagementState.setUpdating(false);
         })
       );
   }
@@ -50,5 +49,15 @@ export class UserManagementFacade {
       return this.userManagementApi.getUsersInfo$()
         .pipe(tap(usersInfo => this.userManagementState.setUsersInfo(usersInfo)));
     }
+  }
+
+  addUser(userInfo: UserInfo): Observable<HttpResponse<any>> {
+    this.userManagementState.setUsersInfoUpdating(true);
+    return this.userManagementApi.addUser(userInfo).pipe(
+      tap(response => {
+        this.userManagementState.setUsersInfoUpdating(false);
+        this.userManagementState.setUsersInfoLoaded(false);
+      })
+    );
   }
 }

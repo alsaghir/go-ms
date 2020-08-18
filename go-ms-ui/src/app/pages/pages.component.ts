@@ -73,7 +73,9 @@ export class PagesComponent implements OnInit, OnDestroy {
           profiles.forEach(profile => {
             const nbAclRole: NbAclRole = {};
             profile.privileges.forEach(privilege => nbAclRole[privilege] = '*');
+            console.log(nbAclRole);
             nbAcl[profile.id.toString()] = nbAclRole;
+            console.log(nbAcl);
           });
           this.nbUtil.setAccessControl(nbAcl);
         },

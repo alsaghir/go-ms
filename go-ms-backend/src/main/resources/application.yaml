@@ -18,6 +18,28 @@ spring:
   main:
     lazy-initialization: true
 
+  kafka:
+    bootstrap-servers:
+      - localhost:9091
+      - localhost:9092
+      - localhost:9093
+    producer:
+      transaction-id-prefix: kafka-transaction_
+      acks: all
+    consumer:
+      group-id: foo
+      properties:
+        spring.json.trusted.packages: "*"
+        allow.auto.create.topics: false
+      auto-offset-reset: earliest
+      enable-auto-commit: false
+    admin:
+      properties:
+        request.timeout.ms: 5000
+      fail-fast: true
+    listener:
+      missing-topics-fatal: true
+
 
 app:
   config:
@@ -93,3 +115,9 @@ logging:
       springframework:
         transaction: DEBUG
         security: DEBUG
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'

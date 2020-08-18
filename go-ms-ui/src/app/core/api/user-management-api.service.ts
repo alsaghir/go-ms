@@ -56,4 +56,9 @@ export class UserManagementApi {
     const apiUrl = BackendUrls.API_ENDPOINT(BackendUrls.API_PROFILES);
     return this.http.get<Profile[]>(apiUrl);
   }
+
+  addUser(userInfo: UserInfo): Observable<HttpResponse<any>> {
+    const apiUrl = BackendUrls.API_ENDPOINT(BackendUrls.API_USER);
+    return this.http.post(apiUrl, userInfo, {observe: 'response'});
+  }
 }

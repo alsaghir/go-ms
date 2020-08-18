@@ -1,4 +1,4 @@
-package com.goms.interfaces.usermanagement.web;
+package com.goms.interfaces.web.usermanagement;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
