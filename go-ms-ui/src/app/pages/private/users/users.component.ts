@@ -35,7 +35,6 @@ export class UsersComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.destroy$))
       .subscribe(usersInfo => {
         this.users = usersInfo;
-        console.log(usersInfo);
       });
 
     this.createUserForm = this.formBuilder.group(

@@ -1,7 +1,9 @@
 package com.goms.interfaces.messaging;
 
 import com.goms.application.service.data.UserDetailsData;
+import org.apache.kafka.clients.admin.NewTopic;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.kafka.annotation.KafkaHandler;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -13,7 +15,7 @@ import org.springframework.stereotype.Component;
     topics = "user-topic",
     groupId = "UserListener",
     clientIdPrefix = "cl",
-    autoStartup = "true")
+    autoStartup = "false")
 @Component
 @Lazy(value = false)
 public class UserListener {

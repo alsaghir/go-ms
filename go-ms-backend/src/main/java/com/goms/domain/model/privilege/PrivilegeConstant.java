@@ -4,9 +4,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 public enum PrivilegeConstant {
-  OP_USERS_MANAGEMENT(1);
+  OP_USERS_MANAGEMENT(1, "Users Management");
 
   private final Integer id;
+  private final String description;
   private static final Map<Integer, PrivilegeConstant> lookupOfPrivileges = new HashMap<>();
 
   static {
@@ -15,12 +16,17 @@ public enum PrivilegeConstant {
     }
   }
 
-  PrivilegeConstant(int id) {
+  PrivilegeConstant(int id, String description) {
     this.id = id;
+    this.description = description;
   }
 
   public Integer getId() {
     return id;
+  }
+
+  public String getDescription() {
+    return description;
   }
 
   public static PrivilegeConstant get(Integer id) {

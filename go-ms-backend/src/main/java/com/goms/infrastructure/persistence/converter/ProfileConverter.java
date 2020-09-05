@@ -5,6 +5,7 @@ import com.goms.infrastructure.persistence.entity.ProfileEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -32,11 +33,15 @@ public class ProfileConverter {
                 : this.privilegeConverter.toPrivilegeEntitySet(profile.privileges()));
   }
 
-  public Set<Profile> toDomainSet(Set<ProfileEntity> profileEntities) {
-    return profileEntities.parallelStream().map(this::toDomain).collect(Collectors.toSet());
+  public Set<Profile> toFullDomainSet(Set<ProfileEntity> profileEntities) {
+    return profileEntities.parallelStream().map(this::toFullDomain).collect(Collectors.toSet());
   }
 
-  public Profile toDomain(ProfileEntity profileEntity) {
+  public Set<Profile> toFullDomainSet(List<ProfileEntity> profileEntities) {
+    return profileEntities.parallelStream().map(this::toFullDomain).collect(Collectors.toSet());
+  }
+
+  public Profile toFullDomain(ProfileEntity profileEntity) {
     return new Profile(profileEntity.getId(), profileEntity.getName())
         .assignPrivileges(
             profileEntity.getPrivilegeEntitySet() == null

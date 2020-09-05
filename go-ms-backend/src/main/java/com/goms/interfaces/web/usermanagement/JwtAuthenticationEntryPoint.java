@@ -1,7 +1,7 @@
 package com.goms.interfaces.web.usermanagement;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.stereotype.Component;
@@ -13,13 +13,11 @@ import java.io.IOException;
 @Component
 public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
 
-  private final Logger logger = LoggerFactory.getLogger(JwtAuthenticationEntryPoint.class);
+  private final Logger logger = LogManager.getLogger(JwtAuthenticationEntryPoint.class);
 
   @Override
   public void commence(
-      HttpServletRequest request,
-      HttpServletResponse response,
-      AuthenticationException ex)
+      HttpServletRequest request, HttpServletResponse response, AuthenticationException ex)
       throws IOException {
     logger.error("Responding with unauthorized error. Message - {}", ex.getMessage());
     response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Unauthorized");

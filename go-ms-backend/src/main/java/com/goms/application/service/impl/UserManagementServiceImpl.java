@@ -8,6 +8,8 @@ import com.goms.application.service.data.UserInfoData;
 import com.goms.application.shared.ApplicationException;
 import com.goms.domain.model.config.AppConfig;
 import com.goms.domain.model.config.AppConfigRepository;
+import com.goms.domain.model.profile.Profile;
+import com.goms.domain.model.profile.ProfileRepository;
 import com.goms.domain.model.user.Password;
 import com.goms.domain.model.user.PasswordState;
 import com.goms.domain.model.user.User;
@@ -29,27 +31,34 @@ import java.util.stream.Collectors;
 @Service
 public class UserManagementServiceImpl implements UserManagementService {
 
-  private final UserRepository userRepository;
   private final AppConfigRepository appConfigRepository;
-  private final CryptoService cryptoService;
   private final AuthService authService;
+  private final CryptoService cryptoService;
   private final EventService eventService;
+  private final ProfileRepository profileRepository;
+  private final UserRepository userRepository;
 
   @Autowired
   public UserManagementServiceImpl(
-          UserRepository userRepository,
-          AppConfigRepository appConfigRepository,
-          CryptoService cryptoService,
-          AuthService authService,
-          EventService eventService) {
-    this.userRepository = userRepository;
+      AppConfigRepository appConfigRepository,
+      AuthService authService,
+      CryptoService cryptoService,
+      EventService eventService,
+      ProfileRepository profileRepository,
+      UserRepository userRepository) {
+
     this.appConfigRepository = appConfigRepository;
-    this.cryptoService = cryptoService;
     this.authService = authService;
+    this.cryptoService = cryptoService;
     this.eventService = eventService;
+    this.profileRepository = profileRepository;
+    this.userRepository = userRepository;
   }
 
-  @Transactional(transactionManager = "transactionManager", rollbackFor = ApplicationException.class, readOnly = true)
+  @Transactional(
+      transactionManager = "transactionManager",
+      rollbackFor = ApplicationException.class,
+      readOnly = true)
   @Override
   public String generateToken(String email, String password, boolean passwordEncrypted)
       throws ApplicationException {
@@ -133,18 +142,36 @@ public class UserManagementServiceImpl implements UserManagementService {
   }
 
   @Override
+  public Set<ProfileData> profilesAndPrivileges() {
+    Set<Profile> profiles = this.profileRepository.findAll();
+
+    return profiles.parallelStream()
+        .map(
+            profile ->
+                new ProfileData()
+                    .setId(profile.id())
+                    .setName(profile.name())
+                    .setPrivileges(
+                        profile.privileges().parallelStream()
+                            .map(privilege -> privilege.privilegeConstant().name())
+                            .collect(Collectors.toSet())))
+        .collect(Collectors.toSet());
+  }
+
+  @Override
   public void createNewUser(CreateUserCommand createUserCommand) throws ApplicationException {
     try {
-      User createdUser = this.userRepository.saveFull(
+      User createdUser =
+          this.userRepository.saveFull(
               User.of(
-                      createUserCommand.getEmail(),
-                      Password.of("123", PasswordState.RAW),
-                      false,
-                      createUserCommand.getFirstName(),
-                      createUserCommand.getLastName()));
+                  createUserCommand.getEmail(),
+                  Password.of("123", PasswordState.RAW),
+                  false,
+                  createUserCommand.getFirstName(),
+                  createUserCommand.getLastName()));
 
-
-      this.eventService.publish(createdUser.id(), new UserDetailsData().setEmail(createdUser.email()));
+      this.eventService.publish(
+          createdUser.id(), new UserDetailsData().setEmail(createdUser.email()));
 
     } catch (DomainException domainException) {
       throw new ApplicationException(domainException);

@@ -116,6 +116,14 @@ export class NbUtil {
     return this.authService().authenticate(strategyName, data);
   }
 
+  onTokenChange(): Observable<NbAuthToken> {
+    return this.authService().onTokenChange();
+  }
+
+  isAuthenticated(): Observable<boolean> {
+    return this.authService().isAuthenticated();
+  }
+
   private aclService(): NbAclService {
     return this.nbAclService;
   }

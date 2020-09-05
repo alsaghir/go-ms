@@ -1,3 +1,6 @@
+-- Creating schema
+CREATE SCHEMA U;
+
 -- Default schema is APP
 SET SCHEMA U;
 

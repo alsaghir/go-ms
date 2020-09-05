@@ -15,7 +15,7 @@ export class Helper {
   validateConstantProperties(object: any): void {
     const keys = Object.keys(object);
     for (const key of keys) {
-      if (object.hasOwnProperty(key) && object[key] !== key) {
+      if (!object.hasOwnProperty(key) || object[key] !== key) {
         throw new TypeError(`key ${key} has unexpected value ${object[key]}`);
       }
     }

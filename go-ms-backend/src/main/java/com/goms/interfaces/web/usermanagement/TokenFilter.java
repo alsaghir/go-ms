@@ -62,7 +62,9 @@ public class TokenFilter extends OncePerRequestFilter {
 
     MutableHttpServletRequest mutableRequest = new MutableHttpServletRequest(request);
 
-    if (authHeader != null && StringUtils.startsWithIgnoreCase(authHeader, "Bearer ")) {
+    if (!isAuthEndpoint(request)
+        && authHeader != null
+        && StringUtils.startsWithIgnoreCase(authHeader, "Bearer ")) {
 
       if (debug) this.logger.debug("Authorization header found");
 
@@ -87,5 +89,9 @@ public class TokenFilter extends OncePerRequestFilter {
     }
 
     filterChain.doFilter(mutableRequest, response);
+  }
+
+  private boolean isAuthEndpoint(HttpServletRequest request) {
+    return request.getServletPath().endsWith("/api/login");
   }
 }

@@ -6,6 +6,7 @@ export class ErrorLocaleName {
 
   readonly UNEXPECTED_ERROR = 'UNEXPECTED_ERROR';
   readonly EXPECTED_ERROR = 'EXPECTED_ERROR';
+  readonly BAD_CREDENTIALS = 'BAD_CREDENTIALS';
 
 
   private constructor() {

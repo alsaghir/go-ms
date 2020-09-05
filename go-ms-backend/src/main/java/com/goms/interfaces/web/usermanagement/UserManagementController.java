@@ -8,12 +8,15 @@ import com.goms.application.service.data.UserInfoData;
 import com.goms.application.shared.ApplicationException;
 import com.goms.infrastructure.utility.APIController;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.configurationprocessor.json.JSONException;
+import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import java.util.HashMap;
 import java.util.Set;
 
 @APIController
@@ -30,11 +33,16 @@ public class UserManagementController {
       value = "/login",
       consumes = MediaType.APPLICATION_JSON_VALUE,
       produces = MediaType.APPLICATION_JSON_VALUE)
-  public String login(@RequestBody GenerateJwtTokenCommand generateJwtTokenCommand) throws ApplicationException {
-    return this.userManagementService.generateToken(
-        generateJwtTokenCommand.getEmail(),
-        generateJwtTokenCommand.getPassword(),
-        generateJwtTokenCommand.isPasswordEncrypted());
+  public HashMap<String, String> login(@RequestBody GenerateJwtTokenCommand generateJwtTokenCommand)
+      throws ApplicationException {
+    HashMap<String, String> response = new HashMap<>();
+    response.put(
+        "token",
+        this.userManagementService.generateToken(
+            generateJwtTokenCommand.getEmail(),
+            generateJwtTokenCommand.getPassword(),
+            generateJwtTokenCommand.isPasswordEncrypted()));
+    return response;
   }
 
   @GetMapping("/user")

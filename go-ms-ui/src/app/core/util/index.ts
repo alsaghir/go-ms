@@ -1,3 +1,4 @@
+export * from './auth-guard.service';
 export * from './backend-interceptor.service';
 export * from './common-util.service';
 export * from './crypto-util.service';

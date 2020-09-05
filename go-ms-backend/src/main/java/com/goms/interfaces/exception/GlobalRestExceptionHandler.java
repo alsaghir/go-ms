@@ -4,8 +4,9 @@ import com.goms.application.shared.ApplicationException;
 import com.goms.domain.shared.DomainError;
 import com.goms.interfaces.exception.dto.ApiError;
 import com.goms.interfaces.exception.dto.ApiSubError;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+
+import org.apache.logging.log4j.Logger;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
@@ -26,7 +27,7 @@ import java.util.stream.Collectors;
 @RestControllerAdvice
 public final class GlobalRestExceptionHandler extends ResponseEntityExceptionHandler {
 
-  private final Logger logger = LoggerFactory.getLogger(GlobalRestExceptionHandler.class);
+  private final Logger logger = LogManager.getLogger(GlobalRestExceptionHandler.class);
 
   @ExceptionHandler(value = ApplicationException.class)
   protected ResponseEntity<Object> handleApplicationException(

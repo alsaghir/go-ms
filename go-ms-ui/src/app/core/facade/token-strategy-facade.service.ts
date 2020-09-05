@@ -28,6 +28,7 @@ export class TokenStrategyFacade extends NbAuthStrategy {
 
     if (PASSWORD_ENCRYPTION_ENABLED) {
       userData.password = this.encrypt(userData.password);
+      userData.passwordEncrypted = true;
     }
 
     return this.userManagementApi.getJwtToken$(userData, this.getName());

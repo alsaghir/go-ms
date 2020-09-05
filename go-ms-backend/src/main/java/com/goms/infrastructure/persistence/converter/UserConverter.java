@@ -52,6 +52,6 @@ public class UserConverter {
         .assignProfiles(
             userEntity.getProfileEntitySet() == null
                 ? null
-                : this.profileConverter.toDomainSet(userEntity.getProfileEntitySet()));
+                : this.profileConverter.toFullDomainSet(userEntity.getProfileEntitySet()));
   }
 }

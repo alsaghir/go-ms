@@ -37,7 +37,7 @@ export class UserManagementState {
   }
 
   setUsersInfo(usersInfo: UserInfo[]): void {
-    this.usersInfo$.asObservable();
+    this.usersInfo$.next(usersInfo);
   }
 
   getUsersInfo$(): Observable<UserInfo[]> {

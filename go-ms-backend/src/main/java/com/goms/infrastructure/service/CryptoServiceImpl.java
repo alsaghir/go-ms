@@ -92,14 +92,14 @@ public class CryptoServiceImpl implements CryptoService {
       throws DomainException {
     String subject = id.toString();
     byte[] secret = Base64.getDecoder().decode(jwtSigningKey);
-    Date expirationTime = new Date(TimeUnit.SECONDS.toMillis(Long.parseLong(jwtExpirationTime)));
 
     // Construct claims to be part of the generated JWT
     JWTClaimsSet claims =
         new JWTClaimsSet.Builder()
             .subject(subject)
-            .issueTime(new Date())
-            .expirationTime(expirationTime)
+            .expirationTime(
+                    new Date(new Date().getTime()
+                            + TimeUnit.SECONDS.toMillis(Long.parseLong(jwtExpirationTime))))
             .build();
 
     JWSHeader header = new JWSHeader(JWSAlgorithm.HS512); // Needs 512 bit secret key

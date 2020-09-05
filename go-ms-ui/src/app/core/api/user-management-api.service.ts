@@ -32,7 +32,7 @@ export class UserManagementApi {
 
             if ((err.error as ApiError).apiSubErrors != null) {
 
-              errorCodesOrNames.push(...Object.keys((err.error as ApiError).apiSubErrors));
+              errorCodesOrNames.push(...(err.error as ApiError).apiSubErrors.map(apiError => apiError.code));
             } else {
               errorCodesOrNames.push(ErrorLocaleName.instance.UNEXPECTED_ERROR);
             }

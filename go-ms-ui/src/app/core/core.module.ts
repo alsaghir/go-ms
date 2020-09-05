@@ -20,7 +20,11 @@ export const CORE_PROVIDERS = [
       })
     ]
   }).providers,
-  NbSecurityModule.forRoot().providers,
+  NbSecurityModule.forRoot({accessControl: {
+      anonymous: {
+        view: '*',
+      }
+    }}).providers,
   { provide: NbRoleProvider, useClass: RoleProviderFacade },
 
   NbThemeModule.forRoot({
