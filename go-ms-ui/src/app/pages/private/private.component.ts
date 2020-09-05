@@ -31,6 +31,12 @@ export class PrivateComponent implements OnInit {
       icon: 'people-outline',
       link: '/pages/pr/users',
       home: true,
+    },
+    {
+      title: 'Profiles',
+      icon: 'people-outline',
+      link: '/pages/pr/profiles',
+      home: true,
     }
     ];
 

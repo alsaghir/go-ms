@@ -1,6 +1,6 @@
 {
   "API_LOGIN": {
-    "token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIyIiwiZXhwIjoxNTk5MzExMTk2fQ.cT0mJzGL_oBmIm2ZsRx10hlbgTcDdnmDlL12l_fsbGujiAr8-9MUwusAe-qmp6oHkv6F6IryEya999QwxnnTrQ"
+    "token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIyIiwiZXhwIjoxNTk5MzU2MjM2fQ.WU6xsnKYjScd3ECPtlNNOicn79xXUSxpqOEAzcXY2ujX4xQJjkhTl_Zsowrh5k2pYsozYs6SmqHuof4xjCUP7w"
   },
   "API_USER": {
     "email": "email.example.com",

@@ -21,7 +21,7 @@ export class AuthGuard implements CanActivate {
       if (!isAuthenticated)
         this.router.navigate([LOGIN_PATH])
           .then(isSuccessNavigation =>
-            this.logger.debug(isSuccessNavigation ? 'Successful Navigation' : 'Failed Navigation'));
+            this.logger.debug(isSuccessNavigation ? 'Successful Auth Navigation' : 'Failed Auth Navigation'));
     }));
   }
 }

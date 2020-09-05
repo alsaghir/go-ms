@@ -1,9 +1,12 @@
 import {NgModule} from '@angular/core';
 
-import {UsersComponent} from './users/users.component';
-import {SharedModule} from '../../shared/shared.module';
 import {PrivateComponent} from './private.component';
 import {PrivateRoutingModule} from './private-routing.module';
+
+import {SharedModule} from '../../shared/shared.module';
+
+import {ProfilesComponent} from "./profiles/profiles.component";
+import {UsersComponent} from './users/users.component';
 
 @NgModule({
   imports: [
@@ -14,6 +17,7 @@ import {PrivateRoutingModule} from './private-routing.module';
   declarations: [
     PrivateComponent,
 
+    ProfilesComponent,
     UsersComponent
   ],
 })
