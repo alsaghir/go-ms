@@ -43,6 +43,11 @@ export class PrivateComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
+    this.verifyBackendConstants();
+  }
+
+  verifyBackendConstants(): void {
+
   }
 
 }

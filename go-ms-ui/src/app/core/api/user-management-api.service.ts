@@ -6,7 +6,7 @@ import {ApiError, JwtToken, Profile, UserCredentials, UserDetails, UserInfo} fro
 import {catchError, map, tap} from 'rxjs/operators';
 import {NbAuthResult} from '@nebular/auth';
 import {NbJwtToken} from '../../common/implementation';
-import {ErrorLocaleName} from '../../common/constant';
+import {ErrorLocaleName} from '../../common/constant/backendrelated';
 import {LoggerUtil} from '../util';
 
 @Injectable({providedIn: 'root'})

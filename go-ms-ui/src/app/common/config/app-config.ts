@@ -17,4 +17,4 @@ const DEV: EnvironmentProfile = {
 export const API_BACKEND_HOST_ACTIVE = DEV;
 export const PASSWORD_ENCRYPTION_ENABLED = true;
 export const LOGIN_PATH = '/pages/login';
-export const REDIRECT_AFTER_LOGIN_PATH = '/pages/pr/users';
+export const REDIRECT_AFTER_LOGIN_PATH = '/pages/pr/profiles';

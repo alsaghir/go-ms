@@ -3,7 +3,7 @@ import {Observable} from 'rxjs';
 import {NbRoleProvider} from '@nebular/security';
 
 import {UserManagementFacade} from './user-management-facade.service';
-import {flatMap, map} from 'rxjs/operators';
+import {mergeMap, map} from 'rxjs/operators';
 import {NbUtil} from "../util";
 
 @Injectable()
@@ -15,7 +15,7 @@ export class RoleProviderFacade implements NbRoleProvider {
 
   getRole(): Observable<string | string[]> {
     return this.nbUtil.isAuthenticated().pipe(
-      flatMap(isAuthenticated => {
+      mergeMap(isAuthenticated => {
         if (isAuthenticated) {
           return this.userManagementFacade.getUserDetails$()
             .pipe(

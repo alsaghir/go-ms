@@ -3,12 +3,13 @@ import {BehaviorSubject, Subject} from 'rxjs';
 import {map, takeUntil} from 'rxjs/operators';
 
 import {CommonUtil, ErrorLocaleHandlingUtil, LocaleHandlingUtil, LoggerUtil, NbUtil, RippleService} from '../../../core/util';
-import {ErrorLocaleName, LocaleName, THEMES} from '../../../common/constant';
+import {ErrorLocaleName} from '../../../common/constant/backendrelated';
 import {NbMenuItem} from '@nebular/theme';
 import {EventFacade, UserManagementFacade} from '../../../core/facade';
 import {ApiError, UserDetails, UserInfo} from '../../../common/interface';
 import {NbAccessChecker} from '@nebular/security';
 import {PrivilegeConstant} from '../../../common/constant/backendrelated';
+import {LocaleName, THEMES} from "../../../common/constant";
 
 
 @Component({

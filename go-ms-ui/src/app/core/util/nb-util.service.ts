@@ -42,16 +42,30 @@ export class NbUtil {
     return this.nbToastrService;
   }
 
-  showToast(message: string, title: string, position: string | NbGlobalPosition, status: NbComponentStatus): NbToastRef {
-    return this.toastService().show(message, title, {position: position as NbGlobalPosition, status: status as NbComponentStatus});
+  showToast(message: string,
+            title: string,
+            position: string | NbGlobalPosition,
+            status: NbComponentStatus): NbToastRef {
+    return this.toastService().show(message, title, {
+      position: position as NbGlobalPosition,
+      status: status as NbComponentStatus
+    });
   }
 
   dangerToast(message: string, title: string, position: string | NbGlobalPosition): NbToastRef {
     return this.toastService().danger(message, title, {position: position as NbGlobalPosition});
   }
 
+  private layoutDirectionService(): NbLayoutDirectionService {
+    return this.nbLayoutDirectionService;
+  }
+
   setDirection(direction: string | LayoutDirection): void {
-    this.nbLayoutDirectionService.setDirection(direction as NbLayoutDirection);
+    this.layoutDirectionService().setDirection(direction as NbLayoutDirection);
+  }
+
+  getDirection(): LayoutDirection {
+    return this.layoutDirectionService().getDirection() === NbLayoutDirection.LTR ? LayoutDirection.LTR : LayoutDirection.RTL;
   }
 
   private themeService(): NbThemeService {

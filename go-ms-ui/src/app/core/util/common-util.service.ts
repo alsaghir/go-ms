@@ -1,10 +1,11 @@
 import {Injectable} from '@angular/core';
 import {ApiError} from '../../common/interface';
-import {ErrorLocaleName, LocaleName} from '../../common/constant';
+import {ErrorLocaleName} from '../../common/constant/backendrelated';
 import {LoggerUtil} from './logger-util.service';
 import {ErrorLocaleHandlingUtil} from './error-locale-handling-util.service';
 import {LocaleHandlingUtil} from './locale-handling-util.service';
 import {NbUtil} from './nb-util.service';
+import {LocaleName} from "../../common/constant";
 
 @Injectable({providedIn: 'root'})
 export class CommonUtil {

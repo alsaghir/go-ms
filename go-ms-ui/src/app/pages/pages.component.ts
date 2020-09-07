@@ -12,8 +12,7 @@ import {CommonUtil, LoggerUtil, NbUtil} from '../core/util';
 
 @Component({
   selector: 'app-pages',
-  template: `
-    <router-outlet></router-outlet>
+  template: `<router-outlet></router-outlet>
 
     <app-locale-translate>
     </app-locale-translate>

@@ -1,6 +1,6 @@
 import {AfterViewInit, Component, ElementRef, OnInit, QueryList, ViewChildren} from '@angular/core';
 import {ErrorLocaleHandlingUtil} from '../../../core/util';
-import {ErrorLocaleName} from '../../../common/constant';
+import {ErrorLocaleName} from '../../../common/constant/backendrelated';
 
 @Component({
   selector: 'app-error-locale-translate',

@@ -28,7 +28,7 @@ export const CORE_PROVIDERS = [
   { provide: NbRoleProvider, useClass: RoleProviderFacade },
 
   NbThemeModule.forRoot({
-    name: 'cosmic',
+    name: 'cosmic'
   }).providers,
 
   NbToastrModule.forRoot().providers,

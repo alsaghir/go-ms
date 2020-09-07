@@ -1,5 +1,5 @@
 import {ElementRef, Injectable, QueryList} from '@angular/core';
-import {ErrorLocaleName} from '../../common/constant';
+import {ErrorLocaleName} from '../../common/constant/backendrelated';
 import {ApiError} from '../../common/interface';
 
 @Injectable({providedIn: 'root'})

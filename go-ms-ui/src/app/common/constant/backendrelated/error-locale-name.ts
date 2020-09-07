@@ -1,4 +1,4 @@
-import {Helper} from '../implementation';
+import {Helper} from '../../implementation';
 
 export class ErrorLocaleName {
 

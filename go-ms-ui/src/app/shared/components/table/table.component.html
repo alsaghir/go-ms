@@ -1,15 +1,32 @@
-<p-table [columns]="columnsData" [value]="dataObjects" [responsive]="true" [loading]="false" class="p-table">
+<p-table [columns]="columnsData"
+         [value]="dataObjects"
+         [responsive]="true"
+         [loading]="false"
+         class="p-table"
+         editMode="row">
   <ng-template pTemplate="header" let-columns>
     <tr>
       <th *ngFor="let col of columns">
         {{col.header}}
       </th>
+      <th></th>
     </tr>
   </ng-template>
-  <ng-template pTemplate="body" let-dataObject let-columns="columns">
+  <ng-template pTemplate="body" let-dataObject let-columns="columns" let-editing="editing">
     <tr>
       <td *ngFor="let col of columns">
         {{dataObject[col.field]}}
+      </td>
+      <td>
+        <button nbButton status="warning" [ngStyle]="direction === layoutDirections.LTR
+                 ? {'margin-right': '0.5em'}
+                 : {'margin-left': '0.5em'}"
+                (click)="editRowData(dataObject)">
+          <nb-icon icon="edit" pack="eva"></nb-icon>
+        </button>
+        <button nbButton status="danger" (click)="deleteRowData(dataObject)">
+          <nb-icon icon="trash" pack="eva"></nb-icon>
+        </button>
       </td>
     </tr>
   </ng-template>

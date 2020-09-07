@@ -8,17 +8,17 @@
   ::ng-deep .p-datatable .p-datatable-thead > tr > th {
     color: nb-theme(text-basic-color);
     background: nb-theme(background-basic-color-1);
-    border-width: 0 0 1px 0;
-    border-style: solid;
-    border-color: nb-theme(border-basic-color-3);
+    //border-width: 0 0 1px 0;
+    //border-style: solid;
+    border-color: nb-theme(border-basic-color-4);
   }
   ::ng-deep .p-datatable .p-datatable-tbody > tr {
     color: nb-theme(text-basic-color);
     background: nb-theme(background-basic-color-1);
   }
   ::ng-deep .p-datatable .p-datatable-tbody > tr > td {
-    border-width: 0 0 1px 0;
-    border-style: solid;
-    border-color: nb-theme(border-basic-color-3);
+    //border-width: 0 0 1px 0;
+    //border-style: solid;
+    border-color: nb-theme(border-basic-color-4);
   }
 }
