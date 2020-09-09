@@ -19,7 +19,7 @@ public interface UserManagementService {
 
   Set<UserInfoData> retrieveAllUsersInfo();
 
-  Set<ProfileData> profilesAndPrivileges();
+  Set<ProfileData> retrieveProfilesAndPrivileges();
 
   void createNewUser(CreateUserCommand createUserCommand) throws ApplicationException;
 }

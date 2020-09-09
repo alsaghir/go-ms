@@ -9,5 +9,5 @@ import java.util.Set;
 @Repository
 public interface PrivilegeRepositoryJpa extends JpaRepository<PrivilegeEntity, Integer> {
 
-    Set<PrivilegeEntity> findAllBy();
+  Set<PrivilegeEntity> findAllBy();
 }

@@ -3,9 +3,11 @@ package com.goms.interfaces.web.usermanagement;
 import com.goms.application.service.UserManagementService;
 import com.goms.application.service.command.CreateUserCommand;
 import com.goms.application.service.command.GenerateJwtTokenCommand;
+import com.goms.application.service.data.ProfileData;
 import com.goms.application.service.data.UserDetailsData;
 import com.goms.application.service.data.UserInfoData;
 import com.goms.application.shared.ApplicationException;
+import com.goms.domain.model.profile.Profile;
 import com.goms.infrastructure.utility.APIController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.configurationprocessor.json.JSONException;
@@ -65,13 +67,7 @@ public class UserManagementController {
 
   @GetMapping("/profiles")
   @PreAuthorize("isAuthenticated()")
-  public Set<UserInfoData> profiles() {
-    return this.userManagementService.retrieveAllUsersInfo();
-  }
-
-  @GetMapping("/privileges")
-  @PreAuthorize("isAuthenticated()")
-  public Set<UserInfoData> privileges() {
-    return this.userManagementService.retrieveAllUsersInfo();
+  public Set<ProfileData> profiles() {
+    return this.userManagementService.retrieveProfilesAndPrivileges();
   }
 }

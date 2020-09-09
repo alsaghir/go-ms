@@ -1,6 +1,5 @@
 package com.goms.infrastructure.persistence.repository;
 
-
 import com.goms.domain.model.privilege.Privilege;
 import com.goms.domain.model.privilege.PrivilegeConstant;
 import com.goms.domain.model.privilege.PrivilegeRepository;
@@ -32,14 +31,14 @@ public class PrivilegeRepositoryImpl implements PrivilegeRepository {
   }
 
   public Set<Privilege> findAll() {
-    return Set.of(PrivilegeConstant.values())
-        .parallelStream()
+    return Set.of(PrivilegeConstant.values()).parallelStream()
         .map(Privilege::new)
         .collect(Collectors.toSet());
   }
 
   public Set<Privilege> save(Set<Privilege> privileges) {
-    Set<PrivilegeEntity> privilegeEntitySet = this.privilegeConverter.toPrivilegeEntitySet(privileges);
+    Set<PrivilegeEntity> privilegeEntitySet =
+        this.privilegeConverter.toPrivilegeEntitySet(privileges);
     List<PrivilegeEntity> saved = this.privilegeRepositoryJpa.saveAll(privilegeEntitySet);
     return this.privilegeConverter.toDomainSet(saved);
   }

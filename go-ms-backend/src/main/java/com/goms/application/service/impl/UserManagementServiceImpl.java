@@ -142,7 +142,7 @@ public class UserManagementServiceImpl implements UserManagementService {
   }
 
   @Override
-  public Set<ProfileData> profilesAndPrivileges() {
+  public Set<ProfileData> retrieveProfilesAndPrivileges() {
     Set<Profile> profiles = this.profileRepository.findAll();
 
     return profiles.parallelStream()

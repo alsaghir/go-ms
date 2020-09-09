@@ -47,12 +47,12 @@ export class UserManagementApi {
     return this.http.get<UserDetails>(apiUrl);
   }
 
-  getUsersInfo$(): Observable<UserInfo[]> {
-    const apiUrl = BackendUrls.API_ENDPOINT(BackendUrls.API_USERS_INFO);
+  getAllUsersInfo$(): Observable<UserInfo[]> {
+    const apiUrl = BackendUrls.API_ENDPOINT(BackendUrls.API_ALL_USERS);
     return this.http.get<UserInfo[]>(apiUrl);
   }
 
-  getProfiles$(): Observable<Profile[]> {
+  getAllProfiles$(): Observable<Profile[]> {
     const apiUrl = BackendUrls.API_ENDPOINT(BackendUrls.API_PROFILES);
     return this.http.get<Profile[]>(apiUrl);
   }

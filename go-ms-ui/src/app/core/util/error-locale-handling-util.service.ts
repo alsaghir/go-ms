@@ -60,7 +60,11 @@ export class ErrorLocaleHandlingUtil {
   }
 
   private getTranslationFromElementsByCode(errorCode: string): string {
-    return this.inputElements.find((element) => element.nativeElement.id === errorCode).nativeElement.value;
+    let inputElement = this.inputElements.find((element) => element.nativeElement.id === errorCode);
+    if (inputElement == null)
+      inputElement = this.inputElements.find((element) => element.nativeElement.name === ErrorLocaleName.instance.UNEXPECTED_ERROR);
+
+    return inputElement.nativeElement.value;
   }
 
   private getTranslationFromElementsByName(errorName: string): string {

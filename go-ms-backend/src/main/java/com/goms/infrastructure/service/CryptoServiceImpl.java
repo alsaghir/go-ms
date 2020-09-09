@@ -36,7 +36,7 @@ public class CryptoServiceImpl implements CryptoService {
         x.generateJwtTokenForUser(
             15,
             "MTIzNDU2Nzg5QUJDREVGR0hJSktMTU5PUFFSU1RVVlcxMjM0NTY3ODlBQkNERUZHSElKS0xNTk9QUVJTVFVWVw==",
-            "18000"));
+            "1800000"));
   }
 
   private byte[] rsaDecrypt(String message, String privateKey)

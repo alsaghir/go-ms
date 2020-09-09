@@ -1,6 +1,5 @@
 package com.goms.infrastructure.persistence.repository;
 
-
 import com.goms.domain.model.profile.Profile;
 import com.goms.domain.model.profile.ProfileRepository;
 import com.goms.infrastructure.persistence.converter.ProfileConverter;
@@ -21,8 +20,7 @@ public class ProfileRepositoryImpl implements ProfileRepository {
 
   @Autowired
   public ProfileRepositoryImpl(
-      ProfileRepositoryJpa profileRepositoryJpa,
-      ProfileConverter profileConverter) {
+      ProfileRepositoryJpa profileRepositoryJpa, ProfileConverter profileConverter) {
     this.profileRepositoryJpa = profileRepositoryJpa;
     this.profileConverter = profileConverter;
   }
@@ -40,5 +38,9 @@ public class ProfileRepositoryImpl implements ProfileRepository {
     return this.profileConverter.toFullDomainSet(profileEntities);
   }
 
-
+  @Override
+  public Optional<Profile> findById(Integer id) {
+    Optional<ProfileEntity> profile = this.profileRepositoryJpa.findById(id);
+    return profile.map(this.profileConverter::toFullDomain);
+  }
 }

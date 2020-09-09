@@ -1,0 +1,71 @@
+<div class="row">
+    <div class="col-4">
+      <nb-card>
+        <nb-card-header>
+          Users Profiles
+        </nb-card-header>
+
+        <nb-card-body>
+          <app-table [dataObjects]="profiles"
+                     [columnsData]="profilesDataView"
+                     [direction]="layoutDirection">
+          </app-table>
+        </nb-card-body>
+      </nb-card>
+      <nb-card>
+        <nb-card-header>Hero Buttons</nb-card-header>
+        <nb-card-body>
+          <div class="buttons-row">
+            <button *ngFor="let status of [ 'primary', 'success', 'info', 'warning', 'danger' ]" nbButton matRipple [status]="status" hero>
+              {{ status }}
+            </button>
+            <button disabled nbButton matRipple hero>
+              disabled
+            </button>
+          </div>
+        </nb-card-body>
+      </nb-card>
+
+      <nb-card>
+        <nb-card-header>Default Buttons</nb-card-header>
+        <nb-card-body>
+          <div class="buttons-row">
+            <button *ngFor="let status of [ 'primary', 'success', 'info', 'warning', 'danger' ]" nbButton matRipple [status]="status">
+              {{ status }}
+            </button>
+            <button disabled nbButton matRipple>
+              disabled
+            </button>
+          </div>
+        </nb-card-body>
+      </nb-card>
+
+      <nb-card>
+        <nb-card-header>Outline Buttons</nb-card-header>
+        <nb-card-body>
+          <div class="buttons-row">
+            <button *ngFor="let status of [ 'primary', 'success', 'info', 'warning', 'danger' ]" nbButton matRipple [status]="status" outline>
+              {{ status }}
+            </button>
+            <button disabled nbButton matRipple outline>
+              disabled
+            </button>
+          </div>
+        </nb-card-body>
+      </nb-card>
+
+      <nb-card>
+        <nb-card-header>Ghost Buttons</nb-card-header>
+        <nb-card-body>
+          <div class="buttons-row">
+            <button *ngFor="let status of [ 'primary', 'success', 'info', 'warning', 'danger' ]" nbButton matRipple [status]="status" ghost>
+              {{ status }}
+            </button>
+            <button disabled nbButton matRipple outline>
+              disabled
+            </button>
+          </div>
+        </nb-card-body>
+      </nb-card>
+    </div>
+  </div>

@@ -31,7 +31,7 @@ export class UsersComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.userManagementFacade.getUsers$()
+    this.userManagementFacade.getAllUsers$()
       .pipe(takeUntil(this.destroy$))
       .subscribe(usersInfo => {
         this.users = usersInfo;

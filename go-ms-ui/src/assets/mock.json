@@ -1,6 +1,6 @@
 {
   "API_LOGIN": {
-    "token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNSIsImV4cCI6MTU5OTY4MzgwMX0.4uO5KrIAmAYwOSIwQmokOWOT6hBHd4SweHiaruJ7Tj02gcd7iNeu_hHVF41BpbTeY2cl0jcnQvJclp8xRkmAXA"
+    "token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNSIsImV4cCI6MTYwMTQ4OTA5NX0.mw0bpX6M2renhz2HNAC8Igpk_g-7RqSHaamt6qzIPzQdoEyRSwjROj_Eiu7wb5nDUmbJTwWAWNyZ6M60igZ1Bw"
   },
   "API_USER": {
     "email": "email.example.com",
@@ -16,7 +16,7 @@
       }
     ]
   },
-  "API_USERS_INFO": [
+  "API_ALL_USERS": [
     {
       "id": 15,
       "email": "any@first.com",

@@ -1,27 +1,15 @@
 import {Injectable} from '@angular/core';
-import {NbAuthResult} from '@nebular/auth';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {Profile, UserDetails, UserInfo} from '../../common/interface';
 
 @Injectable({providedIn: 'root'})
 export class UserManagementState {
 
-  private nbAuthResult$ = new BehaviorSubject<NbAuthResult>(new NbAuthResult(false));
-  private userDetails$ = new BehaviorSubject<UserDetails>(null);
-  private userDetailsLoaded = false;
-  private usersInfo$ = new BehaviorSubject<UserInfo[]>(null);
-  private usersInfoLoaded = false;
-  private usersInfoUpdating = false;
-  private profiles$ = new BehaviorSubject<Profile[]>(null);
-  private profilesLoaded = false;
-
-
   constructor() {
   }
 
-  setNbAuthResult(nbAuthResult: NbAuthResult): void {
-    this.nbAuthResult$.next(nbAuthResult);
-  }
+  private userDetails$ = new BehaviorSubject<UserDetails>(null);
+  private userDetailsLoaded = false;
 
   setUserDetails(userDetails: UserDetails): void {
     this.userDetailsLoaded = true;
@@ -36,40 +24,47 @@ export class UserManagementState {
     return this.userDetailsLoaded;
   }
 
-  setUsersInfo(usersInfo: UserInfo[]): void {
-    this.usersInfo$.next(usersInfo);
+  private allUsersInfo$ = new BehaviorSubject<UserInfo[]>(null);
+  private allUsersInfoLoaded = false;
+  private allUsersInfoUpdating = false;
+
+  setAllUsersInfo(usersInfo: UserInfo[]): void {
+    this.allUsersInfo$.next(usersInfo);
   }
 
-  getUsersInfo$(): Observable<UserInfo[]> {
-    return this.usersInfo$.asObservable();
+  getAllUsersInfo$(): Observable<UserInfo[]> {
+    return this.allUsersInfo$.asObservable();
   }
 
-  isUsersInfoLoaded(): boolean {
-    return this.usersInfoLoaded;
+  isAllUsersInfoLoaded(): boolean {
+    return this.allUsersInfoLoaded;
   }
 
-  setUsersInfoLoaded(usersInfoLoaded: boolean): void {
-    this.usersInfoLoaded = usersInfoLoaded;
+  setAllUsersInfoLoaded(usersInfoLoaded: boolean): void {
+    this.allUsersInfoLoaded = usersInfoLoaded;
   }
 
-  isUsersInfoUpdating$(): boolean {
-    return this.usersInfoUpdating;
+  isAllUsersInfoUpdating$(): boolean {
+    return this.allUsersInfoUpdating;
   }
 
-  setUsersInfoUpdating(usersInfoUpdating: boolean): void {
-    this.usersInfoUpdating = usersInfoUpdating;
+  setAllUsersInfoUpdating(usersInfoUpdating: boolean): void {
+    this.allUsersInfoUpdating = usersInfoUpdating;
   }
 
-  isProfilesLoaded(): boolean {
-    return this.profilesLoaded;
+  private allProfiles$ = new BehaviorSubject<Profile[]>(null);
+  private allProfilesLoaded = false;
+  private allProfilesUpdating = false;
+
+  isAllProfilesLoaded(): boolean {
+    return this.allProfilesLoaded;
   }
 
-  getProfiles$(): Observable<Profile[]> {
-    return this.profiles$.asObservable();
+  getAllProfiles$(): Observable<Profile[]> {
+    return this.allProfiles$.asObservable();
   }
 
-  setProfiles(profiles: Profile[]): void {
-    return this.profiles$.next(profiles);
+  setAllProfiles(allProfiles: Profile[]): void {
+    return this.allProfiles$.next(allProfiles);
   }
-
 }

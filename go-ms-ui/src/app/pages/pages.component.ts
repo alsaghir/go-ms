@@ -64,7 +64,7 @@ export class PagesComponent implements OnInit, OnDestroy {
   }
 
   private listenProfilesAndPrivileges(): void {
-    this.userManagementFacade.getProfiles$()
+    this.userManagementFacade.getAllProfiles$()
       .pipe(takeUntil(this.destroy$))
       .subscribe(
         profiles => {
