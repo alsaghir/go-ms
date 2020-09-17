@@ -1,4 +1,4 @@
-package com.goms.application.service.impl;
+package com.goms.application.impl;
 
 import com.goms.domain.model.privilege.Privilege;
 import com.goms.domain.service.UtilService;

@@ -1,4 +1,4 @@
-package com.goms.infrastructure.config;
+package com.goms.infrastructure.auth;
 
 import com.goms.domain.model.user.User;
 import com.goms.domain.model.user.UserRepository;
@@ -25,7 +25,7 @@ public class UserDetailsLoadingService implements UserDetailsService {
   public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
     User user =
         this.userRepository
-            .findByEmailWithProfiles(email)
+            .findByEmail(email)
             .orElseThrow(
                 () -> new UsernameNotFoundException("Email: " + email + " not found"));
 
@@ -35,7 +35,7 @@ public class UserDetailsLoadingService implements UserDetailsService {
   public UserDetails loadUserByUserId(Integer id) throws UsernameNotFoundException {
     User user =
         this.userRepository
-            .findByIdWithProfiles(id)
+            .findById(id)
             .orElseThrow(() -> new UsernameNotFoundException("User with id: " + id + " not found"));
 
     return new UserPrincipal(user);

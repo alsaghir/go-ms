@@ -1,6 +1,6 @@
 package com.goms.interfaces.initiation.server;
 
-import com.goms.application.service.InitiationService;
+import com.goms.application.InitiationService;
 import com.goms.domain.shared.DomainException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

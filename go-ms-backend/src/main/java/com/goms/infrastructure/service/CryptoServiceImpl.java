@@ -78,13 +78,10 @@ public class CryptoServiceImpl implements CryptoService {
   }
 
   @Override
-  public String decryptedPassword(String message,
-                                  String rsaPrivateKey,
-                                  boolean passwordEncrypted) throws DomainException {
-    if(!passwordEncrypted)
-      return message;
-    else
-      return decryptedPassword(message, rsaPrivateKey);
+  public String decryptedPassword(String message, String rsaPrivateKey, boolean passwordEncrypted)
+      throws DomainException {
+    if (!passwordEncrypted) return message;
+    else return decryptedPassword(message, rsaPrivateKey);
   }
 
   @Override
@@ -98,8 +95,9 @@ public class CryptoServiceImpl implements CryptoService {
         new JWTClaimsSet.Builder()
             .subject(subject)
             .expirationTime(
-                    new Date(new Date().getTime()
-                            + TimeUnit.SECONDS.toMillis(Long.parseLong(jwtExpirationTime))))
+                new Date(
+                    new Date().getTime()
+                        + TimeUnit.SECONDS.toMillis(Long.parseLong(jwtExpirationTime))))
             .build();
 
     JWSHeader header = new JWSHeader(JWSAlgorithm.HS512); // Needs 512 bit secret key

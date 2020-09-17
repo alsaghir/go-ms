@@ -1,26 +1,18 @@
 package com.goms.interfaces.messaging;
 
-import com.goms.application.service.data.UserDetailsData;
-import org.apache.kafka.clients.admin.NewTopic;
-import org.apache.kafka.clients.consumer.ConsumerRecord;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
-import org.springframework.context.annotation.Lazy;
-import org.springframework.kafka.annotation.KafkaHandler;
-import org.springframework.kafka.annotation.KafkaListener;
-import org.springframework.kafka.listener.adapter.ConsumerRecordMetadata;
 import org.springframework.stereotype.Component;
 
-@KafkaListener(
+/*@KafkaListener(
     id = "UserListener",
     topics = "user-topic",
     groupId = "UserListener",
     clientIdPrefix = "cl",
-    autoStartup = "false")
+    autoStartup = "false")*/
 @Component
-@Lazy(value = false)
+//@Lazy(value = false)
 public class UserListener {
 
-  @KafkaHandler
+ /* @KafkaHandler
   public void listen(
       UserDetailsData userDetailsData, ConsumerRecordMetadata meta, ConsumerRecord<?, ?> record) {
     System.out.println("Normal test Listener");
@@ -36,5 +28,5 @@ public class UserListener {
     System.out.println(object);
     System.out.println(meta);
     System.out.println(record);
-  }
+  }*/
 }

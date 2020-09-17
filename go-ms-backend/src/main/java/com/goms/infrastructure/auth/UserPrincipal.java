@@ -11,59 +11,59 @@ import java.util.stream.Collectors;
 
 public class UserPrincipal implements UserDetails {
 
-    private final User user;
-    private final Set<SimpleGrantedAuthority> grantedAuthorities;
+  private final User user;
+  private final Set<SimpleGrantedAuthority> grantedAuthorities;
 
-    public UserPrincipal(User user) {
-        super();
-        this.user = user;
-        this.grantedAuthorities =
-                this.user.profiles().stream()
-                        .flatMap(profile -> profile.privileges().stream())
-                        .map(privilege -> new SimpleGrantedAuthority(privilege.privilegeConstant().name()))
-                        .collect(Collectors.toSet());
-    }
+  public UserPrincipal(User user) {
+    super();
+    this.user = user;
+    this.grantedAuthorities =
+        this.user.getProfiles().stream()
+            .flatMap(profile -> profile.getPrivileges().stream())
+            .map(privilege -> new SimpleGrantedAuthority(privilege.getPrivilege().name()))
+            .collect(Collectors.toSet());
+  }
 
-    public Integer getId() {
-        return this.user.id();
-    }
+  public Integer getId() {
+    return this.user.getId();
+  }
 
-    public User getUserWithProfilesAndPrivileges() {
-        return this.user;
-    }
+  public User getUserWithProfilesAndPrivileges() {
+    return this.user;
+  }
 
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return this.grantedAuthorities;
-    }
+  @Override
+  public Collection<? extends GrantedAuthority> getAuthorities() {
+    return this.grantedAuthorities;
+  }
 
-    @Override
-    public String getPassword() {
-        return this.user.password().value();
-    }
+  @Override
+  public String getPassword() {
+    return this.user.getPassword();
+  }
 
-    @Override
-    public String getUsername() {
-        return this.user.email();
-    }
+  @Override
+  public String getUsername() {
+    return this.user.getEmail();
+  }
 
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
+  @Override
+  public boolean isAccountNonExpired() {
+    return true;
+  }
 
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
-    }
+  @Override
+  public boolean isAccountNonLocked() {
+    return true;
+  }
 
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
+  @Override
+  public boolean isCredentialsNonExpired() {
+    return true;
+  }
 
-    @Override
-    public boolean isEnabled() {
-        return this.user.isActive();
-    }
+  @Override
+  public boolean isEnabled() {
+    return this.user.isActive();
+  }
 }

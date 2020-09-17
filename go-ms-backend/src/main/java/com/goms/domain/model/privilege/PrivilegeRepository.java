@@ -1,9 +1,14 @@
 package com.goms.domain.model.privilege;
 
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.rest.core.annotation.RepositoryRestResource;
+import org.springframework.stereotype.Repository;
+
 import java.util.Set;
 
-public interface PrivilegeRepository {
-    Set<Privilege> findAllStored();
-    Set<Privilege> findAll();
-    Set<Privilege> save(Set<Privilege> notStoredPrivileges);
+@Repository
+@RepositoryRestResource
+public interface PrivilegeRepository extends JpaRepository<Privilege, Integer> {
+
+  Set<Privilege> findAllBy();
 }

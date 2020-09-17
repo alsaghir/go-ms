@@ -1,4 +1,4 @@
-package com.goms.application.service.data;
+package com.goms.application.data;
 
 public class UserInfoData {
     private Integer id;

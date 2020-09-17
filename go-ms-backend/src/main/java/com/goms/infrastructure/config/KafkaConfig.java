@@ -21,7 +21,7 @@ import org.springframework.kafka.listener.ContainerProperties;
 import org.springframework.kafka.support.LoggingProducerListener;
 import org.springframework.kafka.support.ProducerListener;
 
-@Configuration
+//@Configuration
 public class KafkaConfig {
 
   @Autowired

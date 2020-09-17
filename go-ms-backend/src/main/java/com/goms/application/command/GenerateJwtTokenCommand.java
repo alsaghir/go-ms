@@ -1,4 +1,4 @@
-package com.goms.application.service.command;
+package com.goms.application.command;
 
 public class GenerateJwtTokenCommand {
     private String email;

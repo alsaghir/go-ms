@@ -1,9 +1,9 @@
 package com.goms.interfaces.web.usermanagement;
 
-import com.goms.application.service.UserManagementService;
-import com.goms.application.shared.ApplicationException;
+import com.goms.application.UserManagementService;
+import com.goms.domain.shared.DomainException;
 import com.goms.infrastructure.auth.MutableHttpServletRequest;
-import com.goms.infrastructure.config.UserDetailsLoadingService;
+import com.goms.infrastructure.auth.UserDetailsLoadingService;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -81,7 +81,7 @@ public class TokenFilter extends OncePerRequestFilter {
 
         authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
         SecurityContextHolder.getContext().setAuthentication(authentication);
-      } catch (ApplicationException ex) {
+      } catch (DomainException ex) {
         logger.error("Failure validating, parsing token or authenticating user", ex);
       }
     } else {

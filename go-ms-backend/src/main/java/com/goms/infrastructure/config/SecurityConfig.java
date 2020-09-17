@@ -1,5 +1,6 @@
 package com.goms.infrastructure.config;
 
+import com.goms.infrastructure.auth.UserDetailsLoadingService;
 import com.goms.interfaces.web.usermanagement.JwtAuthenticationEntryPoint;
 import com.goms.interfaces.web.usermanagement.TokenFilter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
@@ -68,6 +70,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     // https://docs.spring.io/spring-security/site/docs/current/reference/html5/#authentication-password-storage
     DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
     provider.setUserDetailsService(userDetailsService());
+    provider.setPasswordEncoder(PasswordEncoderFactories.createDelegatingPasswordEncoder());
     return provider;
   }
 

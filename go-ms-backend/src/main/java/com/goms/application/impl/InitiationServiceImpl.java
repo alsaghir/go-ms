@@ -1,22 +1,22 @@
-package com.goms.application.service.impl;
+package com.goms.application.impl;
 
-import com.goms.application.service.InitiationService;
+import com.goms.application.InitiationService;
 import com.goms.domain.model.config.AppConfigRepository;
 import com.goms.domain.model.privilege.Privilege;
+import com.goms.domain.model.privilege.PrivilegeConstant;
 import com.goms.domain.model.privilege.PrivilegeRepository;
 import com.goms.domain.model.profile.Profile;
 import com.goms.domain.model.profile.ProfileRepository;
-import com.goms.domain.model.user.Password;
-import com.goms.domain.model.user.PasswordState;
 import com.goms.domain.model.user.User;
 import com.goms.domain.model.user.UserRepository;
 import com.goms.domain.service.UtilService;
-import com.goms.domain.shared.DomainException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class InitiationServiceImpl implements InitiationService {
@@ -43,39 +43,37 @@ public class InitiationServiceImpl implements InitiationService {
 
   @Override
   @Transactional(transactionManager = "transactionManager")
-  public void storeDefaultData() throws DomainException {
+  public void storeDefaultData() {
     if (initializationIsRequired()) {
-      initializePrivileges();
-      initializeProfilesAndUsers();
+      this.initializePrivileges();
+      this.initializeProfilesAndUsers();
     }
   }
 
-  private void initializeProfilesAndUsers() throws DomainException {
-    if (!this.userRepository.atLeastOneUserExists()) {
+  private void initializeProfilesAndUsers() {
+    if (this.userRepository.findTopBy().isEmpty()) {
 
       Profile defaultProfile =
           this.profileRepository.save(
-              new Profile("admin").assignPrivileges(this.privilegeRepository.findAll()));
+              new Profile("admin", new HashSet<>(this.privilegeRepository.findAll()), null));
 
-      this.userRepository.saveFull(
-          User.of(
-                  "admin@example.com",
-                  Password.of("{noop}admin", PasswordState.RAW),
-                  true,
-                  "admin",
-                  "admin")
-              .assignProfiles(Set.of(defaultProfile)));
+      this.userRepository.save(
+          new User(
+              "admin@example.com", "{noop}admin", true, "admin", "admin", Set.of(defaultProfile)));
     }
   }
 
   private void initializePrivileges() {
-    Set<Privilege> storedPrivileges = this.privilegeRepository.findAllStored();
-    Set<Privilege> allPrivileges = this.privilegeRepository.findAll();
+    Set<Privilege> storedPrivileges = this.privilegeRepository.findAllBy();
+    Set<Privilege> allPrivileges =
+        Set.of(PrivilegeConstant.values()).parallelStream()
+            .map(Privilege::new)
+            .collect(Collectors.toSet());
 
     if (!utilService.equals(allPrivileges, storedPrivileges)) {
       Set<Privilege> notStoredPrivileges =
           utilService.differentPrivilegesBetween(allPrivileges, storedPrivileges);
-      this.privilegeRepository.save(notStoredPrivileges);
+      this.privilegeRepository.saveAll(notStoredPrivileges);
     }
   }
 

@@ -1,24 +1,16 @@
 package com.goms.domain.model.user;
 
-import java.util.List;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.query.QueryByExampleExecutor;
+import org.springframework.data.rest.core.annotation.RepositoryRestResource;
+import org.springframework.stereotype.Repository;
+
 import java.util.Optional;
 
-public interface UserRepository {
+@Repository
+@RepositoryRestResource
+public interface UserRepository extends JpaRepository<User, Integer>, QueryByExampleExecutor<User> {
+  Optional<User> findByEmail(String email);
 
-    Optional<User> findByEmailWithProfiles(String userName);
-    Optional<User> findByIdWithProfiles(Integer id);
-
-    User saveFull(User user);
-
-    Optional<User> findAny();
-
-    Optional<User> findByEmail(String email);
-
-    Optional<User> findById(Integer id);
-
-    List<User> findAll();
-
-    boolean atLeastOneUserExists();
-
-
+  Optional<User> findTopBy();
 }

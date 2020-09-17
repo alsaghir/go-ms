@@ -1,4 +1,4 @@
-package com.goms.application.service;
+package com.goms.application;
 
 import com.goms.domain.shared.DomainException;
 

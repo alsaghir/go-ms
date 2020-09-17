@@ -40,6 +40,11 @@ spring:
     listener:
       missing-topics-fatal: true
 
+  data:
+    rest:
+      detection-strategy: annotated
+      base-path: /api
+
 
 app:
   config:
@@ -88,6 +93,7 @@ spring:
 
   jpa:
     show-sql: true
+    database-platform: org.hibernate.dialect.DerbyTenSevenDialect
 
   datasource:
     platform: derby

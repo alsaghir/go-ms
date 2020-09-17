@@ -1,11 +1,10 @@
 package com.goms.interfaces.exception;
 
-import com.goms.application.shared.ApplicationException;
 import com.goms.domain.shared.DomainError;
+import com.goms.domain.shared.DomainException;
 import com.goms.interfaces.exception.dto.ApiError;
 import com.goms.interfaces.exception.dto.ApiSubError;
 import org.apache.logging.log4j.LogManager;
-
 import org.apache.logging.log4j.Logger;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -29,19 +28,19 @@ public final class GlobalRestExceptionHandler extends ResponseEntityExceptionHan
 
   private final Logger logger = LogManager.getLogger(GlobalRestExceptionHandler.class);
 
-  @ExceptionHandler(value = ApplicationException.class)
+  @ExceptionHandler(value = DomainException.class)
   protected ResponseEntity<Object> handleApplicationException(
-      ApplicationException applicationException,
+      DomainException domainException,
       HandlerMethod handlerMethod,
       WebRequest webRequest,
       HttpServletRequest servletRequest,
       HttpServletResponse servletResponse,
       HttpMethod httpMethod) {
 
-    logger.error(applicationException.getMessage(), applicationException);
+    logger.error(domainException.getMessage(), domainException);
 
     List<ApiSubError> apiSubErrors =
-        applicationException.domainErrors().stream()
+        domainException.domainErrors().stream()
             .map(
                 domainError ->
                     new ApiSubError(
@@ -49,16 +48,16 @@ public final class GlobalRestExceptionHandler extends ResponseEntityExceptionHan
                         domainError.getErrorMessage()))
             .collect(Collectors.toList());
 
-    if (applicationException.domainErrors().contains(DomainError.BAD_CREDENTIALS))
+    if (domainException.domainErrors().contains(DomainError.BAD_CREDENTIALS))
       return handleExceptionInternal(
-          applicationException,
+          domainException,
           new ApiError(HttpStatus.UNAUTHORIZED, apiSubErrors),
           new HttpHeaders(),
           HttpStatus.UNAUTHORIZED,
           webRequest);
     else
       return handleExceptionInternal(
-          applicationException,
+          domainException,
           new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, apiSubErrors),
           new HttpHeaders(),
           HttpStatus.INTERNAL_SERVER_ERROR,
