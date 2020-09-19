@@ -1,12 +1,11 @@
 import {Injectable} from '@angular/core';
 import {NbAuthResult} from '@nebular/auth';
-import {Observable} from 'rxjs';
-import {Profile, UserCredentials, UserDetails, UserInfo} from '../../common/interface';
+import {Observable, of as observableOf} from 'rxjs';
 import {UserManagementState} from '../state';
-import {tap} from 'rxjs/operators';
 import {UserManagementApi} from '../api';
 import {NbUtil} from '../util';
-import {HttpResponse} from '@angular/common/http';
+import {Collection, Profile, User, UserCredentials} from "../../common/model";
+import {tap} from "rxjs/operators";
 
 @Injectable({providedIn: 'root'})
 export class UserManagementFacade {
@@ -16,43 +15,72 @@ export class UserManagementFacade {
   }
 
   authenticate(strategyName: string, data: UserCredentials): Observable<NbAuthResult> {
-    return this.nbUtil.authenticate(strategyName, data);
+    return this.nbUtil.authenticate(strategyName, data).pipe(tap(nbAuthResult => {
+      if (nbAuthResult.isSuccess())
+        this.userManagementState.setLoggedInUserId(Number(nbAuthResult.getToken().getPayload().sub))
+    }));
   }
 
-  getUserDetails$(): Observable<UserDetails> {
-    if (this.userManagementState.isUserDetailsLoaded()) {
-      return this.userManagementState.getUserDetails$();
-    } else {
-      return this.userManagementApi.getUserDetails$()
-        .pipe(tap(userDetails => this.userManagementState.setUserDetails(userDetails)));
-    }
+  getProfiles$(): Observable<Collection<Profile>> {
+    return this.userManagementApi.getProfiles$();
   }
 
-  getAllProfiles$(): Observable<Profile[]> {
-    if (this.userManagementState.isAllProfilesLoaded()) {
-      return this.userManagementState.getAllProfiles$();
-    } else {
-      return this.userManagementApi.getAllProfiles$()
-        .pipe(tap(profiles => this.userManagementState.setAllProfiles(profiles)));
-    }
+  getLoggedInUserId$(): Observable<number> {
+    if (this.userManagementState.isLoggedInUserIdLoaded())
+      return this.userManagementState.getLoggedInUserId$();
+    else
+      return observableOf(this.nbUtil.getToken().getPayload().sub as number)
+        .pipe(tap(id => this.userManagementState.setLoggedInUserId(id)));
   }
 
-  getAllUsers$(): Observable<UserInfo[]> {
-    if (this.userManagementState.isAllUsersInfoLoaded()) {
-      return this.userManagementState.getAllUsersInfo$();
-    } else {
-      return this.userManagementApi.getAllUsersInfo$()
-        .pipe(tap(usersInfo => this.userManagementState.setAllUsersInfo(usersInfo)));
-    }
+  getUser$(id: number): Observable<User> {
+    return this.userManagementApi.getUser$(id);
   }
 
-  addUser(userInfo: UserInfo): Observable<HttpResponse<any>> {
-    this.userManagementState.setAllUsersInfoUpdating(true);
-    return this.userManagementApi.addUser(userInfo).pipe(
-      tap(response => {
-        this.userManagementState.setAllUsersInfoUpdating(false);
-        this.userManagementState.setAllUsersInfoLoaded(false);
-      })
-    );
-  }
+  /* getLoggedInUserInfo$(): Observable<UserInfo> {
+     return this.userManagementApi.getUserInfo$()
+         .pipe(tap(loggedInUserInfo => this.userManagementState.setLoggedInUserInfo(loggedInUserInfo)), shareReplay(1));
+   }
+
+   getUserProfiles$(): Observable<Profile[]> {
+     if (this.userManagementState.isUserProfilesLoaded()) {
+       return this.userManagementState.getUserProfiles$();
+     } else {
+       return this.userManagementApi.getUserProfiles$()
+         .pipe(tap(userProfiles => this.userManagementState.setUserProfiles(userProfiles)));
+     }
+   }
+
+   getProfilePrivileges$(profileId: number): Observable<string[]> {
+     return this.userManagementApi.getProfilePrivileges$(profileId);
+   }
+
+   getAllProfiles$(): Observable<Profile[]> {
+     if (this.userManagementState.isAllProfilesLoaded()) {
+       return this.userManagementState.getAllProfiles$();
+     } else {
+       return this.userManagementApi.getAllProfiles$()
+         .pipe(tap(profiles => this.userManagementState.setAllProfiles(profiles)));
+     }
+   }
+
+   getAllUsers$(): Observable<UserInfo[]> {
+     if (this.userManagementState.isAllUsersInfoLoaded()) {
+       return this.userManagementState.getAllUsersInfo$();
+     } else {
+       return this.userManagementApi.getAllUsersInfo$()
+         .pipe(tap(usersInfo => this.userManagementState.setAllUsersInfo(usersInfo)));
+     }
+   }
+
+   addUser(userInfo: UserInfo): Observable<HttpResponse<any>> {
+     this.userManagementState.setAllUsersInfoUpdating(true);
+     return this.userManagementApi.addUser(userInfo).pipe(
+       tap(response => {
+         this.userManagementState.setAllUsersInfoUpdating(false);
+         this.userManagementState.setAllUsersInfoLoaded(false);
+       })
+     );
+   }*/
+
 }

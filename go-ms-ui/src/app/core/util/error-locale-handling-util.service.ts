@@ -1,6 +1,6 @@
 import {ElementRef, Injectable, QueryList} from '@angular/core';
 import {ErrorLocaleName} from '../../common/constant/backendrelated';
-import {ApiError} from '../../common/interface';
+import {ApiError} from '../../common/model';
 
 @Injectable({providedIn: 'root'})
 export class ErrorLocaleHandlingUtil {
@@ -31,7 +31,7 @@ export class ErrorLocaleHandlingUtil {
     if (!errorsCodes || !Array.isArray(errorsCodes)) {
       throw new TypeError('Error code is not found !');
     }
-    return this.getTranslationsByErrorCodes(errorsCodes);
+    return errorsCodes.map(errorCode => this.getTranslationFromElementsByCode(errorCode));
   }
 
   translateByName(errorsNames: string[]): string[] {
@@ -39,7 +39,7 @@ export class ErrorLocaleHandlingUtil {
       throw new TypeError('Error name is not found !');
     }
 
-    return this.getTranslationsByErrorNames(errorsNames);
+    return errorsNames.map(errorName => this.getTranslationFromElementsByName(errorName));
   }
 
   private fillMessagesFromArray(messages: string[], codesOrNames: string[]): void {
@@ -55,10 +55,6 @@ export class ErrorLocaleHandlingUtil {
     }
   }
 
-  private getTranslationsByErrorCodes(errorCodes: string[]): string[] {
-    return errorCodes.map(errorCode => this.getTranslationFromElementsByCode(errorCode));
-  }
-
   private getTranslationFromElementsByCode(errorCode: string): string {
     let inputElement = this.inputElements.find((element) => element.nativeElement.id === errorCode);
     if (inputElement == null)
@@ -69,10 +65,6 @@ export class ErrorLocaleHandlingUtil {
 
   private getTranslationFromElementsByName(errorName: string): string {
     return this.inputElements.find((element) => element.nativeElement.name === errorName).nativeElement.value;
-  }
-
-  private getTranslationsByErrorNames(errorNames: string[]): string[] {
-    return errorNames.map(errorName => this.getTranslationFromElementsByName(errorName));
   }
 
   /** Hold references to elements and in memory to use either for translation

@@ -34,11 +34,11 @@
       [matRippleUnbounded]="true"
       [matRippleCentered]="true">
       <nb-user
-        [nbSpinner]="userMenu == null || userDetails == null"
+        [nbSpinner]="userMenu == null || loggedInUser == null"
         nbSpinnerStatus="basic"
         [nbContextMenu]="userMenu ? userMenu : [{title: ''}]"
         [onlyPicture]="userPictureOnly"
-        [name]="userDetails ? userDetails.firstName + ' ' + userDetails.lastName : ''" >
+        [name]="loggedInUser ? loggedInUser.firstName + ' ' + loggedInUser.lastName : ''" >
       </nb-user>
     </nb-action>
   </nb-actions>

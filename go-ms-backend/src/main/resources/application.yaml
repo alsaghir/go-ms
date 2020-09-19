@@ -21,8 +21,6 @@ spring:
   kafka:
     bootstrap-servers:
       - localhost:9091
-      - localhost:9092
-      - localhost:9093
     producer:
       transaction-id-prefix: kafka-transaction_
       acks: all
@@ -42,7 +40,7 @@ spring:
 
   data:
     rest:
-      detection-strategy: annotated
+      detection-strategy: annotated # com.goms.infrastructure.config.RepositoryRestConfig#configureRepositoryRestConfiguration
       base-path: /api
 
 

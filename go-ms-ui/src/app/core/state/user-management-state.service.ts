@@ -1,6 +1,5 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject, Observable} from 'rxjs';
-import {Profile, UserDetails, UserInfo} from '../../common/interface';
 
 @Injectable({providedIn: 'root'})
 export class UserManagementState {
@@ -8,22 +7,35 @@ export class UserManagementState {
   constructor() {
   }
 
-  private userDetails$ = new BehaviorSubject<UserDetails>(null);
-  private userDetailsLoaded = false;
+  private loggedInUserId$ = new BehaviorSubject<number>(null);
+  private loggedInUserIdLoaded = false;
+  private loggedInUserIdUpdating = false;
 
-  setUserDetails(userDetails: UserDetails): void {
-    this.userDetailsLoaded = true;
-    this.userDetails$.next(userDetails);
+  setLoggedInUserId (userId: number): void {
+    this.loggedInUserIdLoaded = true;
+    this.loggedInUserId$.next(userId);
   }
 
-  getUserDetails$(): Observable<UserDetails> {
-    return this.userDetails$.asObservable();
+  getLoggedInUserId$(): Observable<number> {
+    return this.loggedInUserId$.asObservable();
   }
 
-  isUserDetailsLoaded(): boolean {
-    return this.userDetailsLoaded;
+  isLoggedInUserIdLoaded(): boolean {
+    return this.loggedInUserIdLoaded;
   }
 
+  setLoggedInUserIdLoaded(loggedInUserIdLoaded: boolean): void {
+    this.loggedInUserIdLoaded = loggedInUserIdLoaded;
+  }
+
+  isLoggedInUserIdUpdating(): boolean {
+    return this.loggedInUserIdUpdating;
+  }
+
+  setLoggedInUserIdUpdating(loggedInUserIdUpdating: boolean): void {
+    this.loggedInUserIdUpdating = loggedInUserIdUpdating;
+  }
+/*
   private allUsersInfo$ = new BehaviorSubject<UserInfo[]>(null);
   private allUsersInfoLoaded = false;
   private allUsersInfoUpdating = false;
@@ -66,5 +78,5 @@ export class UserManagementState {
 
   setAllProfiles(allProfiles: Profile[]): void {
     return this.allProfiles$.next(allProfiles);
-  }
+  }*/
 }

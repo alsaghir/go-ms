@@ -12,7 +12,9 @@ import {CommonUtil, LoggerUtil, NbUtil} from '../core/util';
 
 @Component({
   selector: 'app-pages',
-  template: `<router-outlet></router-outlet>
+  styleUrls: ['pages.component.scss'],
+  template: `
+    <router-outlet></router-outlet>
 
     <app-locale-translate>
     </app-locale-translate>
@@ -63,25 +65,26 @@ export class PagesComponent implements OnInit, OnDestroy {
 
   }
 
-  private listenProfilesAndPrivileges(): void {
+  /*private listenProfilesAndPrivileges(): void {
     this.userManagementFacade.getAllProfiles$()
       .pipe(takeUntil(this.destroy$))
       .subscribe(
         profiles => {
-          const nbAcl: NbAccessControl = {};
+          const nbAcl: NbAccessControl = {}; // keys are profiles ids
           profiles.forEach(profile => {
-            const nbAclRole: NbAclRole = {};
-            profile.privileges.forEach(privilege => nbAclRole[privilege] = '*');
-            console.log(nbAclRole);
+            const nbAclRole: NbAclRole = {}; // keys are privileges
+            this.userManagementFacade.getProfilePrivileges$(profile.id)
+              .pipe(takeUntil(this.destroy$))
+              .subscribe(privileges => privileges.forEach(privilege => nbAclRole[privilege] = '*'));
             nbAcl[profile.id.toString()] = nbAclRole;
-            console.log(nbAcl);
           });
+          console.log(nbAcl);
           this.nbUtil.setAccessControl(nbAcl);
         },
         err => {
           this.commonUtil.handleRetrievingDataError(err);
         }
       );
-  }
+  }*/
 
 }

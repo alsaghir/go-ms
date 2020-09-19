@@ -1,8 +1,6 @@
 import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {Subject} from 'rxjs';
 import {LayoutDirection} from "../../../common/constant";
-import {Profile} from "../../../common/interface";
-
 
 @Component({
   selector: 'app-table',
@@ -30,11 +28,11 @@ export class TableComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
-  editRowData(dataObject: Profile) {
+  /*editRowData(dataObject: Profile) {
     console.log(dataObject);
   }
 
   deleteRowData(dataObject: Profile) {
     console.log(dataObject);
-  }
+  }*/
 }

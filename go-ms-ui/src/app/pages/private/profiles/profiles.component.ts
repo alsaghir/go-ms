@@ -2,10 +2,11 @@ import {Component, OnDestroy, OnInit} from "@angular/core";
 import {Subject} from "rxjs";
 import {FormBuilder} from "@angular/forms";
 import {UserManagementFacade} from "../../../core/facade";
-import {Profile} from "../../../common/interface";
-import {takeUntil} from "rxjs/operators";
 import {NbUtil} from "../../../core/util";
 import {LayoutDirection} from "../../../common/constant";
+import {takeUntil} from "rxjs/operators";
+import {BackendUrls} from "../../../common/config";
+import {Collection, Profile} from "../../../common/model";
 
 @Component({
   selector: 'app-profiles',
@@ -22,7 +23,9 @@ export class ProfilesComponent implements OnInit, OnDestroy {
   ];
 
   layoutDirection: LayoutDirection;
-  profiles: Profile[];
+  profilesModel: Profile[] = [];
+
+  profilesResponse: Collection<Profile>;
 
   constructor(private formBuilder: FormBuilder,
               private userManagementFacade: UserManagementFacade,
@@ -32,10 +35,12 @@ export class ProfilesComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.layoutDirection = this.nbUtil.getDirection();
 
-    this.userManagementFacade.getAllProfiles$()
+    this.userManagementFacade.getProfiles$()
       .pipe(takeUntil(this.destroy$))
-      .subscribe(profiles => {
-        this.profiles = profiles;
+      .subscribe(profilesResponse => {
+        this.profilesResponse = profilesResponse;
+        this.profilesResponse._embedded[BackendUrls.API_RESOURCE_PROFILES]
+          .forEach(profileResponse => this.profilesModel.push(profileResponse as Profile))
       });
   }
 
@@ -43,8 +48,4 @@ export class ProfilesComponent implements OnInit, OnDestroy {
     this.destroy$.next();
     this.destroy$.complete();
   }
-
-
-
-
 }

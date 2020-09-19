@@ -2,21 +2,21 @@
   "API_LOGIN": {
     "token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNSIsImV4cCI6MTYwMTQ4OTA5NX0.mw0bpX6M2renhz2HNAC8Igpk_g-7RqSHaamt6qzIPzQdoEyRSwjROj_Eiu7wb5nDUmbJTwWAWNyZ6M60igZ1Bw"
   },
+
   "API_USER": {
     "email": "email.example.com",
     "firstName": "first",
-    "lastName": "last",
-    "profiles": [
-      {
-        "id": 2,
-        "name": "admin-profile",
-        "privileges": [
-          "OP_USERS_DELETE"
-        ]
-      }
-    ]
+    "lastName": "last"
   },
-  "API_ALL_USERS": [
+  "API_USER_API_PROFILES" : [{
+    "id": 1,
+    "name": "another-profile"
+  }, {
+      "id": 2,
+      "name": "admin-profile"
+    }],
+  "API_PROFILES_API_PRIVILEGES" : ["OP_USERS_DELETE"],
+  "API_USERS": [
     {
       "id": 15,
       "email": "any@first.com",
@@ -33,17 +33,12 @@
   "API_PROFILES": [
     {
       "id": 1,
-      "name": "another-profile",
-      "privileges": [
-        "OP_USERS_MANAGEMENT"
-      ]
+      "name": "another-profile"
     },
     {
       "id": 2,
-      "name": "admin-profile",
-      "privileges": [
-        "OP_USERS_DELETE"
-      ]
+      "name": "admin-profile"
     }
-  ]
+  ],
+  "API_PRIVILEGES" : ["OP_USERS_DELETE"]
 }

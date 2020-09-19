@@ -1,15 +1,22 @@
 import {ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
 import {BehaviorSubject, Subject} from 'rxjs';
 import {map, takeUntil} from 'rxjs/operators';
-
-import {CommonUtil, ErrorLocaleHandlingUtil, LocaleHandlingUtil, LoggerUtil, NbUtil, RippleService} from '../../../core/util';
-import {ErrorLocaleName} from '../../../common/constant/backendrelated';
 import {NbMenuItem} from '@nebular/theme';
+
+import {
+  CommonUtil,
+  ErrorLocaleHandlingUtil,
+  LocaleHandlingUtil,
+  LoggerUtil,
+  NbUtil,
+  RippleService
+} from '../../../core/util';
+
+
 import {EventFacade, UserManagementFacade} from '../../../core/facade';
-import {ApiError, UserDetails, UserInfo} from '../../../common/interface';
 import {NbAccessChecker} from '@nebular/security';
-import {PrivilegeConstant} from '../../../common/constant/backendrelated';
 import {LocaleName, THEMES} from "../../../common/constant";
+import {User} from "../../../common/model";
 
 
 @Component({
@@ -27,8 +34,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
   userPictureOnly = false;
   currentTheme: string = null;
   userMenu: NbMenuItem[] = null;
-  userDetails: UserDetails = null;
-  usersInfo: UserInfo[] = null;
+  loggedInUserId: number = null;
+  loggedInUser: User = null;
 
   public constructor(private changeDetectorRef: ChangeDetectorRef,
                      private rippleService: RippleService,
@@ -39,11 +46,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
                      private loggerUtil: LoggerUtil,
                      private commonUtil: CommonUtil,
                      private nbUtil: NbUtil,
-                     private nbAccessChecker : NbAccessChecker ) {
+                     private nbAccessChecker: NbAccessChecker) {
   }
 
   ngOnInit(): void {
-    this.listenInfoNeedsLocaleTranslation();
+    this.loadInfoNeedsLocaleTranslation();
 
     this.currentTheme = this.nbUtil.currentTheme();
     this.materialTheme$.next(this.currentTheme.startsWith('material'));
@@ -76,19 +83,22 @@ export class HeaderComponent implements OnInit, OnDestroy {
     return this.localeHandlingUtil.translationOf(text);
   }
 
-  private listenUserDetails(): void {
-    this.userManagementFacade.getUserDetails$()
+  private loadUser(): void {
+    this.userManagementFacade.getLoggedInUserId$()
       .pipe(takeUntil(this.destroy$))
       .subscribe(
-        userDetails => this.userDetails = userDetails,
-        err => {
-          this.commonUtil.handleRetrievingDataError(err);
+        userId => {
+          this.loggedInUserId = userId;
+
+          this.userManagementFacade.getUser$(userId).pipe(takeUntil(this.destroy$))
+            .subscribe(user => this.loggedInUser = user);
         }
       );
   }
 
-  private listenInfoNeedsLocaleTranslation(): void {
-    this.eventFacade.localeViewRendered$().pipe(takeUntil(this.destroy$))
+  private loadInfoNeedsLocaleTranslation(): void {
+    this.eventFacade.localeViewRendered$()
+      .pipe(takeUntil(this.destroy$))
       .subscribe((localeViewRendered: boolean) => {
         if (localeViewRendered) {
 
@@ -96,7 +106,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
             title: this.translationOf(LocaleName.instance.LOGOUT)
           }];
 
-          this.listenUserDetails();
+          this.loadUser();
 
           this.changeDetectorRef.detectChanges();
         }

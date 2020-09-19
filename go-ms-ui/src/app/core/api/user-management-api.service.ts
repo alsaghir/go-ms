@@ -1,13 +1,13 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpErrorResponse, HttpResponse} from '@angular/common/http';
-import {BackendUrls} from '../../common/config';
+import {HttpClient, HttpResponse} from '@angular/common/http';
 import {Observable, of as observableOf} from 'rxjs';
-import {ApiError, JwtToken, Profile, UserCredentials, UserDetails, UserInfo} from '../../common/interface';
-import {catchError, map, tap} from 'rxjs/operators';
+import {catchError, map} from 'rxjs/operators';
 import {NbAuthResult} from '@nebular/auth';
+
+import {BackendUrls} from '../../common/config';
 import {NbJwtToken} from '../../common/implementation';
-import {ErrorLocaleName} from '../../common/constant/backendrelated';
 import {LoggerUtil} from '../util';
+import {Collection, JwtToken, Profile, User, UserCredentials} from "../../common/model";
 
 @Injectable({providedIn: 'root'})
 export class UserManagementApi {
@@ -18,7 +18,7 @@ export class UserManagementApi {
 
   getJwtToken$(userData: UserCredentials, strategyName: string): Observable<NbAuthResult> {
 
-    const apiUrl = BackendUrls.API_ENDPOINT(BackendUrls.API_LOGIN);
+    const apiUrl = BackendUrls.API_ENDPOINT(BackendUrls.API_JWT);
 
     return this.http.post<JwtToken>(apiUrl, userData, {observe: 'response'})
       .pipe(
@@ -26,39 +26,61 @@ export class UserManagementApi {
           (response: HttpResponse<JwtToken>) =>
             new NbAuthResult(true, response, null, [], [], new NbJwtToken(response.body.token, strategyName))
         ),
-        catchError((err: any, caught: Observable<NbAuthResult>) => {
-            this.loggerUtil.error(err);
-            const errorCodesOrNames: string[] = [];
+        catchError((errorCodesOrNames: string[]) => {
 
-            if ((err.error as ApiError).apiSubErrors != null) {
-
-              errorCodesOrNames.push(...(err.error as ApiError).apiSubErrors.map(apiError => apiError.code));
-            } else {
-              errorCodesOrNames.push(ErrorLocaleName.instance.UNEXPECTED_ERROR);
-            }
-            return observableOf(new NbAuthResult(false, caught, null, errorCodesOrNames));
+            return observableOf(new NbAuthResult(false, null, null, errorCodesOrNames));
           }
         )
       );
   }
 
-  getUserDetails$(): Observable<UserDetails> {
-    const apiUrl = BackendUrls.API_ENDPOINT(BackendUrls.API_USER);
-    return this.http.get<UserDetails>(apiUrl);
+  getProfiles$(): Observable<Collection<Profile>> {
+
+    const apiUrl = BackendUrls.API_ENDPOINT(BackendUrls.API_RESOURCE_PROFILES);
+
+    return this.http.get<Collection<Profile>>(apiUrl);
   }
 
-  getAllUsersInfo$(): Observable<UserInfo[]> {
-    const apiUrl = BackendUrls.API_ENDPOINT(BackendUrls.API_ALL_USERS);
-    return this.http.get<UserInfo[]>(apiUrl);
+  getUser$(id: number): Observable<User> {
+
+    const apiUrl = BackendUrls.API_ENDPOINT(BackendUrls.API_RESOURCE_USERS) + `/${id}`;
+
+    return this.http.get<User>(apiUrl);
   }
 
-  getAllProfiles$(): Observable<Profile[]> {
-    const apiUrl = BackendUrls.API_ENDPOINT(BackendUrls.API_PROFILES);
-    return this.http.get<Profile[]>(apiUrl);
-  }
+  /*
+    getUserInfo$(id: number): Observable<UserInfo> {
+      const apiUrl = BackendUrls.API_ENDPOINT(BackendUrls.API_USERS + `/${id}`);
+      return this.http.get<UserInfo>(apiUrl);
+    }
 
-  addUser(userInfo: UserInfo): Observable<HttpResponse<any>> {
-    const apiUrl = BackendUrls.API_ENDPOINT(BackendUrls.API_USER);
-    return this.http.post(apiUrl, userInfo, {observe: 'response'});
-  }
+    getUserProfiles$(id: number): Observable<Profile[]> {
+      const apiUrl = BackendUrls.API_ENDPOINT(BackendUrls.API_USERS + `/${id}/` + BackendUrls.API_PROFILES);
+      return this.http.get<Profile[]>(apiUrl);
+    }
+
+    getProfilePrivileges$(id: number): Observable<string[]> {
+      const apiUrl = BackendUrls.API_ENDPOINT(BackendUrls.API_PROFILES + `/${id}/` + BackendUrls.API_PRIVILEGES);
+      return this.http.get<string[]>(apiUrl);
+    }
+
+    getAllUsersInfo$(): Observable<UserInfo[]> {
+      const apiUrl = BackendUrls.API_ENDPOINT(BackendUrls.API_USERS);
+      return this.http.get<UserInfo[]>(apiUrl);
+    }
+
+    addUser(userInfo: UserInfo): Observable<HttpResponse<any>> {
+      const apiUrl = BackendUrls.API_ENDPOINT(BackendUrls.API_USERS);
+      return this.http.post(apiUrl, userInfo, {observe: 'response'});
+    }
+
+    getAllProfiles$(): Observable<Profile[]> {
+      const apiUrl = BackendUrls.API_ENDPOINT(BackendUrls.API_PROFILES);
+      return this.http.get<Profile[]>(apiUrl);
+    }
+
+    getAllPrivileges$(): Observable<string[]> {
+      const apiUrl = BackendUrls.API_ENDPOINT(BackendUrls.API_PRIVILEGES);
+      return this.http.get<string[]>(apiUrl);
+    }*/
 }

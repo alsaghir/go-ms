@@ -1,4 +1,3 @@
-export * from './layout-direction';
 export * from './locale-name';
 
 export const THEMES: {[key: string]: {name: string, value: string}} = {
@@ -10,3 +9,9 @@ export const THEMES: {[key: string]: {name: string, value: string}} = {
   MATERIAL_LIGHT: {name: 'Material Light', value: 'material-light'},
   MATERIAL_DARK: {name: 'material Dark', value: 'material-dark'}
 };
+
+
+export enum LayoutDirection {
+  LTR = 'ltr',
+  RTL = 'rtl'
+}

@@ -1,5 +1,6 @@
 package com.goms.domain.model.user;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.goms.domain.model.profile.Profile;
 
 import javax.persistence.*;
@@ -25,6 +26,7 @@ public class User {
   @Column(name = "EMAIL")
   private String email;
 
+  @JsonIgnore
   @Column(name = "PASSWORD")
   private String password;
 

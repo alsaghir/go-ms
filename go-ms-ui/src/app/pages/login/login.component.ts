@@ -8,8 +8,9 @@ import {NbAuthResult} from '@nebular/auth';
 import {EventFacade, UserManagementFacade} from '../../core/facade';
 import {ErrorLocaleHandlingUtil, LocaleHandlingUtil, LoggerUtil, NbUtil} from '../../core/util';
 import {LocaleName} from '../../common/constant';
-import {UserCredentials} from '../../common/interface';
 import {REDIRECT_AFTER_LOGIN_PATH} from "../../common/config";
+import {UserCredentials} from "../../common/model/command/user-credentials";
+import {HttpClient} from "@angular/common/http";
 
 @Component({
   selector: 'app-login',
@@ -36,7 +37,8 @@ export class LoginComponent implements OnInit, OnDestroy {
               private errorHandlingUtil: ErrorLocaleHandlingUtil,
               private localeHandlingUtil: LocaleHandlingUtil,
               private logger: LoggerUtil,
-              private nbUtil: NbUtil) {
+              private nbUtil: NbUtil,
+              private http: HttpClient) {
 
   }
 
@@ -73,7 +75,10 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   login(): void {
-    const userCredentials: UserCredentials = {email: this.emailFormControl().value, password: this.passwordFormControl().value};
+    const userCredentials: UserCredentials = {
+      email: this.emailFormControl().value,
+      password: this.passwordFormControl().value
+    };
     this.userManagementFacade.authenticate('jwt', userCredentials)
       .subscribe(
         (authResult: NbAuthResult) => {
@@ -83,12 +88,7 @@ export class LoginComponent implements OnInit, OnDestroy {
               .then(isSuccessNavigation =>
                 this.logger.debug(isSuccessNavigation ? 'Successful Navigation' : 'Failed Navigation'));
             this.nbUtil.showToast(LocaleName.instance.LOGIN_SUCCESS, 'Success', 'bottom-right', 'success');
-          } else {
-            this.errors.push(...this.errorHandlingUtil.translateByCodesAndNames(authResult.getErrors()));
           }
-          this.errors.forEach(error =>
-            this.nbUtil.dangerToast(error, this.localeHandlingUtil.translationOf(LocaleName.instance.ERROR), 'bottom-right'));
         });
   }
-
 }

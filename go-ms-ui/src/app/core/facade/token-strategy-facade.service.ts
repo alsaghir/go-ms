@@ -2,7 +2,7 @@ import {NbAuthResult, NbAuthStrategy, NbAuthStrategyClass, NbPasswordAuthStrateg
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 import {NbAuthStrategyOptions} from '@nebular/auth/strategies/auth-strategy-options';
-import {UserCredentials} from '../../common/interface';
+import {UserCredentials} from '../../common/model';
 import {CryptoUtil, LoggerUtil} from '../util';
 import {PASSWORD_ENCRYPTION_ENABLED} from '../../common/config';
 import {HttpClient} from '@angular/common/http';

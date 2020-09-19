@@ -23,22 +23,6 @@
 @import '~primeng/resources/themes/arya-purple/theme.css';
 @import '~primeng/resources/primeng.min.css';
 
-// loading progress bar
-@mixin ngx-pace-theme() {
-
-  .pace .pace-progress {
-    background: nb-theme(color-primary-default);
-  }
-
-  .pace .pace-progress-inner {
-    box-shadow: 0 0 10px nb-theme(color-primary-default), 0 0 5px nb-theme(color-primary-default);
-  }
-
-  .pace .pace-activity {
-    display: none;
-  }
-}
-
 @mixin ngx-layout() {
   @include media-breakpoint-down(is) {
     .row {
@@ -115,9 +99,6 @@
   @include nb-auth-global();
 
   @include ngx-layout();
-
-  // loading progress bar
-  @include ngx-pace-theme();
 
   @include nb-overrides();
   @include material-overrides();
