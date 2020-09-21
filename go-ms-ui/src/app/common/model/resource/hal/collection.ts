@@ -1,5 +1,6 @@
 import {Resource} from "./resource";
 import {Link} from "./link";
+import {Profile} from "../profile";
 
 export class Collection<T extends Resource> {
   _embedded: { [resourceName: string]: T[] };
@@ -10,4 +11,8 @@ export class Collection<T extends Resource> {
     totalPages: number,
     number: number
   };
+
+  getModels(resourceName: string): T[] {
+    return this._embedded[resourceName].map(resource => resource as T);
+  }
 }

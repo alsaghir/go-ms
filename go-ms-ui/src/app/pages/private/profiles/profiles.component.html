@@ -1,16 +1,29 @@
 <div class="row">
-    <div class="col-4">
-      <nb-card>
-        <nb-card-header>
-          Users Profiles
-        </nb-card-header>
+  <div class="col-4">
+    <nb-card>
+      <nb-card-header>
+        Users Profiles
+      </nb-card-header>
 
-        <nb-card-body>
-          <app-table [dataObjects]="profilesModel"
-                     [columnsData]="profilesDataView"
-                     [direction]="layoutDirection">
-          </app-table>
-        </nb-card-body>
-      </nb-card>
-    </div>
+      <nb-card-body>
+        <app-table [dataObjects]="profilesModel"
+                   [columnsData]="profilesDataView"
+                   [direction]="layoutDirection"
+                   (onEditRowClick)="editProfile($event)">
+        </app-table>
+      </nb-card-body>
+    </nb-card>
   </div>
+  <div class="col-8">
+    <nb-card *ngIf="selectedProfileForEdit != null">
+      <nb-card-header>Privileges</nb-card-header>
+      <nb-card-body>
+        <nb-list>
+          <nb-list-item *ngFor="let privilege of privilegesModel">
+            <nb-checkbox [checked]="privilege.assigned">{{privilege.privilegeObject.privilege}}</nb-checkbox>
+          </nb-list-item>
+        </nb-list>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>

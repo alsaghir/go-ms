@@ -8,6 +8,7 @@ import {BackendUrls} from '../../common/config';
 import {NbJwtToken} from '../../common/implementation';
 import {LoggerUtil} from '../util';
 import {Collection, JwtToken, Profile, User, UserCredentials} from "../../common/model";
+import {Privilege} from "../../common/model/resource/privilege";
 
 @Injectable({providedIn: 'root'})
 export class UserManagementApi {
@@ -39,6 +40,18 @@ export class UserManagementApi {
     const apiUrl = BackendUrls.API_ENDPOINT(BackendUrls.API_RESOURCE_PROFILES);
 
     return this.http.get<Collection<Profile>>(apiUrl);
+  }
+
+  getPrivileges$(): Observable<Collection<Privilege>> {
+    const apiUrl = BackendUrls.API_ENDPOINT(BackendUrls.API_RESOURCE_PRIVILEGES) + '/search/findAllBy';
+
+    return this.http.get<Collection<Privilege>>(apiUrl);
+  }
+
+  getPrivilegesOf(profile: Profile): Observable<Collection<Privilege>> {
+    const apiUrl = profile._links[BackendUrls.API_RESOURCE_PRIVILEGES].href;
+
+    return this.http.get<Collection<Privilege>>(apiUrl);
   }
 
   getUser$(id: number): Observable<User> {
@@ -83,4 +96,6 @@ export class UserManagementApi {
       const apiUrl = BackendUrls.API_ENDPOINT(BackendUrls.API_PRIVILEGES);
       return this.http.get<string[]>(apiUrl);
     }*/
+
+
 }

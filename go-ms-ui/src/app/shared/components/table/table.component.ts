@@ -1,4 +1,4 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
 import {Subject} from 'rxjs';
 import {LayoutDirection} from "../../../common/constant";
 
@@ -17,6 +17,9 @@ export class TableComponent implements OnInit, OnDestroy {
   @Input() columnsData: {header: string, field: string}[];
   @Input() direction: LayoutDirection = LayoutDirection.LTR;
 
+  @Output() onEditRowClick = new EventEmitter<any>();
+  @Output() onDeleteRowClick = new EventEmitter<any>();
+
   public constructor() {
   }
 
@@ -28,11 +31,11 @@ export class TableComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
-  /*editRowData(dataObject: Profile) {
-    console.log(dataObject);
+  editRowData(dataObject) {
+    this.onEditRowClick.emit(dataObject);
   }
 
-  deleteRowData(dataObject: Profile) {
-    console.log(dataObject);
-  }*/
+  deleteRowData(dataObject) {
+    this.onDeleteRowClick.emit(dataObject);
+  }
 }

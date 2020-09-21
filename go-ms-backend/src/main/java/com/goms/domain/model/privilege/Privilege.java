@@ -16,12 +16,16 @@ public class Privilege {
   @Enumerated(EnumType.STRING)
   private PrivilegeConstant privilege;
 
+  @Column(name= "DESCRIPTION")
+  private String description;
+
   public Privilege() {
   }
 
   public Privilege(PrivilegeConstant privilege) {
     this.id = privilege.getId();
     this.privilege = privilege;
+    this.description = privilege.getDescription();
   }
 
   public Integer getId() {
@@ -30,7 +34,8 @@ public class Privilege {
 
   public Privilege setId(Integer id) {
     this.id = id;
-    this.privilege = PrivilegeConstant.get(id);
+    setPrivilege(PrivilegeConstant.get(id));
+    setDescription(this.privilege.getDescription());
     return this;
   }
 
@@ -41,6 +46,16 @@ public class Privilege {
   public Privilege setPrivilege(PrivilegeConstant privilege) {
     this.privilege = privilege;
     this.id = privilege.getId();
+    setDescription(privilege.getDescription());
+    return this;
+  }
+
+  public String getDescription() {
+    return description;
+  }
+
+  public Privilege setDescription(String description) {
+    this.description = description;
     return this;
   }
 

@@ -6,6 +6,8 @@ import {UserManagementApi} from '../api';
 import {NbUtil} from '../util';
 import {Collection, Profile, User, UserCredentials} from "../../common/model";
 import {tap} from "rxjs/operators";
+import {Privilege} from "../../common/model/resource/privilege";
+import {BackendUrls} from "../../common/config";
 
 @Injectable({providedIn: 'root'})
 export class UserManagementFacade {
@@ -21,16 +23,24 @@ export class UserManagementFacade {
     }));
   }
 
-  getProfiles$(): Observable<Collection<Profile>> {
-    return this.userManagementApi.getProfiles$();
-  }
-
   getLoggedInUserId$(): Observable<number> {
     if (this.userManagementState.isLoggedInUserIdLoaded())
       return this.userManagementState.getLoggedInUserId$();
     else
       return observableOf(this.nbUtil.getToken().getPayload().sub as number)
         .pipe(tap(id => this.userManagementState.setLoggedInUserId(id)));
+  }
+
+  getProfiles$(): Observable<Collection<Profile>> {
+    return this.userManagementApi.getProfiles$();
+  }
+
+  getPrivileges$(): Observable<Collection<Privilege>> {
+    return this.userManagementApi.getPrivileges$();
+  }
+
+  getPrivilegesOf$(profile: Profile) {
+    return this.userManagementApi.getPrivilegesOf(profile);
   }
 
   getUser$(id: number): Observable<User> {
@@ -82,5 +92,6 @@ export class UserManagementFacade {
        })
      );
    }*/
+
 
 }

@@ -4,7 +4,7 @@ import {ErrorLocaleHandlingUtil} from './error-locale-handling-util.service';
 import {LocaleHandlingUtil} from './locale-handling-util.service';
 import {NbUtil} from './nb-util.service';
 import {LocaleName} from "../../common/constant";
-import {DomainError} from "../../common/model";
+import {Collection, DomainError, Resource} from "../../common/model";
 
 @Injectable({providedIn: 'root'})
 export class CommonUtil {
