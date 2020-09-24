@@ -3,11 +3,12 @@ import {Location} from '@angular/common';
 import {takeUntil} from 'rxjs/operators';
 import {Subject} from 'rxjs';
 
-import {NbAccessControl, NbAclRole} from '@nebular/security';
+import {NbAccessControl, NbAclRole, NbAclService} from '@nebular/security';
 
 import {LayoutDirection} from '../common/constant';
 import {UserManagementFacade} from '../core/facade';
 import {CommonUtil, LoggerUtil, NbUtil} from '../core/util';
+import {BackendUrls} from "../common/config";
 
 
 @Component({
@@ -29,13 +30,14 @@ export class PagesComponent implements OnInit, OnDestroy {
               private userManagementFacade: UserManagementFacade,
               private loggerUtil: LoggerUtil,
               private commonUtil: CommonUtil,
+              private nbAclService: NbAclService,
               private nbUtil: NbUtil) {
 
   }
 
   ngOnInit(): void {
     this.initializeDirectionByLocale();
-    // this.listenProfilesAndPrivileges();
+    this.listenProfilesAndPrivileges();
   }
 
   ngOnDestroy(): void {
@@ -65,26 +67,30 @@ export class PagesComponent implements OnInit, OnDestroy {
 
   }
 
-  /*private listenProfilesAndPrivileges(): void {
-    this.userManagementFacade.getAllProfiles$()
+  private listenProfilesAndPrivileges(): void {
+    this.userManagementFacade.getProfiles$()
       .pipe(takeUntil(this.destroy$))
       .subscribe(
         profiles => {
           const nbAcl: NbAccessControl = {}; // keys are profiles ids
-          profiles.forEach(profile => {
+          profiles._embedded[BackendUrls.API_RESOURCE_PROFILES].forEach(profile => {
             const nbAclRole: NbAclRole = {}; // keys are privileges
-            this.userManagementFacade.getProfilePrivileges$(profile.id)
+            this.userManagementFacade.getPrivilegesOf$(profile)
               .pipe(takeUntil(this.destroy$))
-              .subscribe(privileges => privileges.forEach(privilege => nbAclRole[privilege] = '*'));
-            nbAcl[profile.id.toString()] = nbAclRole;
+              .subscribe(privileges => {
+                privileges._embedded[BackendUrls.API_RESOURCE_PRIVILEGES].forEach(privilege => nbAclRole[privilege.privilege] = '*');
+                nbAcl[profile._links.self.href] = nbAclRole;
+
+                this.nbAclService.setAccessControl(nbAcl);
+              });
           });
-          console.log(nbAcl);
-          this.nbUtil.setAccessControl(nbAcl);
+
         },
         err => {
-          this.commonUtil.handleRetrievingDataError(err);
+          console.log(err);
+          this.commonUtil.handleHttpError(err);
         }
       );
-  }*/
+  }
 
 }

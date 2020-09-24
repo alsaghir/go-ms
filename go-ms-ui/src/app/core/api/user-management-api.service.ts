@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpResponse} from '@angular/common/http';
+import {HttpClient, HttpHeaders, HttpResponse} from '@angular/common/http';
 import {Observable, of as observableOf} from 'rxjs';
 import {catchError, map} from 'rxjs/operators';
 import {NbAuthResult} from '@nebular/auth';
@@ -7,7 +7,7 @@ import {NbAuthResult} from '@nebular/auth';
 import {BackendUrls} from '../../common/config';
 import {NbJwtToken} from '../../common/implementation';
 import {LoggerUtil} from '../util';
-import {Collection, JwtToken, Profile, User, UserCredentials} from "../../common/model";
+import {Collection, JwtToken, Link, Profile, User, UserCredentials} from "../../common/model";
 import {Privilege} from "../../common/model/resource/privilege";
 
 @Injectable({providedIn: 'root'})
@@ -42,6 +42,11 @@ export class UserManagementApi {
     return this.http.get<Collection<Profile>>(apiUrl);
   }
 
+  getProfilesOf$(user: User): Observable<Collection<Profile>> {
+    const apiUrl = user._links.profiles.href;
+    return this.http.get<Collection<Profile>>(apiUrl);
+  }
+
   getPrivileges$(): Observable<Collection<Privilege>> {
     const apiUrl = BackendUrls.API_ENDPOINT(BackendUrls.API_RESOURCE_PRIVILEGES) + '/search/findAllBy';
 
@@ -59,6 +64,20 @@ export class UserManagementApi {
     const apiUrl = BackendUrls.API_ENDPOINT(BackendUrls.API_RESOURCE_USERS) + `/${id}`;
 
     return this.http.get<User>(apiUrl);
+  }
+
+  updateAssignedPrivilegesOf(profile: Profile, linksOfPrivileges: Link[]): Observable<null> {
+
+    const apiUrl = profile._links[BackendUrls.API_RESOURCE_PRIVILEGES].href;
+
+    let body = '';
+    linksOfPrivileges.forEach(link => body += `${link.href}\n`);
+
+    return this.http.put<null>(apiUrl, body, {
+      headers: {
+        'Content-type': 'text/uri-list'
+      }
+    });
   }
 
   /*
@@ -96,6 +115,7 @@ export class UserManagementApi {
       const apiUrl = BackendUrls.API_ENDPOINT(BackendUrls.API_PRIVILEGES);
       return this.http.get<string[]>(apiUrl);
     }*/
+
 
 
 }

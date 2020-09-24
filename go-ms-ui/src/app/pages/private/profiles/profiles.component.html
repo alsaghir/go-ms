@@ -18,9 +18,9 @@
     <nb-card *ngIf="selectedProfileForEdit != null">
       <nb-card-header>Privileges</nb-card-header>
       <nb-card-body>
-        <nb-list>
+        <nb-list [nbSpinner]="privilegesUpdating">
           <nb-list-item *ngFor="let privilege of privilegesModel">
-            <nb-checkbox [checked]="privilege.assigned">{{privilege.privilegeObject.privilege}}</nb-checkbox>
+            <nb-checkbox (checkedChange)="updateAssignedPrivileges(privilege, $event)" [checked]="privilege.assigned">{{privilege.privilegeObject.privilege}}</nb-checkbox>
           </nb-list-item>
         </nb-list>
       </nb-card-body>

@@ -6,9 +6,7 @@ import {tap} from "rxjs/operators";
 import {LoggerUtil} from "./logger-util.service";
 import {LOGIN_PATH} from "../../common/config";
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable({providedIn: 'root'})
 export class AuthGuard implements CanActivate {
 
   constructor(private router: Router, private nbUtil: NbUtil, private logger: LoggerUtil) {

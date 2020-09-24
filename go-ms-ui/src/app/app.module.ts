@@ -5,6 +5,9 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import {CoreModule} from './core/core.module';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {NbUtil} from "./core/util";
+import {RoleProviderFacade, UserManagementFacade} from "./core/facade";
+import {NbRoleProvider} from "@nebular/security";
 
 @NgModule({
   declarations: [

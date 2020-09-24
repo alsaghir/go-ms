@@ -14,7 +14,6 @@ import {
 
 
 import {EventFacade, UserManagementFacade} from '../../../core/facade';
-import {NbAccessChecker} from '@nebular/security';
 import {LocaleName, THEMES} from "../../../common/constant";
 import {User} from "../../../common/model";
 
@@ -45,8 +44,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
                      private errorLocaleHandlingUtil: ErrorLocaleHandlingUtil,
                      private loggerUtil: LoggerUtil,
                      private commonUtil: CommonUtil,
-                     private nbUtil: NbUtil,
-                     private nbAccessChecker: NbAccessChecker) {
+                     private nbUtil: NbUtil) {
   }
 
   ngOnInit(): void {

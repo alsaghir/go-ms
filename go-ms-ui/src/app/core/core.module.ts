@@ -5,11 +5,17 @@ import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {NbAuthModule} from '@nebular/auth';
 import {NbRoleProvider, NbSecurityModule} from '@nebular/security';
 
-import {RoleProviderFacade, TokenStrategyFacade} from './facade';
+import {RoleProviderFacade, TokenStrategyFacade, UserManagementFacade} from './facade';
 import {NbJwtToken} from '../common/implementation';
-import {BackendInterceptor} from './util';
+import {BackendInterceptor, NbUtil} from './util';
+
+/*const roleProviderServiceFactory = (userManagementFacade: UserManagementFacade, nbUtil: NbUtil) => {
+  return new RoleProviderFacade(userManagementFacade, nbUtil);
+};*/
 
 export const CORE_PROVIDERS = [
+  //{ provide: NbRoleProvider, useFactory: roleProviderServiceFactory, deps: [UserManagementFacade, NbUtil]},
+  { provide: NbRoleProvider, useClass: RoleProviderFacade},
   NbAuthModule.forRoot({
     forms: {}, strategies: [
       TokenStrategyFacade.setup({
@@ -20,12 +26,7 @@ export const CORE_PROVIDERS = [
       })
     ]
   }).providers,
-  NbSecurityModule.forRoot({accessControl: {
-      anonymous: {
-        view: '*',
-      }
-    }}).providers,
-  { provide: NbRoleProvider, useClass: RoleProviderFacade },
+  NbSecurityModule.forRoot().providers,
 
   NbThemeModule.forRoot({
     name: 'cosmic'
@@ -45,7 +46,7 @@ export const HTTP_CLIENT_INTERCEPTORS = [
 @NgModule({
   imports: [HttpClientModule],
   exports: [HttpClientModule],
-  declarations: [],
+  declarations: []
 })
 export class CoreModule {
   // https://angular.io/guide/singleton-services#prevent-reimport-of-the-greetingmodule

@@ -4,7 +4,7 @@ import {Observable, of as observableOf} from 'rxjs';
 import {UserManagementState} from '../state';
 import {UserManagementApi} from '../api';
 import {NbUtil} from '../util';
-import {Collection, Profile, User, UserCredentials} from "../../common/model";
+import {Collection, Link, Profile, User, UserCredentials} from "../../common/model";
 import {tap} from "rxjs/operators";
 import {Privilege} from "../../common/model/resource/privilege";
 import {BackendUrls} from "../../common/config";
@@ -35,6 +35,10 @@ export class UserManagementFacade {
     return this.userManagementApi.getProfiles$();
   }
 
+  getProfilesOf$(user: User): Observable<Collection<Profile>> {
+    return this.userManagementApi.getProfilesOf$(user);
+  }
+
   getPrivileges$(): Observable<Collection<Privilege>> {
     return this.userManagementApi.getPrivileges$();
   }
@@ -45,6 +49,10 @@ export class UserManagementFacade {
 
   getUser$(id: number): Observable<User> {
     return this.userManagementApi.getUser$(id);
+  }
+
+  updateAssignedPrivilegesOf(profile: Profile, linksOfPrivileges: Link[]): Observable<null> {
+    return this.userManagementApi.updateAssignedPrivilegesOf(profile, linksOfPrivileges);
   }
 
   /* getLoggedInUserInfo$(): Observable<UserInfo> {
@@ -92,6 +100,7 @@ export class UserManagementFacade {
        })
      );
    }*/
+
 
 
 }
