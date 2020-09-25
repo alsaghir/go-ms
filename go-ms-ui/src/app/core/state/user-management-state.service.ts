@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject, Observable} from 'rxjs';
+import {takeLast} from "rxjs/operators";
 
 @Injectable({providedIn: 'root'})
 export class UserManagementState {
@@ -17,8 +18,7 @@ export class UserManagementState {
   }
 
   getLoggedInUserId$(): Observable<number> {
-    return this.loggedInUserId$.asObservable();
-  }
+    return this.loggedInUserId$.asObservable().pipe(takeLast(1))  }
 
   isLoggedInUserIdLoaded(): boolean {
     return this.loggedInUserIdLoaded;

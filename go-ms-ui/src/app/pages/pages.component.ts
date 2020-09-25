@@ -87,7 +87,7 @@ export class PagesComponent implements OnInit, OnDestroy {
 
         },
         err => {
-          console.log(err);
+          this.loggerUtil.error(err);
           this.commonUtil.handleHttpError(err);
         }
       );

@@ -25,7 +25,7 @@ export class BackendInterceptor implements HttpInterceptor {
     return next.handle(req).pipe(
       // error conversion to codes or generic
       catchError((err: HttpErrorResponse) => {
-        this.loggerUtil.error(err);
+        this.loggerUtil.trace(err);
 
         const domainError = new DomainError();
 

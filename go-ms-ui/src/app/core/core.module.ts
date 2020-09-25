@@ -1,13 +1,13 @@
-import {ModuleWithProviders, NgModule, Optional, SkipSelf} from '@angular/core';
+import {ErrorHandler, ModuleWithProviders, NgModule, Optional, SkipSelf} from '@angular/core';
 import {NbMenuModule, NbSidebarModule, NbThemeModule, NbToastrModule, NbWindowModule} from '@nebular/theme';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 
 import {NbAuthModule} from '@nebular/auth';
 import {NbRoleProvider, NbSecurityModule} from '@nebular/security';
 
-import {RoleProviderFacade, TokenStrategyFacade, UserManagementFacade} from './facade';
+import {RoleProviderFacade, TokenStrategyFacade} from './facade';
 import {NbJwtToken} from '../common/implementation';
-import {BackendInterceptor, NbUtil} from './util';
+import {BackendInterceptor, GlobalErrorHandler} from './util';
 
 /*const roleProviderServiceFactory = (userManagementFacade: UserManagementFacade, nbUtil: NbUtil) => {
   return new RoleProviderFacade(userManagementFacade, nbUtil);
@@ -15,7 +15,8 @@ import {BackendInterceptor, NbUtil} from './util';
 
 export const CORE_PROVIDERS = [
   //{ provide: NbRoleProvider, useFactory: roleProviderServiceFactory, deps: [UserManagementFacade, NbUtil]},
-  { provide: NbRoleProvider, useClass: RoleProviderFacade},
+  {provide: NbRoleProvider, useClass: RoleProviderFacade},
+  {provide: ErrorHandler, useClass: GlobalErrorHandler},
   NbAuthModule.forRoot({
     forms: {}, strategies: [
       TokenStrategyFacade.setup({

@@ -7,7 +7,7 @@ import {NbAuthResult} from '@nebular/auth';
 import {BackendUrls} from '../../common/config';
 import {NbJwtToken} from '../../common/implementation';
 import {LoggerUtil} from '../util';
-import {Collection, JwtToken, Link, Profile, User, UserCredentials} from "../../common/model";
+import {Collection, DomainError, JwtToken, Link, Profile, User, UserCredentials} from "../../common/model";
 import {Privilege} from "../../common/model/resource/privilege";
 
 @Injectable({providedIn: 'root'})
@@ -27,9 +27,9 @@ export class UserManagementApi {
           (response: HttpResponse<JwtToken>) =>
             new NbAuthResult(true, response, null, [], [], new NbJwtToken(response.body.token, strategyName))
         ),
-        catchError((errorCodesOrNames: string[]) => {
+        catchError((domainError: DomainError) => {
 
-            return observableOf(new NbAuthResult(false, null, null, errorCodesOrNames));
+            return observableOf(new NbAuthResult(false, null, null, domainError));
           }
         )
       );
