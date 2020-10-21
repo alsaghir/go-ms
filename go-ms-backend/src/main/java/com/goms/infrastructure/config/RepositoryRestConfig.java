@@ -14,18 +14,21 @@ public class RepositoryRestConfig implements RepositoryRestConfigurer {
 
   private final Jackson2ObjectMapperBuilder objectMapperBuilder;
   private final RepositoryRestProperties properties;
+  private final ConfigProperties configProperties;
 
   @Autowired
   RepositoryRestConfig(
-      Jackson2ObjectMapperBuilder objectMapperBuilder, RepositoryRestProperties properties) {
+      Jackson2ObjectMapperBuilder objectMapperBuilder, RepositoryRestProperties properties, ConfigProperties configProperties) {
     this.objectMapperBuilder = objectMapperBuilder;
     this.properties = properties;
+    this.configProperties = configProperties;
   }
 
   @Override
   public void configureRepositoryRestConfiguration(RepositoryRestConfiguration config) {
     config.setRepositoryDetectionStrategy(
         RepositoryDetectionStrategy.RepositoryDetectionStrategies.ANNOTATED);
+    config.setBasePath(this.configProperties.getBasePath());
     config.exposeIdsFor();
 
     this.properties.applyTo(config);

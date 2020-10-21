@@ -46,7 +46,13 @@ public class User {
       inverseJoinColumns = @JoinColumn(name = "PROFILE_ID", referencedColumnName = "ID"))
   private Set<Profile> profiles;
 
-  public User(String email, String password, boolean active, String firstName, String lastName, Set<Profile> profiles) {
+  public User(
+      String email,
+      String password,
+      boolean active,
+      String firstName,
+      String lastName,
+      Set<Profile> profiles) {
     this.email = email;
     this.password = password;
     this.active = active;
@@ -118,5 +124,26 @@ public class User {
   public User setProfiles(Set<Profile> profiles) {
     this.profiles = profiles;
     return this;
+  }
+
+  @Override
+  public String toString() {
+    return "User{"
+        + "id="
+        + id
+        + ", email='"
+        + email
+        + '\''
+        + ", active="
+        + active
+        + ", firstName='"
+        + firstName
+        + '\''
+        + ", lastName='"
+        + lastName
+        + '\''
+        + ", profiles="
+        + profiles
+        + '}';
   }
 }

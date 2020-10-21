@@ -2,9 +2,9 @@ package com.goms.infrastructure.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.kafka.annotation.EnableKafka;
 
-@EnableKafka
 @Configuration
 @ConfigurationProperties(prefix = "app.config")
 public class ConfigProperties {
@@ -12,6 +12,7 @@ public class ConfigProperties {
   private String jwtSigningKey;
   private String jwtExpirationTime;
   private boolean initializingDataRequired;
+  private String basePath;
   private String rsaPrivateKey;
 
   public String getJwtExpirationTime() {
@@ -37,6 +38,15 @@ public class ConfigProperties {
 
   public void setInitializingDataRequired(boolean initializingDataRequired) {
     this.initializingDataRequired = initializingDataRequired;
+  }
+
+  public String getBasePath() {
+    return basePath;
+  }
+
+  public ConfigProperties setBasePath(String basePath) {
+    this.basePath = basePath;
+    return this;
   }
 
   public String getRsaPrivateKey() {

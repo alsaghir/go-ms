@@ -76,4 +76,13 @@ public class Privilege {
   public int hashCode() {
     return Objects.hash(this.getId());
   }
+
+  @Override
+  public String toString() {
+    return "Privilege{" +
+            "id=" + id +
+            ", privilege=" + privilege +
+            ", description='" + description + '\'' +
+            '}';
+  }
 }

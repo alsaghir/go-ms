@@ -29,6 +29,7 @@ org\springframework\boot\logging\log4j2\log4j2.xml
         <Logger name="org.eclipse.jetty.util.component.AbstractLifeCycle" level="error"/>
         <Logger name="org.hibernate.validator.internal.util.Version" level="warn"/>
         <logger name="org.springframework.boot.actuate.endpoint.jmx" level="warn"/>
+        <logger name="org.apache.kafka" level="info"/>
         <Root level="info">
             <AppenderRef ref="Console"/>
         </Root>
